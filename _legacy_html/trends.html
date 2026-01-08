@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dissertation Scaffold - Trends</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13a4ec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                        "surface-dark": "#1a262d",
+                        "surface-light": "#ffffff",
+                        "card-dark": "#1e2b32",
+                        "card-border": "#2e3f47",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for data tables/lists */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #2e3f47;
+            border-radius: 3px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background-color: #13a4ec;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased selection:bg-primary/30 selection:text-primary">
+    <div class="relative flex h-screen w-full flex-col overflow-hidden">
+        <!-- Top Navigation -->
+        <header
+            class="shrink-0 flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-card-border bg-surface-light dark:bg-background-dark px-6 py-3 z-20">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-3">
+                    <div class="size-8 text-primary">
+                        <svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd"
+                                d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z"
+                                fill="currentColor" fill-rule="evenodd" opacity="0.8"></path>
+                            <path clip-rule="evenodd"
+                                d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z"
+                                fill="currentColor" fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-lg font-bold leading-tight tracking-tight dark:text-white">Dissertation Scaffold
+                    </h2>
+                </div>
+                <!-- Search Bar -->
+                <div class="hidden md:flex flex-col min-w-60 h-10">
+                    <div
+                        class="flex w-full flex-1 items-stretch rounded-lg bg-slate-100 dark:bg-card-dark border border-slate-200 dark:border-card-border focus-within:ring-2 focus-within:ring-primary/50 transition-all">
+                        <div class="flex items-center justify-center pl-3 text-slate-400">
+                            <span class="material-symbols-outlined text-[20px]">search</span>
+                        </div>
+                        <input
+                            class="w-full bg-transparent border-none text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-0 h-full px-3"
+                            placeholder="Search topics, grants..." />
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center gap-6">
+                <nav class="hidden lg:flex items-center gap-6">
+                    <a class="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors"
+                        href="index.html">Home</a>
+                    <a class="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors"
+                        href="methodology.html">Tools</a>
+                    <a class="text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary text-sm font-medium transition-colors"
+                        href="grant-potential.html">Grants</a>
+                    <a class="text-primary text-sm font-medium" href="#">Trends</a>
+                </nav>
+                <div class="flex items-center gap-4">
+                    <button
+                        class="relative p-2 text-slate-500 dark:text-slate-400 hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">notifications</span>
+                        <span class="absolute top-1.5 right-1.5 size-2 bg-primary rounded-full"></span>
+                    </button>
+                    <div class="h-9 w-9 rounded-full bg-cover bg-center ring-2 ring-slate-200 dark:ring-card-border"
+                        data-alt="User profile picture"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCgRamdt_VJt1mnyUPNINJUDtzhRdGys1bZ47v08UvqG-KBBHOLYcaksnZhb84Fvi-pOTkHrzPP4xP_gdzQslCzuoXfbE0SozZXoiev3nRpyDdNfzk47jQzHPeUTZgyRzNdnCt4rq5v-cLL_Vbfs0nnh7s8EG9AKXrJeMpnthdqnGoKiVGdum9s9xwdz17qeg69oPu97TB9IZBVjjVqLtB44y8zC4_TfrqqwCH7VTnKVGwFVtjPUqaCP94afm-l8TPniGFCB3VaxBM');">
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content Area -->
+        <main
+            class="flex-1 overflow-y-auto custom-scrollbar bg-surface-light dark:bg-background-dark p-4 md:p-8 lg:px-12">
+            <div class="max-w-[1400px] mx-auto flex flex-col gap-8">
+                <!-- Page Header -->
+                <div class="flex flex-col lg:flex-row justify-between lg:items-end gap-6">
+                    <div class="flex flex-col gap-2">
+                        <h1 class="text-3xl md:text-4xl font-black tracking-tight text-slate-900 dark:text-white">Global
+                            Research Trends &amp; Insights</h1>
+                        <p class="text-slate-500 dark:text-slate-400 text-base md:text-lg max-w-2xl">Visualize emerging
+                            topics and identify funding opportunities in your field.</p>
+                    </div>
+                    <!-- Filters -->
+                    <div class="flex flex-wrap gap-3">
+                        <button
+                            class="group flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-card-dark border border-slate-200 dark:border-card-border hover:border-primary/50 transition-all shadow-sm">
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-200">Field: <span
+                                    class="text-primary font-semibold">All Sciences</span></span>
+                            <span
+                                class="material-symbols-outlined text-slate-400 group-hover:text-primary text-[20px]">keyboard_arrow_down</span>
+                        </button>
+                        <button
+                            class="group flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-card-dark border border-slate-200 dark:border-card-border hover:border-primary/50 transition-all shadow-sm">
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-200">Time: <span
+                                    class="text-primary font-semibold">Last 5 Years</span></span>
+                            <span
+                                class="material-symbols-outlined text-slate-400 group-hover:text-primary text-[20px]">keyboard_arrow_down</span>
+                        </button>
+                        <button
+                            class="group flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-card-dark border border-slate-200 dark:border-card-border hover:border-primary/50 transition-all shadow-sm">
+                            <span class="text-sm font-medium text-slate-700 dark:text-slate-200">Region: <span
+                                    class="text-primary font-semibold">Global</span></span>
+                            <span
+                                class="material-symbols-outlined text-slate-400 group-hover:text-primary text-[20px]">keyboard_arrow_down</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Metrics Row -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Metric 1 -->
+                    <div
+                        class="relative overflow-hidden rounded-xl bg-white dark:bg-card-dark border border-slate-200 dark:border-card-border p-6 shadow-sm group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-2 rounded-lg bg-primary/10 text-primary">
+                                <span class="material-symbols-outlined">description</span>
+                            </div>
+                            <span
+                                class="flex items-center text-emerald-500 text-sm font-semibold bg-emerald-500/10 px-2 py-1 rounded-md">
+                                <span class="material-symbols-outlined text-[16px] mr-1">trending_up</span> +12%
+                            </span>
+                        </div>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Papers Analyzed</p>
+                        <h3 class="text-3xl font-bold text-slate-900 dark:text-white">1,240,052</h3>
+                        <div
+                            class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary/0 via-primary to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <!-- Metric 2 -->
+                    <div
+                        class="relative overflow-hidden rounded-xl bg-white dark:bg-card-dark border border-slate-200 dark:border-card-border p-6 shadow-sm group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-2 rounded-lg bg-primary/10 text-primary">
+                                <span class="material-symbols-outlined">monetization_on</span>
+                            </div>
+                            <span
+                                class="flex items-center text-emerald-500 text-sm font-semibold bg-emerald-500/10 px-2 py-1 rounded-md">
+                                <span class="material-symbols-outlined text-[16px] mr-1">trending_up</span> +5%
+                            </span>
+                        </div>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">New Grants Posted</p>
+                        <h3 class="text-3xl font-bold text-slate-900 dark:text-white">+45 <span
+                                class="text-lg font-normal text-slate-500 dark:text-slate-400">this week</span></h3>
+                        <div
+                            class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary/0 via-primary to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <!-- Metric 3 -->
+                    <div
+                        class="relative overflow-hidden rounded-xl bg-white dark:bg-card-dark border border-slate-200 dark:border-card-border p-6 shadow-sm group">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-2 rounded-lg bg-primary/10 text-primary">
+                                <span class="material-symbols-outlined">query_stats</span>
+                            </div>
+                            <span
+                                class="flex items-center text-emerald-500 text-sm font-semibold bg-emerald-500/10 px-2 py-1 rounded-md">
+                                <span class="material-symbols-outlined text-[16px] mr-1">trending_up</span> +22%
+                            </span>
+                        </div>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium mb-1">Top Trending Method</p>
+                        <h3 class="text-3xl font-bold text-slate-900 dark:text-white">Qualitative NLP</h3>
+                        <div
+                            class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary/0 via-primary to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                </div>
+                <!-- Main Visualization: Keyword Velocity Map -->
+                <div
+                    class="rounded-2xl bg-white dark:bg-card-dark border border-slate-200 dark:border-card-border p-6 shadow-sm flex flex-col h-[500px]">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-white">Keyword Velocity Map</h2>
+                            <p class="text-sm text-slate-500 dark:text-slate-400">Correlation between publication
+                                frequency and grant funding over time.</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button
+                                class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400">
+                                <span class="material-symbols-outlined">zoom_in</span>
+                            </button>
+                            <button
+                                class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400">
+                                <span class="material-symbols-outlined">download</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Chart Simulation Area -->
+                    <div
+                        class="relative flex-1 w-full bg-slate-50 dark:bg-[#151f25] rounded-xl border border-dashed border-slate-200 dark:border-card-border overflow-hidden">
+                        <!-- Grid Lines -->
+                        <div class="absolute inset-0 flex flex-col justify-between p-8 opacity-20 pointer-events-none">
+                            <div class="w-full h-px bg-slate-400"></div>
+                            <div class="w-full h-px bg-slate-400"></div>
+                            <div class="w-full h-px bg-slate-400"></div>
+                            <div class="w-full h-px bg-slate-400"></div>
+                            <div class="w-full h-px bg-slate-400"></div>
+                        </div>
+                        <!-- Bubbles (CSS Simulation) -->
+                        <div class="absolute top-[30%] left-[20%] size-24 rounded-full bg-primary/20 border border-primary text-primary flex items-center justify-center text-xs font-bold animate-pulse"
+                            style="animation-duration: 4s;">
+                            Deep Learning
+                        </div>
+                        <div
+                            class="absolute top-[60%] left-[50%] size-32 rounded-full bg-indigo-500/20 border border-indigo-500 text-indigo-400 flex items-center justify-center text-xs font-bold text-center p-2">
+                            Climate Resilience
+                        </div>
+                        <div
+                            class="absolute top-[20%] left-[70%] size-16 rounded-full bg-emerald-500/20 border border-emerald-500 text-emerald-500 flex items-center justify-center text-xs font-bold">
+                            CRISPR
+                        </div>
+                        <div
+                            class="absolute top-[75%] left-[30%] size-12 rounded-full bg-orange-500/20 border border-orange-500 text-orange-400 flex items-center justify-center text-xs font-bold">
+                            VR
+                        </div>
+                        <div
+                            class="absolute top-[45%] left-[80%] size-20 rounded-full bg-rose-500/20 border border-rose-500 text-rose-400 flex items-center justify-center text-xs font-bold text-center">
+                            Ethical AI
+                        </div>
+                        <!-- X/Y Axis Labels -->
+                        <div
+                            class="absolute bottom-2 left-8 right-8 flex justify-between text-xs text-slate-400 font-mono">
+                            <span>2019</span>
+                            <span>2020</span>
+                            <span>2021</span>
+                            <span>2022</span>
+                            <span>2023</span>
+                            <span>2024</span>
+                        </div>
+                        <div
+                            class="absolute top-8 bottom-8 left-2 flex flex-col justify-between text-xs text-slate-400 font-mono">
+                            <span>High</span>
+                            <span>Med</span>
+                            <span>Low</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Split View: Emerging Themes Table & Detailed Analysis -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <!-- Left Column: Themes List (5 cols) -->
+                    <div class="lg:col-span-5 flex flex-col gap-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Top 10 Rising Subjects</h3>
+                            <a class="text-primary text-sm font-medium hover:underline" href="#">View All</a>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-card-border overflow-hidden shadow-sm">
+                            <div class="flex flex-col divide-y divide-slate-100 dark:divide-card-border">
+                                <!-- List Item 1 -->
+                                <button
+                                    class="flex items-center gap-4 p-4 text-left hover:bg-slate-50 dark:hover:bg-[#25333b] transition-colors border-l-4 border-primary">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-start">
+                                            <p class="text-sm font-bold text-slate-900 dark:text-white">Machine Learning
+                                                in History</p>
+                                            <span
+                                                class="text-xs font-mono text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded">+124%</span>
+                                        </div>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-1">
+                                            Analyzing historical texts using NLP models.</p>
+                                    </div>
+                                    <span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+                                </button>
+                                <!-- List Item 2 -->
+                                <button
+                                    class="flex items-center gap-4 p-4 text-left hover:bg-slate-50 dark:hover:bg-[#25333b] transition-colors border-l-4 border-transparent">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-start">
+                                            <p class="text-sm font-bold text-slate-900 dark:text-white">Sustainable
+                                                Urban Mining</p>
+                                            <span
+                                                class="text-xs font-mono text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded">+89%</span>
+                                        </div>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-1">
+                                            Recovering materials from electronic waste.</p>
+                                    </div>
+                                    <span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+                                </button>
+                                <!-- List Item 3 -->
+                                <button
+                                    class="flex items-center gap-4 p-4 text-left hover:bg-slate-50 dark:hover:bg-[#25333b] transition-colors border-l-4 border-transparent">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-start">
+                                            <p class="text-sm font-bold text-slate-900 dark:text-white">Micro-grids
+                                                &amp; Energy Storage</p>
+                                            <span
+                                                class="text-xs font-mono text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded">+65%</span>
+                                        </div>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-1">
+                                            Decentralized power solutions.</p>
+                                    </div>
+                                    <span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+                                </button>
+                                <!-- List Item 4 -->
+                                <button
+                                    class="flex items-center gap-4 p-4 text-left hover:bg-slate-50 dark:hover:bg-[#25333b] transition-colors border-l-4 border-transparent">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-start">
+                                            <p class="text-sm font-bold text-slate-900 dark:text-white">Telemedicine
+                                                Post-Pandemic</p>
+                                            <span
+                                                class="text-xs font-mono text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded">+42%</span>
+                                        </div>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-1">
+                                            Long-term efficacy of remote care.</p>
+                                    </div>
+                                    <span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+                                </button>
+                                <!-- List Item 5 -->
+                                <button
+                                    class="flex items-center gap-4 p-4 text-left hover:bg-slate-50 dark:hover:bg-[#25333b] transition-colors border-l-4 border-transparent">
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-start">
+                                            <p class="text-sm font-bold text-slate-900 dark:text-white">Quantum
+                                                Cryptography</p>
+                                            <span
+                                                class="text-xs font-mono text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded">+38%</span>
+                                        </div>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-1">Security
+                                            in the age of quantum computing.</p>
+                                    </div>
+                                    <span class="material-symbols-outlined text-slate-400 text-lg">chevron_right</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right Column: Analysis Detail (7 cols) -->
+                    <div class="lg:col-span-7 flex flex-col gap-6">
+                        <!-- Chart Card -->
+                        <div
+                            class="bg-white dark:bg-card-dark rounded-xl border border-slate-200 dark:border-card-border p-6 shadow-sm">
+                            <div class="flex items-center justify-between mb-6">
+                                <div>
+                                    <h3
+                                        class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                        <span class="w-2 h-2 rounded-full bg-primary"></span>
+                                        Trend Analysis: Machine Learning in History
+                                    </h3>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Growth trajectory over
+                                        last 12 months</p>
+                                </div>
+                                <span
+                                    class="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">High
+                                    Velocity</span>
+                            </div>
+                            <!-- Mock Line Chart -->
+                            <div class="h-48 w-full relative flex items-end gap-2 px-2 pb-2">
+                                <div
+                                    class="absolute inset-0 border-b border-l border-slate-200 dark:border-slate-700 opacity-50 z-0">
+                                </div>
+                                <!-- Bars Simulation -->
+                                <div
+                                    class="w-full bg-primary/20 hover:bg-primary/40 rounded-t-sm h-[20%] transition-all relative group">
+                                    <div
+                                        class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded">
+                                        120</div>
+                                </div>
+                                <div
+                                    class="w-full bg-primary/25 hover:bg-primary/40 rounded-t-sm h-[35%] transition-all relative group">
+                                    <div
+                                        class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded">
+                                        215</div>
+                                </div>
+                                <div
+                                    class="w-full bg-primary/30 hover:bg-primary/40 rounded-t-sm h-[25%] transition-all relative group">
+                                    <div
+                                        class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded">
+                                        180</div>
+                                </div>
+                                <div
+                                    class="w-full bg-primary/40 hover:bg-primary/40 rounded-t-sm h-[45%] transition-all relative group">
+                                    <div
+                                        class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded">
+                                        320</div>
+                                </div>
+                                <div
+                                    class="w-full bg-primary/50 hover:bg-primary/40 rounded-t-sm h-[60%] transition-all relative group">
+                                    <div
+                                        class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded">
+                                        450</div>
+                                </div>
+                                <div
+                                    class="w-full bg-primary/60 hover:bg-primary/40 rounded-t-sm h-[50%] transition-all relative group">
+                                    <div
+                                        class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded">
+                                        380</div>
+                                </div>
+                                <div
+                                    class="w-full bg-primary/70 hover:bg-primary/40 rounded-t-sm h-[75%] transition-all relative group">
+                                    <div
+                                        class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded">
+                                        620</div>
+                                </div>
+                                <div
+                                    class="w-full bg-primary/80 hover:bg-primary/40 rounded-t-sm h-[90%] transition-all relative group">
+                                    <div
+                                        class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded">
+                                        810</div>
+                                </div>
+                                <div
+                                    class="w-full bg-primary hover:bg-primary/90 rounded-t-sm h-[85%] transition-all relative group">
+                                    <div
+                                        class="hidden group-hover:block absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded">
+                                        750</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Insight Panel / Grant Opportunity -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- AI Summary -->
+                            <div
+                                class="bg-gradient-to-br from-slate-100 to-slate-200 dark:from-[#25333b] dark:to-[#1a262d] rounded-xl p-6 border border-slate-200 dark:border-card-border relative overflow-hidden">
+                                <div class="absolute top-0 right-0 p-4 opacity-10">
+                                    <span class="material-symbols-outlined text-[80px]">psychology</span>
+                                </div>
+                                <h4
+                                    class="text-sm uppercase tracking-wider font-bold text-slate-500 dark:text-slate-400 mb-2">
+                                    Why is this trending?</h4>
+                                <p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300 relative z-10">
+                                    Digitization of national archives has reached critical mass, allowing researchers to
+                                    apply Large Language Models (LLMs) to millions of historical documents. This method
+                                    is uncovering semantic shifts previously invisible to manual reading.
+                                </p>
+                            </div>
+                            <!-- Grant Opportunity -->
+                            <div
+                                class="bg-slate-900 dark:bg-black rounded-xl p-6 border border-slate-700 dark:border-slate-800 flex flex-col justify-between relative overflow-hidden">
+                                <!-- Decorative background blob -->
+                                <div
+                                    class="absolute -right-6 -bottom-6 w-32 h-32 bg-primary blur-3xl opacity-20 rounded-full">
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <span class="material-symbols-outlined text-primary">local_atm</span>
+                                        <h4 class="text-white font-bold">Open Grant Opportunity</h4>
+                                    </div>
+                                    <p class="text-slate-400 text-xs mb-4">NSF: Digital Humanities Advancement Grants
+                                    </p>
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <span
+                                            class="bg-slate-800 text-slate-300 text-[10px] px-2 py-1 rounded border border-slate-700">Due:
+                                            Oct 15</span>
+                                        <span
+                                            class="bg-slate-800 text-slate-300 text-[10px] px-2 py-1 rounded border border-slate-700">$50k
+                                            - $300k</span>
+                                    </div>
+                                </div>
+                                <button
+                                    class="w-full bg-primary hover:bg-sky-500 text-white text-sm font-semibold py-2 rounded-lg transition-colors z-10">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

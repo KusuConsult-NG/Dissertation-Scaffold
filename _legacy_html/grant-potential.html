@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Grant Potential Analysis - Dissertation Scaffold</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "card-dark": "#161e2c",
+                        "card-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body
+    class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark text-gray-900 dark:text-white font-display overflow-x-hidden transition-colors duration-200">
+    <!-- Top Navigation -->
+    <header
+        class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-[#101622]/80 backdrop-blur-md px-4 sm:px-10 py-3">
+        <div class="flex items-center gap-8">
+            <div class="flex items-center gap-3 text-primary">
+                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white">
+                    <span class="material-symbols-outlined text-2xl">school</span>
+                </div>
+                <h2 class="text-gray-900 dark:text-white text-lg font-bold leading-tight hidden md:block">Dissertation
+                    Scaffold</h2>
+            </div>
+            <nav class="hidden md:flex items-center gap-6 lg:gap-9">
+                <a class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-white text-sm font-medium leading-normal transition-colors"
+                    href="index.html">Dashboard</a>
+                <a class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-white text-sm font-medium leading-normal transition-colors"
+                    href="#">My Projects</a>
+                <a class="text-primary text-sm font-medium leading-normal" href="#">Grant Search</a>
+                <a class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-white text-sm font-medium leading-normal transition-colors"
+                    href="settings.html">Settings</a>
+            </nav>
+        </div>
+        <div class="flex flex-1 justify-end gap-4 sm:gap-8 items-center">
+            <label class="hidden sm:flex flex-col min-w-40 h-10 max-w-64 relative group">
+                <div
+                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500 dark:text-gray-400">
+                    <span class="material-symbols-outlined text-[20px]">search</span>
+                </div>
+                <input
+                    class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-card-dark text-gray-900 dark:text-white h-full placeholder:text-gray-400 pl-10 pr-4 text-sm font-normal leading-normal transition-all"
+                    placeholder="Search grants..." value="" />
+            </label>
+            <div class="flex items-center gap-3">
+                <button
+                    class="relative flex items-center justify-center w-10 h-10 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute top-2 right-2 h-2 w-2 rounded-full bg-red-500"></span>
+                </button>
+                <div class="bg-center bg-no-repeat bg-cover rounded-full h-10 w-10 border-2 border-gray-200 dark:border-gray-700 cursor-pointer"
+                    data-alt="User profile picture showing a professional headshot"
+                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC3TxW4Ab3J43wQ609d6SZ56kDCGucdtccsT9w2ijvHb0KZzHU8Ok0rwbpfZ_mUoQwf6QxMEi3chVZvlJ378xsu2uHvqAZVT-nmcAiM8WYx3vBsD1NtGQ7Mryj71GDRfKaPSgCd0rbCbtbLpZE3BSXkthAPfyIEoevSLIvHf3l43km1tdOPeow6-UGuxwlld8l9HbEF7tNRlfOOpKqh7RR4esIIMsOOTPOlASJ8yY7jm8SbmsfAGpCSDYlqJiAJjQU-w8dJsrb-F2k");'>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content Layout -->
+    <div class="flex-1 flex justify-center py-6 px-4 sm:px-8">
+        <div class="flex flex-col max-w-[1280px] w-full gap-6">
+            <!-- Page Heading & Actions -->
+            <div
+                class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-2 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex flex-col gap-2">
+                    <div class="flex items-center gap-3">
+                        <span
+                            class="bg-green-500/10 text-green-600 dark:text-green-400 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider border border-green-500/20">Active
+                            Analysis</span>
+                        <h1 class="text-3xl md:text-4xl font-black tracking-tight text-gray-900 dark:text-white">Grant
+                            Potential Analysis</h1>
+                    </div>
+                    <p class="text-gray-500 dark:text-gray-400 text-lg">Dissertation: <span
+                            class="font-medium text-gray-900 dark:text-gray-200">Quantum Computing Ethics &amp; Policy
+                            Frameworks</span></p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button
+                        class="flex items-center justify-center px-4 h-10 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-card-dark text-gray-700 dark:text-gray-300 font-bold text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                        <span class="material-symbols-outlined mr-2 text-[18px]">download</span>
+                        Export Report
+                    </button>
+                    <button
+                        class="flex items-center justify-center px-4 h-10 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-sm shadow-lg shadow-primary/20 transition-all transform hover:scale-[1.02]">
+                        <span class="material-symbols-outlined mr-2 text-[18px] animate-spin-slow">refresh</span>
+                        Re-analyze Project
+                    </button>
+                </div>
+            </div>
+            <!-- Key Stats Row -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div
+                    class="flex flex-col gap-1 p-6 rounded-xl bg-card-light dark:bg-card-dark border border-gray-200 dark:border-gray-800 shadow-sm relative overflow-hidden group">
+                    <div
+                        class="absolute right-0 top-0 h-24 w-24 bg-primary/5 rounded-full -mr-6 -mt-6 transition-transform group-hover:scale-110">
+                    </div>
+                    <div class="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-2">
+                        <span class="material-symbols-outlined text-[20px]">payments</span>
+                        <p class="text-sm font-medium uppercase tracking-wider">Total Available Funding</p>
+                    </div>
+                    <p class="text-gray-900 dark:text-white text-3xl font-bold tracking-tight">$1.24 Million</p>
+                    <div class="flex items-center gap-1 mt-2 text-green-600 dark:text-green-400 text-sm font-medium">
+                        <span class="material-symbols-outlined text-[16px]">trending_up</span>
+                        <span>+12% vs last month</span>
+                    </div>
+                </div>
+                <div
+                    class="flex flex-col gap-1 p-6 rounded-xl bg-card-light dark:bg-card-dark border border-gray-200 dark:border-gray-800 shadow-sm relative overflow-hidden group">
+                    <div
+                        class="absolute right-0 top-0 h-24 w-24 bg-purple-500/5 rounded-full -mr-6 -mt-6 transition-transform group-hover:scale-110">
+                    </div>
+                    <div class="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-2">
+                        <span class="material-symbols-outlined text-[20px]">verified</span>
+                        <p class="text-sm font-medium uppercase tracking-wider">High-Confidence Matches</p>
+                    </div>
+                    <p class="text-gray-900 dark:text-white text-3xl font-bold tracking-tight">14 Grants</p>
+                    <p class="text-sm text-gray-500 mt-2">Based on &gt;80% semantic match</p>
+                </div>
+                <div
+                    class="flex flex-col gap-1 p-6 rounded-xl bg-card-light dark:bg-card-dark border border-gray-200 dark:border-gray-800 shadow-sm relative overflow-hidden group">
+                    <div
+                        class="absolute right-0 top-0 h-24 w-24 bg-orange-500/5 rounded-full -mr-6 -mt-6 transition-transform group-hover:scale-110">
+                    </div>
+                    <div class="flex items-center gap-2 text-gray-500 dark:text-gray-400 mb-2">
+                        <span class="material-symbols-outlined text-[20px]">event_upcoming</span>
+                        <p class="text-sm font-medium uppercase tracking-wider">Next Critical Deadline</p>
+                    </div>
+                    <p class="text-gray-900 dark:text-white text-3xl font-bold tracking-tight">Oct 15, 2023</p>
+                    <p class="text-sm text-orange-500 dark:text-orange-400 font-medium mt-2">12 Days Remaining</p>
+                </div>
+            </div>
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left Column: Charts & Grant List -->
+                <div class="lg:col-span-2 flex flex-col gap-6">
+                    <!-- Chart Section -->
+                    <div
+                        class="bg-card-light dark:bg-card-dark rounded-xl border border-gray-200 dark:border-gray-800 p-6 shadow-sm">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white">Approval Probability
+                                    Analysis</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Comparing your abstract keywords
+                                    against historical grant approvals.</p>
+                            </div>
+                            <span
+                                class="flex items-center gap-1 text-sm font-bold text-green-500 bg-green-500/10 px-3 py-1 rounded-full">
+                                High Probability
+                            </span>
+                        </div>
+                        <!-- Chart SVG -->
+                        <div class="w-full aspect-[2/1] sm:aspect-[3/1] relative">
+                            <svg class="w-full h-full" fill="none" preserveaspectratio="none" viewbox="0 0 478 150"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <lineargradient gradientunits="userSpaceOnUse" id="chart-gradient" x1="236" x2="236"
+                                        y1="1" y2="149">
+                                        <stop stop-color="#135bec" stop-opacity="0.2"></stop>
+                                        <stop offset="1" stop-color="#135bec" stop-opacity="0"></stop>
+                                    </lineargradient>
+                                </defs>
+                                <path
+                                    d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H0V109Z"
+                                    fill="url(#chart-gradient)"></path>
+                                <path
+                                    d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25"
+                                    stroke="#135bec" stroke-linecap="round" stroke-width="3"></path>
+                            </svg>
+                        </div>
+                        <div class="flex justify-between mt-4 px-2">
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Jan</span>
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Feb</span>
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Mar</span>
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Apr</span>
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">May</span>
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Jun</span>
+                        </div>
+                    </div>
+                    <!-- Grant List -->
+                    <div class="flex flex-col gap-4">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Matched Opportunities</h3>
+                            <div
+                                class="flex items-center gap-2 p-1 bg-gray-100 dark:bg-card-dark rounded-lg border border-gray-200 dark:border-gray-700">
+                                <button
+                                    class="px-3 py-1.5 bg-white dark:bg-gray-700 rounded shadow-sm text-sm font-medium text-gray-900 dark:text-white">All
+                                    Matches</button>
+                                <button
+                                    class="px-3 py-1.5 text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Government</button>
+                                <button
+                                    class="px-3 py-1.5 text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Private</button>
+                            </div>
+                        </div>
+                        <!-- Card 1 -->
+                        <div
+                            class="flex flex-col sm:flex-row gap-5 p-5 bg-card-light dark:bg-card-dark rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm hover:border-primary/50 transition-colors cursor-pointer group">
+                            <div class="flex-shrink-0">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center border border-blue-100 dark:border-blue-900/30">
+                                    <span class="material-symbols-outlined text-primary text-2xl">account_balance</span>
+                                </div>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex flex-wrap justify-between items-start gap-2 mb-1">
+                                    <h4
+                                        class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+                                        NSF Graduate Research Fellowship</h4>
+                                    <span
+                                        class="bg-primary/10 text-primary px-2.5 py-1 rounded text-xs font-bold whitespace-nowrap">$138,000
+                                        / 3 yrs</span>
+                                </div>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2">Supports
+                                    outstanding graduate students in NSF-supported science, technology, engineering, and
+                                    mathematics disciplines.</p>
+                                <div class="flex flex-col sm:flex-row sm:items-center gap-4 text-sm">
+                                    <div class="flex-1 flex flex-col gap-1.5">
+                                        <div class="flex justify-between items-center text-xs">
+                                            <span class="text-gray-500 font-medium">Match Confidence</span>
+                                            <span class="text-primary font-bold">94%</span>
+                                        </div>
+                                        <div
+                                            class="h-1.5 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-primary rounded-full w-[94%]"></div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="flex items-center gap-4 text-gray-500 dark:text-gray-400 text-xs sm:border-l sm:border-gray-200 dark:sm:border-gray-700 sm:pl-4">
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="material-symbols-outlined text-[16px]">calendar_month</span>
+                                            <span class="font-medium text-gray-700 dark:text-gray-300">Oct 22,
+                                                2023</span>
+                                        </div>
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="material-symbols-outlined text-[16px]">group</span>
+                                            <span>24 Applicants</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card 2 -->
+                        <div
+                            class="flex flex-col sm:flex-row gap-5 p-5 bg-card-light dark:bg-card-dark rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm hover:border-primary/50 transition-colors cursor-pointer group">
+                            <div class="flex-shrink-0">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-green-50 dark:bg-green-900/20 flex items-center justify-center border border-green-100 dark:border-green-900/30">
+                                    <span
+                                        class="material-symbols-outlined text-green-600 dark:text-green-400 text-2xl">energy_savings_leaf</span>
+                                </div>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex flex-wrap justify-between items-start gap-2 mb-1">
+                                    <h4
+                                        class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+                                        Department of Energy (DOE) Grant</h4>
+                                    <span
+                                        class="bg-primary/10 text-primary px-2.5 py-1 rounded text-xs font-bold whitespace-nowrap">$45,000
+                                        / 1 yr</span>
+                                </div>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2">Funding for
+                                    advanced research in quantum information science and ethical AI frameworks for
+                                    public infrastructure.</p>
+                                <div class="flex flex-col sm:flex-row sm:items-center gap-4 text-sm">
+                                    <div class="flex-1 flex flex-col gap-1.5">
+                                        <div class="flex justify-between items-center text-xs">
+                                            <span class="text-gray-500 font-medium">Match Confidence</span>
+                                            <span class="text-primary font-bold">88%</span>
+                                        </div>
+                                        <div
+                                            class="h-1.5 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-primary rounded-full w-[88%]"></div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="flex items-center gap-4 text-gray-500 dark:text-gray-400 text-xs sm:border-l sm:border-gray-200 dark:sm:border-gray-700 sm:pl-4">
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="material-symbols-outlined text-[16px]">calendar_month</span>
+                                            <span class="font-medium text-gray-700 dark:text-gray-300">Nov 01,
+                                                2023</span>
+                                        </div>
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="material-symbols-outlined text-[16px]">group</span>
+                                            <span>18 Applicants</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Card 3 -->
+                        <div
+                            class="flex flex-col sm:flex-row gap-5 p-5 bg-card-light dark:bg-card-dark rounded-xl border border-gray-200 dark:border-gray-800 shadow-sm hover:border-primary/50 transition-colors cursor-pointer group">
+                            <div class="flex-shrink-0">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center border border-purple-100 dark:border-purple-900/30">
+                                    <span
+                                        class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-2xl">science</span>
+                                </div>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex flex-wrap justify-between items-start gap-2 mb-1">
+                                    <h4
+                                        class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-primary transition-colors">
+                                        Google PhD Fellowship</h4>
+                                    <span
+                                        class="bg-primary/10 text-primary px-2.5 py-1 rounded text-xs font-bold whitespace-nowrap">$50,000
+                                        / yr</span>
+                                </div>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2">Recognizing
+                                    outstanding graduate students doing exceptional and innovative research in computer
+                                    science.</p>
+                                <div class="flex flex-col sm:flex-row sm:items-center gap-4 text-sm">
+                                    <div class="flex-1 flex flex-col gap-1.5">
+                                        <div class="flex justify-between items-center text-xs">
+                                            <span class="text-gray-500 font-medium">Match Confidence</span>
+                                            <span class="text-primary font-bold">82%</span>
+                                        </div>
+                                        <div
+                                            class="h-1.5 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                                            <div class="h-full bg-primary rounded-full w-[82%]"></div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="flex items-center gap-4 text-gray-500 dark:text-gray-400 text-xs sm:border-l sm:border-gray-200 dark:sm:border-gray-700 sm:pl-4">
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="material-symbols-outlined text-[16px]">calendar_month</span>
+                                            <span class="font-medium text-gray-700 dark:text-gray-300">Dec 12,
+                                                2023</span>
+                                        </div>
+                                        <div class="flex items-center gap-1.5">
+                                            <span class="material-symbols-outlined text-[16px]">group</span>
+                                            <span>156 Applicants</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            class="w-full py-3 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors border-t border-gray-200 dark:border-gray-800">
+                            View all 14 matches
+                        </button>
+                    </div>
+                </div>
+                <!-- Right Column: Sidebar -->
+                <div class="flex flex-col gap-6">
+                    <!-- Overall Score -->
+                    <div
+                        class="bg-card-light dark:bg-card-dark rounded-xl border border-gray-200 dark:border-gray-800 p-6 shadow-sm">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Overall Suitability</h3>
+                        <div class="flex flex-col items-center justify-center py-4">
+                            <div class="relative h-40 w-40">
+                                <svg class="h-full w-full -rotate-90 transform" viewbox="0 0 100 100">
+                                    <circle class="text-gray-100 dark:text-gray-700" cx="50" cy="50" fill="transparent"
+                                        r="40" stroke="currentColor" stroke-width="8"></circle>
+                                    <circle class="text-primary" cx="50" cy="50" fill="transparent" r="40"
+                                        stroke="currentColor" stroke-dasharray="251.2" stroke-dashoffset="32.6"
+                                        stroke-linecap="round" stroke-width="8"></circle>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <span class="text-3xl font-black text-gray-900 dark:text-white">87%</span>
+                                    <span class="text-xs font-medium text-gray-500 dark:text-gray-400">Excellent</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4 mt-2">
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-gray-500 dark:text-gray-400">Keyword Relevance</span>
+                                    <span class="text-gray-900 dark:text-white font-bold">95%</span>
+                                </div>
+                                <div class="h-1.5 w-full bg-gray-100 dark:bg-gray-700 rounded-full">
+                                    <div class="h-full bg-primary rounded-full w-[95%]"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-gray-500 dark:text-gray-400">Field Alignment</span>
+                                    <span class="text-gray-900 dark:text-white font-bold">82%</span>
+                                </div>
+                                <div class="h-1.5 w-full bg-gray-100 dark:bg-gray-700 rounded-full">
+                                    <div class="h-full bg-primary rounded-full w-[82%]"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-gray-500 dark:text-gray-400">Funding Cap Fit</span>
+                                    <span class="text-gray-900 dark:text-white font-bold">89%</span>
+                                </div>
+                                <div class="h-1.5 w-full bg-gray-100 dark:bg-gray-700 rounded-full">
+                                    <div class="h-full bg-primary rounded-full w-[89%]"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Methodology -->
+                    <div
+                        class="bg-card-light dark:bg-card-dark rounded-xl border border-gray-200 dark:border-gray-800 p-6 shadow-sm">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="material-symbols-outlined text-primary text-[20px]">psychology</span>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-white">
+                                Analysis Methodology</h3>
+                        </div>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mb-4">
+                            We analyzed 50+ semantic data points from your abstract. The system identified strong
+                            correlations with <span class="text-gray-900 dark:text-white font-medium">"Machine Learning
+                                Ethics"</span> and <span class="text-gray-900 dark:text-white font-medium">"Quantum
+                                Policy"</span> funding tracks.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span
+                                class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs font-medium text-gray-600 dark:text-gray-300">#Quantum</span>
+                            <span
+                                class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs font-medium text-gray-600 dark:text-gray-300">#Ethics</span>
+                            <span
+                                class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs font-medium text-gray-600 dark:text-gray-300">#AI_Safety</span>
+                            <span
+                                class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 rounded text-xs font-medium text-gray-600 dark:text-gray-300">#PublicPolicy</span>
+                        </div>
+                    </div>
+                    <!-- Call to Action -->
+                    <div
+                        class="relative bg-gradient-to-br from-primary to-blue-700 rounded-xl p-6 shadow-md overflow-hidden text-white">
+                        <!-- Decorative circles -->
+                        <div class="absolute -top-10 -right-10 h-32 w-32 bg-white/10 rounded-full blur-2xl"></div>
+                        <div class="absolute bottom-0 left-0 h-24 w-24 bg-white/5 rounded-full blur-xl"></div>
+                        <h3 class="text-lg font-bold mb-2 relative z-10">Improve your match score?</h3>
+                        <p class="text-blue-100 text-sm mb-4 relative z-10">Schedule a session with a mentor to refine
+                            your abstract keywords.</p>
+                        <button
+                            class="w-full py-2 bg-white text-primary font-bold text-sm rounded-lg hover:bg-gray-50 transition-colors relative z-10 shadow-sm">
+                            Find a Mentor
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

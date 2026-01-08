@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Settings - Dissertation Scaffold</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-[#111318] dark:text-white h-screen flex overflow-hidden">
+    <!-- Sidebar -->
+    <aside
+        class="w-72 bg-white dark:bg-[#1a2230] border-r border-[#f0f2f4] dark:border-[#2a3441] flex flex-col flex-shrink-0 z-20">
+        <div class="p-6 flex flex-col h-full justify-between">
+            <div class="flex flex-col gap-8">
+                <!-- Branding/User -->
+                <div class="flex gap-4 items-center">
+                    <div class="bg-center bg-no-repeat bg-cover rounded-full size-12 shadow-sm"
+                        data-alt="Profile picture of Dr. Researcher"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuABo9kXH3SbAFQ2t2KBv-CIwvZ8JZf2WPx6esBp9eHh4WEY-EAH7PEqY1x0ndoSISc6M4nv7M7IZQpjdUvz4uGfaMqJzMByOJCKVmMwsZpnqSbX0Ch6FY0MAaWojkSpJRwD2ZZ4J-HXB2URiKIkpgy0B8F3t7Jf5tVysa1RMjIRU240TSzruxJxy5NeCGN_urAfetTGqthibHhDM-0aDaA1r8W5H2T1qqVbW31LY6yrJBawnjl6t8P6TWTpgMlzX3zycwYkUHHDHj8");'>
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-base font-bold leading-tight dark:text-white">Dr. Researcher</h1>
+                        <p class="text-[#616f89] dark:text-gray-400 text-xs font-medium uppercase tracking-wider">
+                            Project: Quantum Ethics</p>
+                    </div>
+                </div>
+                <!-- Navigation -->
+                <nav class="flex flex-col gap-2">
+                    <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#616f89] dark:text-gray-400 hover:bg-background-light dark:hover:bg-[#2a3441] transition-colors group"
+                        href="index.html">
+                        <span
+                            class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">dashboard</span>
+                        <p
+                            class="text-sm font-medium leading-normal group-hover:text-[#111318] dark:group-hover:text-white">
+                            Dashboard</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#616f89] dark:text-gray-400 hover:bg-background-light dark:hover:bg-[#2a3441] transition-colors group"
+                        href="novelty.html">
+                        <span
+                            class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">lightbulb</span>
+                        <p
+                            class="text-sm font-medium leading-normal group-hover:text-[#111318] dark:group-hover:text-white">
+                            Novelty</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#616f89] dark:text-gray-400 hover:bg-background-light dark:hover:bg-[#2a3441] transition-colors group"
+                        href="literature.html">
+                        <span
+                            class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">menu_book</span>
+                        <p
+                            class="text-sm font-medium leading-normal group-hover:text-[#111318] dark:group-hover:text-white">
+                            Literature</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#616f89] dark:text-gray-400 hover:bg-background-light dark:hover:bg-[#2a3441] transition-colors group"
+                        href="grant-potential.html">
+                        <span
+                            class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">monetization_on</span>
+                        <p
+                            class="text-sm font-medium leading-normal group-hover:text-[#111318] dark:group-hover:text-white">
+                            Grants</p>
+                    </a>
+                </nav>
+            </div>
+            <div class="flex flex-col gap-2">
+                <a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary" href="#">
+                    <span class="material-symbols-outlined text-2xl fill-current">settings</span>
+                    <p class="text-sm font-bold leading-normal">Settings</p>
+                </a>
+            </div>
+        </div>
+    </aside>
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full min-w-0 overflow-hidden relative">
+        <!-- Top Navigation -->
+        <header
+            class="h-16 bg-white dark:bg-[#1a2230] border-b border-[#f0f2f4] dark:border-[#2a3441] flex items-center justify-between px-8 flex-shrink-0 z-10">
+            <div class="flex items-center gap-4">
+                <h2 class="text-[#111318] dark:text-white text-lg font-bold tracking-tight">Dissertation Scaffold</h2>
+                <div class="h-6 w-px bg-gray-200 dark:bg-gray-700"></div>
+                <!-- Breadcrumbs -->
+                <div class="flex items-center gap-2 text-sm text-[#616f89] dark:text-gray-400">
+                    <span>Account</span>
+                    <span class="material-symbols-outlined text-sm">chevron_right</span>
+                    <span class="text-[#111318] dark:text-white font-medium">Settings</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="flex items-center gap-4">
+                    <button class="relative p-2 text-[#616f89] hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">notifications</span>
+                        <span
+                            class="absolute top-1.5 right-1.5 size-2 bg-red-500 rounded-full border border-white"></span>
+                    </button>
+                    <div class="h-8 w-8 rounded-full bg-cover bg-center ring-2 ring-gray-100"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuABo9kXH3SbAFQ2t2KBv-CIwvZ8JZf2WPx6esBp9eHh4WEY-EAH7PEqY1x0ndoSISc6M4nv7M7IZQpjdUvz4uGfaMqJzMByOJCKVmMwsZpnqSbX0Ch6FY0MAaWojkSpJRwD2ZZ4J-HXB2URiKIkpgy0B8F3t7Jf5tVysa1RMjIRU240TSzruxJxy5NeCGN_urAfetTGqthibHhDM-0aDaA1r8W5H2T1qqVbW31LY6yrJBawnjl6t8P6TWTpgMlzX3zycwYkUHHDHj8');">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Settings Content -->
+        <div class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-6 md:p-10">
+            <div class="max-w-4xl mx-auto flex flex-col gap-8 pb-20">
+
+                <!-- Header -->
+                <div>
+                    <h1 class="text-3xl font-bold text-[#111318] dark:text-white mb-2">Settings</h1>
+                    <p class="text-[#616f89] dark:text-gray-400">Manage your profile, preferences, and workspace
+                        configuration.</p>
+                </div>
+
+                <!-- Tabs -->
+                <div class="border-b border-[#f0f2f4] dark:border-[#2a3441]">
+                    <nav class="-mb-px flex space-x-8">
+                        <a href="#"
+                            class="border-primary text-primary whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            General
+                        </a>
+                        <a href="#"
+                            class="border-transparent text-[#616f89] hover:text-[#111318] hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            Notifications
+                        </a>
+                        <a href="#"
+                            class="border-transparent text-[#616f89] hover:text-[#111318] hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            Integrations
+                        </a>
+                        <a href="#"
+                            class="border-transparent text-[#616f89] hover:text-[#111318] hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                            Billing
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Profile Section -->
+                <div
+                    class="bg-white dark:bg-[#1a2230] rounded-xl border border-[#f0f2f4] dark:border-[#2a3441] shadow-sm overflow-hidden">
+                    <div class="p-6 border-b border-[#f0f2f4] dark:border-[#2a3441]">
+                        <h3 class="text-lg font-bold text-[#111318] dark:text-white">Profile Information</h3>
+                        <p class="text-sm text-[#616f89] dark:text-gray-400 mt-1">Update your photo and personal
+                            details.</p>
+                    </div>
+                    <div class="p-6 space-y-6">
+                        <div class="flex items-center gap-6">
+                            <div class="h-20 w-20 rounded-full bg-cover bg-center"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuABo9kXH3SbAFQ2t2KBv-CIwvZ8JZf2WPx6esBp9eHh4WEY-EAH7PEqY1x0ndoSISc6M4nv7M7IZQpjdUvz4uGfaMqJzMByOJCKVmMwsZpnqSbX0Ch6FY0MAaWojkSpJRwD2ZZ4J-HXB2URiKIkpgy0B8F3t7Jf5tVysa1RMjIRU240TSzruxJxy5NeCGN_urAfetTGqthibHhDM-0aDaA1r8W5H2T1qqVbW31LY6yrJBawnjl6t8P6TWTpgMlzX3zycwYkUHHDHj8');">
+                            </div>
+                            <div>
+                                <button
+                                    class="bg-white dark:bg-[#2a3441] border border-[#f0f2f4] dark:border-[#384455] text-[#111318] dark:text-white font-medium px-4 py-2 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-[#323e4d] transition-colors">Change
+                                    Photo</button>
+                                <button
+                                    class="text-red-500 font-medium px-4 py-2 rounded-lg text-sm hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors ml-2">Remove</button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-[#111318] dark:text-white mb-2">First
+                                    Name</label>
+                                <input type="text" value="Dr. Researcher"
+                                    class="w-full rounded-lg border-[#dce0e5] dark:border-[#2a3441] bg-transparent text-[#111318] dark:text-white text-sm focus:ring-primary focus:border-primary">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-[#111318] dark:text-white mb-2">Last
+                                    Name</label>
+                                <input type="text" value="Person"
+                                    class="w-full rounded-lg border-[#dce0e5] dark:border-[#2a3441] bg-transparent text-[#111318] dark:text-white text-sm focus:ring-primary focus:border-primary">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-[#111318] dark:text-white mb-2">Academic
+                                    Title</label>
+                                <input type="text" value="Postdoctoral Fellow, Quantum Ethics"
+                                    class="w-full rounded-lg border-[#dce0e5] dark:border-[#2a3441] bg-transparent text-[#111318] dark:text-white text-sm focus:ring-primary focus:border-primary">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-[#111318] dark:text-white mb-2">Bio</label>
+                                <textarea rows="3"
+                                    class="w-full rounded-lg border-[#dce0e5] dark:border-[#2a3441] bg-transparent text-[#111318] dark:text-white text-sm focus:ring-primary focus:border-primary">Researching the intersection of quantum computing mechanics and ethical policy frameworks.</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preferences Section -->
+                <div
+                    class="bg-white dark:bg-[#1a2230] rounded-xl border border-[#f0f2f4] dark:border-[#2a3441] shadow-sm overflow-hidden">
+                    <div class="p-6 border-b border-[#f0f2f4] dark:border-[#2a3441]">
+                        <h3 class="text-lg font-bold text-[#111318] dark:text-white">Workspace Preferences</h3>
+                        <p class="text-sm text-[#616f89] dark:text-gray-400 mt-1">Customize your dissertation
+                            environment.</p>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-center justify-between py-3">
+                            <div class="flex flex-col">
+                                <span class="text-sm font-medium text-[#111318] dark:text-white">Dark Mode</span>
+                                <span class="text-xs text-[#616f89] dark:text-gray-400">Toggle system-wide dark
+                                    theme</span>
+                            </div>
+                            <button
+                                class="bg-primary relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                                role="switch" aria-checked="true">
+                                <span
+                                    class="translate-x-5 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+                            </button>
+                        </div>
+                        <div
+                            class="flex items-center justify-between py-3 border-t border-[#f0f2f4] dark:border-[#2a3441]">
+                            <div class="flex flex-col">
+                                <span class="text-sm font-medium text-[#111318] dark:text-white">Auto-Save</span>
+                                <span class="text-xs text-[#616f89] dark:text-gray-400">Automatically save changes every
+                                    5 minutes</span>
+                            </div>
+                            <button
+                                class="bg-primary relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                                role="switch" aria-checked="true">
+                                <span
+                                    class="translate-x-5 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+                            </button>
+                        </div>
+                        <div
+                            class="flex items-center justify-between py-3 border-t border-[#f0f2f4] dark:border-[#2a3441]">
+                            <div class="flex flex-col">
+                                <span class="text-sm font-medium text-[#111318] dark:text-white">Citation Style</span>
+                                <span class="text-xs text-[#616f89] dark:text-gray-400">Default style for new
+                                    bibliographies</span>
+                            </div>
+                            <select
+                                class="rounded-lg border-[#dce0e5] dark:border-[#2a3441] bg-transparent text-[#111318] dark:text-white text-sm focus:ring-primary focus:border-primary">
+                                <option>APA 7th Edition</option>
+                                <option>MLA 9th Edition</option>
+                                <option>Chicago 17th Edition</option>
+                                <option>Harvard</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Actions -->
+                <div class="flex justify-end gap-3">
+                    <button
+                        class="bg-white dark:bg-[#2a3441] border border-[#f0f2f4] dark:border-[#384455] text-[#111318] dark:text-white font-medium px-6 py-2.5 rounded-lg text-sm hover:bg-gray-50 dark:hover:bg-[#323e4d] transition-colors">Cancel</button>
+                    <button
+                        class="bg-primary hover:bg-blue-700 text-white font-medium px-6 py-2.5 rounded-lg text-sm transition-colors shadow-lg shadow-primary/25">Save
+                        Changes</button>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

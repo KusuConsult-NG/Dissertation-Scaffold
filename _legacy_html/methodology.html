@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Methodology Builder - Dissertation Scaffold</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13a4ec",
+                        "background-dark": "#0d1117",
+                        "surface-dark": "#161b22",
+                        "border-dark": "#30363d",
+                        "accent-green": "#2ea043",
+                        "accent-purple": "#a371f7",
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"],
+                        "mono": ["Space Mono", "monospace"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .mono-text {
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Timeline connector line */
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 20px;
+            width: 2px;
+            background-color: #30363d;
+            z-index: 0;
+        }
+    </style>
+</head>
+
+<body class="bg-background-dark text-slate-300 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="border-b border-border-dark bg-surface-dark sticky top-0 z-50">
+        <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a class="flex items-center gap-2 group" href="index.html">
+                    <div
+                        class="w-8 h-8 rounded bg-primary/20 flex items-center justify-center text-primary border border-primary/30 group-hover:bg-primary/30 transition-colors">
+                        <span class="material-symbols-outlined text-[20px]">science</span>
+                    </div>
+                    <span class="font-bold text-white text-lg tracking-tight">Dissertation Scaffold</span>
+                </a>
+                <span class="text-slate-600 text-2xl font-light">/</span>
+                <h1 class="text-white font-medium">Methodology Builder</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div
+                    class="hidden md:flex items-center text-xs font-mono text-slate-500 bg-border-dark/30 px-3 py-1.5 rounded-full border border-border-dark">
+                    <span class="w-2 h-2 rounded-full bg-accent-green mr-2 animate-pulse"></span>
+                    Auto-save: ON
+                </div>
+                <button
+                    class="px-4 py-2 text-sm font-medium bg-primary text-white rounded hover:bg-sky-400 transition-colors shadow-[0_0_15px_rgba(19,164,236,0.2)]">
+                    Export Logic
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="flex-1 max-w-[1600px] mx-auto w-full p-4 sm:p-6 lg:p-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Left Sidebar: Tools & Components -->
+        <aside class="hidden lg:flex flex-col gap-6 sticky top-24 h-[calc(100vh-8rem)]">
+            <!-- Progress -->
+            <div class="bg-surface-dark border border-border-dark rounded-lg p-5">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Completion Status</h3>
+                <div class="flex items-end justify-between mb-2">
+                    <span class="text-2xl font-bold text-white">45%</span>
+                    <span class="text-xs text-accent-green mb-1">On Track</span>
+                </div>
+                <div class="w-full bg-border-dark rounded-full h-1.5">
+                    <div class="bg-accent-green h-1.5 rounded-full" style="width: 45%"></div>
+                </div>
+            </div>
+            <!-- Toolbox -->
+            <div class="bg-surface-dark border border-border-dark rounded-lg flex-1 flex flex-col overflow-hidden">
+                <div class="p-4 border-b border-border-dark bg-surface-dark/50">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Method Components</h3>
+                </div>
+                <div class="overflow-y-auto p-2 space-y-2 flex-1 scrollbar-thin">
+                    <!-- Draggable Item -->
+                    <div
+                        class="group p-3 rounded bg-background-dark border border-border-dark hover:border-primary/50 cursor-grab active:cursor-grabbing transition-colors flex items-center gap-3">
+                        <span class="material-symbols-outlined text-slate-500 group-hover:text-primary">database</span>
+                        <div>
+                            <p class="text-sm font-medium text-slate-200">Data Collection</p>
+                            <p class="text-[10px] text-slate-500">Surveys, Interviews, API Scrapers</p>
+                        </div>
+                    </div>
+                    <div
+                        class="group p-3 rounded bg-background-dark border border-border-dark hover:border-primary/50 cursor-grab active:cursor-grabbing transition-colors flex items-center gap-3">
+                        <span class="material-symbols-outlined text-slate-500 group-hover:text-primary">analytics</span>
+                        <div>
+                            <p class="text-sm font-medium text-slate-200">Analysis Method</p>
+                            <p class="text-[10px] text-slate-500">Regression, Thematic, ANOVA</p>
+                        </div>
+                    </div>
+                    <div
+                        class="group p-3 rounded bg-background-dark border border-border-dark hover:border-primary/50 cursor-grab active:cursor-grabbing transition-colors flex items-center gap-3">
+                        <span class="material-symbols-outlined text-slate-500 group-hover:text-primary">security</span>
+                        <div>
+                            <p class="text-sm font-medium text-slate-200">Ethics Protocol</p>
+                            <p class="text-[10px] text-slate-500">IRB, Consent Forms, Anonymity</p>
+                        </div>
+                    </div>
+                    <div
+                        class="group p-3 rounded bg-background-dark border border-border-dark hover:border-primary/50 cursor-grab active:cursor-grabbing transition-colors flex items-center gap-3">
+                        <span
+                            class="material-symbols-outlined text-slate-500 group-hover:text-primary">filter_alt</span>
+                        <div>
+                            <p class="text-sm font-medium text-slate-200">Sampling Strategy</p>
+                            <p class="text-[10px] text-slate-500">Random, Stratified, Snowball</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- Center: Canvas / Flowchart Builder -->
+        <section class="col-span-1 lg:col-span-2 flex flex-col gap-6">
+            <!-- Controls -->
+            <div class="flex items-center justify-between">
+                <div class="flex gap-2">
+                    <button class="p-2 rounded hover:bg-surface-dark text-slate-400 hover:text-white transition-colors">
+                        <span class="material-symbols-outlined">undo</span>
+                    </button>
+                    <button class="p-2 rounded hover:bg-surface-dark text-slate-400 hover:text-white transition-colors">
+                        <span class="material-symbols-outlined">redo</span>
+                    </button>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button
+                        class="text-xs font-mono text-primary bg-primary/10 px-3 py-1.5 rounded border border-primary/20 hover:bg-primary/20 transition-colors">
+                        + Add Step
+                    </button>
+                    <div class="flex bg-surface-dark rounded border border-border-dark p-0.5">
+                        <button
+                            class="px-3 py-1 rounded text-xs font-medium bg-background-dark text-white shadow-sm">Visual</button>
+                        <button
+                            class="px-3 py-1 rounded text-xs font-medium text-slate-500 hover:text-slate-300">Text</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Flowchart Canvas Area -->
+            <div class="bg-surface-dark border border-border-dark rounded-xl min-h-[600px] relative overflow-hidden"
+                style="background-image: radial-gradient(#30363d 1px, transparent 1px); background-size: 24px 24px;">
+                <!-- Flowchart Node 1: Start -->
+                <div
+                    class="absolute top-10 left-1/2 -translate-x-1/2 w-64 bg-background-dark border border-border-dark rounded-lg shadow-xl p-4 z-10 hover:border-primary transition-colors">
+                    <div
+                        class="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-700 text-white text-[10px] uppercase font-bold px-2 py-0.5 rounded-full">
+                        Start</div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="font-bold text-white text-sm">Research Questions</h4>
+                        <button class="text-slate-500 hover:text-white"><span
+                                class="material-symbols-outlined text-sm">more_horiz</span></button>
+                    </div>
+                    <p class="text-xs text-slate-400 line-clamp-2">How does remote work impact employee retention in
+                        tech startups?</p>
+                    <!-- Connector Point -->
+                    <div
+                        class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-500 rounded-full border-2 border-background-dark">
+                    </div>
+                </div>
+                <!-- Connector Line (SVG) -->
+                <svg class="absolute inset-0 w-full h-full pointer-events-none">
+                    <path d="M 390 120 L 390 180" fill="none" stroke="#30363d" stroke-width="2"></path>
+                    <path d="M 390 180 L 250 220" fill="none" stroke="#30363d" stroke-width="2"></path>
+                    <path d="M 390 180 L 530 220" fill="none" stroke="#30363d" stroke-width="2"></path>
+                </svg>
+                <!-- Flowchart Node 2: Quant -->
+                <div
+                    class="absolute top-56 left-[20%] w-64 bg-background-dark border border-border-dark rounded-lg shadow-xl p-4 z-10 hover:border-primary transition-colors">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="material-symbols-outlined text-accent-purple text-sm">poll</span>
+                        <h4 class="font-bold text-white text-sm">Quantitative Survey</h4>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-3">N=500 tech workers, Likert scale analysis.</p>
+                    <div class="flex gap-2">
+                        <span
+                            class="text-[10px] bg-accent-purple/10 text-accent-purple px-1.5 py-0.5 rounded border border-accent-purple/20">SurveyMonkey</span>
+                        <span
+                            class="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded border border-slate-700">Pending
+                            IRB</span>
+                    </div>
+                    <!-- Connector Point -->
+                    <div
+                        class="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-500 rounded-full border-2 border-background-dark">
+                    </div>
+                </div>
+                <!-- Flowchart Node 3: Qual -->
+                <div
+                    class="absolute top-56 right-[20%] w-64 bg-background-dark border-2 border-primary rounded-lg shadow-xl shadow-primary/10 p-4 z-10">
+                    <div
+                        class="absolute -right-2 -top-2 w-5 h-5 bg-primary rounded-full flex items-center justify-center text-white">
+                        <span class="material-symbols-outlined text-xs">edit</span>
+                    </div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="material-symbols-outlined text-primary text-sm">record_voice_over</span>
+                        <h4 class="font-bold text-white text-sm">Qualitative Interviews</h4>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-3">Semi-structured, 30 min zoom calls with founders.</p>
+                    <div class="flex gap-2">
+                        <span
+                            class="text-[10px] bg-primary/10 text-primary px-1.5 py-0.5 rounded border border-primary/20">Zoom</span>
+                        <span
+                            class="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded border border-slate-700">Drafting</span>
+                    </div>
+                    <!-- Connector Point -->
+                    <div
+                        class="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-500 rounded-full border-2 border-background-dark transition-colors bg-primary border-primary">
+                    </div>
+                </div>
+                <!-- Floating Editor for Selected Node -->
+                <div
+                    class="absolute bottom-6 right-6 w-80 bg-surface-dark border border-border-dark rounded-lg shadow-2xl p-4 z-20 animate-in slide-in-from-bottom-5 fade-in">
+                    <div class="flex justify-between items-start mb-3">
+                        <h5 class="text-sm font-bold text-white">Edit Step: Qual Interviews</h5>
+                        <button class="text-slate-500 hover:text-white"><span
+                                class="material-symbols-outlined text-sm">close</span></button>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-500 mb-1">Method
+                                Description</label>
+                            <textarea
+                                class="w-full bg-background-dark border border-border-dark rounded p-2 text-xs text-slate-300 focus:border-primary outline-none resize-none h-20"
+                                placeholder="Describe the step...">Semi-structured, 30 min zoom calls with founders.</textarea>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase font-bold text-slate-500 mb-1">Tools
+                                Needed</label>
+                            <input
+                                class="w-full bg-background-dark border border-border-dark rounded p-2 text-xs text-slate-300 focus:border-primary outline-none"
+                                placeholder="e.g. SPSS, NVivo" type="text" value="Zoom, Otter.ai" />
+                        </div>
+                        <button
+                            class="w-full py-1.5 bg-primary text-white text-xs font-bold rounded hover:bg-sky-400">Save
+                            Changes</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Right Column: AI Critique & Checklist -->
+        <aside class="col-span-1 flex flex-col gap-6 h-[calc(100vh-8rem)] sticky top-24">
+            <!-- AI Feedback -->
+            <div class="bg-gradient-to-b from-surface-dark to-background-dark border border-border-dark rounded-lg p-5">
+                <div class="flex items-center gap-2 mb-4">
+                    <span class="material-symbols-outlined text-primary">auto_awesome</span>
+                    <h3 class="font-bold text-white text-sm">Methodology Critique</h3>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-primary/5 border-l-2 border-primary p-3 rounded-r">
+                        <p class="text-xs text-slate-300 leading-relaxed"><strong
+                                class="text-primary">Suggestion:</strong> Your sample size for the interviews (N=10)
+                            might be too small compared to your quantitative sample. Consider increasing to N=20 for
+                            better validity.</p>
+                        <div class="flex gap-2 mt-2">
+                            <button class="text-[10px] font-bold text-primary hover:underline">Accept</button>
+                            <button class="text-[10px] font-bold text-slate-500 hover:text-slate-300">Dismiss</button>
+                        </div>
+                    </div>
+                    <div class="bg-red-500/5 border-l-2 border-red-500 p-3 rounded-r">
+                        <p class="text-xs text-slate-300 leading-relaxed"><strong class="text-red-500">Gap
+                                Detected:</strong> You haven't linked your data analysis method for the qualitative
+                            section yet.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Steps Checklist -->
+            <div class="flex-1 bg-surface-dark border border-border-dark rounded-lg flex flex-col overflow-hidden">
+                <div class="p-4 border-b border-border-dark bg-surface-dark/50 flex justify-between items-center">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Required Sections</h3>
+                    <span class="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">3/7 Complete</span>
+                </div>
+                <div class="overflow-y-auto p-0 flex-1 scrollbar-thin">
+                    <button
+                        class="w-full flex items-center justify-between p-4 border-b border-border-dark/50 hover:bg-background-dark/50 transition-colors text-left group">
+                        <div>
+                            <h4 class="text-sm font-medium text-slate-400 line-through decoration-slate-600">Research
+                                Design</h4>
+                            <p class="text-[10px] text-slate-600">Defined as Mixed-Methods</p>
+                        </div>
+                        <span class="material-symbols-outlined text-accent-green text-sm">check_circle</span>
+                    </button>
+                    <button
+                        class="w-full flex items-center justify-between p-4 border-b border-border-dark/50 hover:bg-background-dark/50 transition-colors text-left group">
+                        <div>
+                            <h4 class="text-sm font-medium text-slate-400 line-through decoration-slate-600">Population
+                                &amp; Sample</h4>
+                            <p class="text-[10px] text-slate-600">Defining target demographics</p>
+                        </div>
+                        <span class="material-symbols-outlined text-accent-green text-sm">check_circle</span>
+                    </button>
+                    <button
+                        class="w-full flex items-center justify-between p-4 border-b border-border-dark/50 bg-primary/5 hover:bg-primary/10 transition-colors text-left group border-l-2 border-l-primary">
+                        <div>
+                            <h4 class="text-sm font-bold text-white">Data Collection Instruments</h4>
+                            <p class="text-[10px] text-slate-400 group-hover:text-primary transition-colors">Currently
+                                Editing</p>
+                        </div>
+                        <span class="material-symbols-outlined text-primary text-sm">edit</span>
+                    </button>
+                    <button
+                        class="w-full flex items-center justify-between p-4 border-b border-border-dark/50 hover:bg-background-dark/50 transition-colors text-left group">
+                        <div>
+                            <h4 class="text-sm font-medium text-slate-300">Data Analysis Procedures</h4>
+                            <p class="text-[10px] text-slate-500">Not started</p>
+                        </div>
+                        <span
+                            class="material-symbols-outlined text-slate-600 text-sm group-hover:text-border-dark">radio_button_unchecked</span>
+                    </button>
+                    <button
+                        class="w-full flex items-center justify-between p-4 border-b border-border-dark/50 hover:bg-background-dark/50 transition-colors text-left group">
+                        <div>
+                            <h4 class="text-sm font-medium text-slate-300">Ethical Considerations</h4>
+                            <p class="text-[10px] text-slate-500">Not started</p>
+                        </div>
+                        <span
+                            class="material-symbols-outlined text-slate-600 text-sm group-hover:text-border-dark">radio_button_unchecked</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+    </main>
+</body>
+
+</html>

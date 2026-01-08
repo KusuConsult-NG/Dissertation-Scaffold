@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Literature Review - Dissertation Scaffold</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-[#111318] dark:text-white h-screen flex overflow-hidden">
+    <!-- Sidebar -->
+    <aside
+        class="w-72 bg-white dark:bg-[#1a2230] border-r border-[#f0f2f4] dark:border-[#2a3441] flex flex-col flex-shrink-0 z-20">
+        <div class="p-6 flex flex-col h-full justify-between">
+            <div class="flex flex-col gap-8">
+                <!-- Branding/User -->
+                <div class="flex gap-4 items-center">
+                    <div class="bg-center bg-no-repeat bg-cover rounded-full size-12 shadow-sm"
+                        data-alt="Profile picture of Dr. Researcher"
+                        style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuABo9kXH3SbAFQ2t2KBv-CIwvZ8JZf2WPx6esBp9eHh4WEY-EAH7PEqY1x0ndoSISc6M4nv7M7IZQpjdUvz4uGfaMqJzMByOJCKVmMwsZpnqSbX0Ch6FY0MAaWojkSpJRwD2ZZ4J-HXB2URiKIkpgy0B8F3t7Jf5tVysa1RMjIRU240TSzruxJxy5NeCGN_urAfetTGqthibHhDM-0aDaA1r8W5H2T1qqVbW31LY6yrJBawnjl6t8P6TWTpgMlzX3zycwYkUHHDHj8");'>
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-base font-bold leading-tight dark:text-white">Dr. Researcher</h1>
+                        <p class="text-[#616f89] dark:text-gray-400 text-xs font-medium uppercase tracking-wider">
+                            Project: Quantum Ethics</p>
+                    </div>
+                </div>
+                <!-- Navigation -->
+                <nav class="flex flex-col gap-2">
+                    <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#616f89] dark:text-gray-400 hover:bg-background-light dark:hover:bg-[#2a3441] transition-colors group"
+                        href="index.html">
+                        <span
+                            class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">dashboard</span>
+                        <p
+                            class="text-sm font-medium leading-normal group-hover:text-[#111318] dark:group-hover:text-white">
+                            Dashboard</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#616f89] dark:text-gray-400 hover:bg-background-light dark:hover:bg-[#2a3441] transition-colors group"
+                        href="novelty.html">
+                        <span
+                            class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">lightbulb</span>
+                        <p
+                            class="text-sm font-medium leading-normal group-hover:text-[#111318] dark:group-hover:text-white">
+                            Novelty</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary" href="#">
+                        <span class="material-symbols-outlined text-2xl fill-current">menu_book</span>
+                        <p class="text-sm font-bold leading-normal">Literature</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#616f89] dark:text-gray-400 hover:bg-background-light dark:hover:bg-[#2a3441] transition-colors group"
+                        href="grant-potential.html">
+                        <span
+                            class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">monetization_on</span>
+                        <p
+                            class="text-sm font-medium leading-normal group-hover:text-[#111318] dark:group-hover:text-white">
+                            Grants</p>
+                    </a>
+                </nav>
+            </div>
+            <div class="flex flex-col gap-2">
+                <a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#616f89] dark:text-gray-400 hover:bg-background-light dark:hover:bg-[#2a3441] transition-colors group"
+                    href="settings.html">
+                    <span
+                        class="material-symbols-outlined text-2xl group-hover:text-primary transition-colors">settings</span>
+                    <p
+                        class="text-sm font-medium leading-normal group-hover:text-[#111318] dark:group-hover:text-white">
+                        Settings</p>
+                </a>
+            </div>
+        </div>
+    </aside>
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full min-w-0 overflow-hidden relative">
+        <!-- Top Navigation -->
+        <header
+            class="h-16 bg-white dark:bg-[#1a2230] border-b border-[#f0f2f4] dark:border-[#2a3441] flex items-center justify-between px-8 flex-shrink-0 z-10">
+            <div class="flex items-center gap-4">
+                <h2 class="text-[#111318] dark:text-white text-lg font-bold tracking-tight">Dissertation Scaffold</h2>
+                <div class="h-6 w-px bg-gray-200 dark:bg-gray-700"></div>
+                <!-- Breadcrumbs -->
+                <div class="flex items-center gap-2 text-sm text-[#616f89] dark:text-gray-400">
+                    <span>Research</span>
+                    <span class="material-symbols-outlined text-sm">chevron_right</span>
+                    <span class="text-[#111318] dark:text-white font-medium">Literature Review</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-6">
+                <!-- Search -->
+                <div class="relative hidden md:block">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-[#616f89]">
+                        <span class="material-symbols-outlined text-[20px]">search</span>
+                    </span>
+                    <input
+                        class="bg-background-light dark:bg-[#101622] text-sm rounded-lg pl-10 pr-4 py-2 w-64 border-none focus:ring-2 focus:ring-primary/50 text-[#111318] dark:text-white placeholder-[#616f89]"
+                        placeholder="Search sources by title, author..." type="text" />
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="relative p-2 text-[#616f89] hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined">notifications</span>
+                        <span
+                            class="absolute top-1.5 right-1.5 size-2 bg-red-500 rounded-full border border-white"></span>
+                    </button>
+                    <div class="h-8 w-8 rounded-full bg-cover bg-center ring-2 ring-gray-100"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuABo9kXH3SbAFQ2t2KBv-CIwvZ8JZf2WPx6esBp9eHh4WEY-EAH7PEqY1x0ndoSISc6M4nv7M7IZQpjdUvz4uGfaMqJzMByOJCKVmMwsZpnqSbX0Ch6FY0MAaWojkSpJRwD2ZZ4J-HXB2URiKIkpgy0B8F3t7Jf5tVysa1RMjIRU240TSzruxJxy5NeCGN_urAfetTGqthibHhDM-0aDaA1r8W5H2T1qqVbW31LY6yrJBawnjl6t8P6TWTpgMlzX3zycwYkUHHDHj8');">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Literature Content -->
+        <div class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-6 md:p-10">
+            <div class="max-w-6xl mx-auto flex flex-col gap-8 pb-20">
+                <!-- Header -->
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold text-[#111318] dark:text-white mb-2">Literature Review</h1>
+                        <p class="text-[#616f89] dark:text-gray-400">Organize your bibliography, reading lists, and
+                            citation notes.</p>
+                    </div>
+                    <button
+                        class="bg-primary hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-lg text-sm transition-colors shadow-lg shadow-primary/25 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[20px]">add</span>
+                        Add Source
+                    </button>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div
+                        class="bg-white dark:bg-[#1a2230] p-4 rounded-xl shadow-sm border border-[#f0f2f4] dark:border-[#2a3441]">
+                        <p class="text-[#616f89] dark:text-gray-400 text-xs font-semibold uppercase mb-1">Total Sources
+                        </p>
+                        <span class="text-2xl font-bold text-[#111318] dark:text-white">142</span>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-[#1a2230] p-4 rounded-xl shadow-sm border border-[#f0f2f4] dark:border-[#2a3441]">
+                        <p class="text-[#616f89] dark:text-gray-400 text-xs font-semibold uppercase mb-1">To Read</p>
+                        <span class="text-2xl font-bold text-orange-500">24</span>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-[#1a2230] p-4 rounded-xl shadow-sm border border-[#f0f2f4] dark:border-[#2a3441]">
+                        <p class="text-[#616f89] dark:text-gray-400 text-xs font-semibold uppercase mb-1">Annotated</p>
+                        <span class="text-2xl font-bold text-green-500">85</span>
+                    </div>
+                    <div
+                        class="bg-white dark:bg-[#1a2230] p-4 rounded-xl shadow-sm border border-[#f0f2f4] dark:border-[#2a3441]">
+                        <p class="text-[#616f89] dark:text-gray-400 text-xs font-semibold uppercase mb-1">Citations Used
+                        </p>
+                        <span class="text-2xl font-bold text-primary">63</span>
+                    </div>
+                </div>
+
+                <!-- Review List -->
+                <div
+                    class="bg-white dark:bg-[#1a2230] rounded-xl border border-[#f0f2f4] dark:border-[#2a3441] shadow-sm overflow-hidden">
+                    <div
+                        class="p-5 border-b border-[#f0f2f4] dark:border-[#2a3441] flex flex-wrap gap-4 justify-between items-center">
+                        <div class="flex gap-2">
+                            <button
+                                class="px-3 py-1.5 rounded-lg bg-background-light dark:bg-[#101622] text-sm font-medium text-[#111318] dark:text-white">All
+                                Sources</button>
+                            <button
+                                class="px-3 py-1.5 rounded-lg text-sm font-medium text-[#616f89] hover:bg-background-light dark:hover:bg-[#101622] transition-colors">Reading
+                                List</button>
+                            <button
+                                class="px-3 py-1.5 rounded-lg text-sm font-medium text-[#616f89] hover:bg-background-light dark:hover:bg-[#101622] transition-colors">Archived</button>
+                        </div>
+                        <div class="flex items-center gap-2 text-sm text-[#616f89]">
+                            <span class="material-symbols-outlined text-[18px]">sort</span>
+                            <span>Sort by: Date Added</span>
+                        </div>
+                    </div>
+                    <div class="divide-y divide-[#f0f2f4] dark:divide-[#2a3441]">
+                        <!-- Item 1 -->
+                        <div
+                            class="p-5 hover:bg-background-light/50 dark:hover:bg-[#101622]/50 transition-colors group">
+                            <div class="flex justify-between items-start gap-4">
+                                <div class="flex flex-col gap-1.5">
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">Journal
+                                            Article</span>
+                                        <span class="text-[#616f89] dark:text-gray-400 text-xs">2023 • Nature Machine
+                                            Intelligence</span>
+                                    </div>
+                                    <h3
+                                        class="text-base font-bold text-[#111318] dark:text-white group-hover:text-primary transition-colors cursor-pointer">
+                                        Ethical Guidelines for Quantum Machine Learning Algorithms
+                                    </h3>
+                                    <p class="text-sm text-[#616f89] dark:text-gray-400">Smith, J., & Doe, A.</p>
+                                    <div class="flex gap-2 mt-2">
+                                        <span
+                                            class="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-2 py-1 rounded">#QuantumEthics</span>
+                                        <span
+                                            class="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-2 py-1 rounded">#Policy</span>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button class="p-2 text-[#616f89] hover:text-primary transition-colors"
+                                        title="Edit">
+                                        <span class="material-symbols-outlined text-[20px]">edit</span>
+                                    </button>
+                                    <button class="p-2 text-[#616f89] hover:text-green-600 transition-colors"
+                                        title="Mark as Read">
+                                        <span class="material-symbols-outlined text-[20px]">check_circle</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Item 2 -->
+                        <div
+                            class="p-5 hover:bg-background-light/50 dark:hover:bg-[#101622]/50 transition-colors group">
+                            <div class="flex justify-between items-start gap-4">
+                                <div class="flex flex-col gap-1.5">
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">Conference
+                                            Paper</span>
+                                        <span class="text-[#616f89] dark:text-gray-400 text-xs">2022 • IEEE Quantum
+                                            Week</span>
+                                    </div>
+                                    <h3
+                                        class="text-base font-bold text-[#111318] dark:text-white group-hover:text-primary transition-colors cursor-pointer">
+                                        Benchmarking Fairness in Superposition States
+                                    </h3>
+                                    <p class="text-sm text-[#616f89] dark:text-gray-400">Lee, K., Chen, Y., & Patel, R.
+                                    </p>
+                                    <div class="flex gap-2 mt-2">
+                                        <span
+                                            class="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-2 py-1 rounded">#Technical</span>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button class="p-2 text-[#616f89] hover:text-primary transition-colors"
+                                        title="Edit">
+                                        <span class="material-symbols-outlined text-[20px]">edit</span>
+                                    </button>
+                                    <button class="p-2 text-[#616f89] hover:text-green-600 transition-colors"
+                                        title="Mark as Read">
+                                        <span class="material-symbols-outlined text-[20px]">check_circle</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Item 3 -->
+                        <div
+                            class="p-5 hover:bg-background-light/50 dark:hover:bg-[#101622]/50 transition-colors group">
+                            <div class="flex justify-between items-start gap-4">
+                                <div class="flex flex-col gap-1.5">
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wide">Book
+                                            Chapter</span>
+                                        <span class="text-[#616f89] dark:text-gray-400 text-xs">2021 • Oxford University
+                                            Press</span>
+                                    </div>
+                                    <h3
+                                        class="text-base font-bold text-[#111318] dark:text-white group-hover:text-primary transition-colors cursor-pointer">
+                                        Foundations of Digital Ethics: From Binary to Qubit
+                                    </h3>
+                                    <p class="text-sm text-[#616f89] dark:text-gray-400">Henderson, M. (Ed.)</p>
+                                    <div class="flex gap-2 mt-2">
+                                        <span
+                                            class="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-2 py-1 rounded">#Theory</span>
+                                        <span
+                                            class="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-2 py-1 rounded">#Philosophy</span>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button class="p-2 text-[#616f89] hover:text-primary transition-colors"
+                                        title="Edit">
+                                        <span class="material-symbols-outlined text-[20px]">edit</span>
+                                    </button>
+                                    <button class="p-2 text-[#616f89] hover:text-green-600 transition-colors"
+                                        title="Mark as Read">
+                                        <span class="material-symbols-outlined text-[20px]">check_circle</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="p-4 bg-background-light dark:bg-[#101622] border-t border-[#f0f2f4] dark:border-[#2a3441] text-center">
+                        <button class="text-sm text-[#616f89] font-medium hover:text-primary transition-colors">Load
+                            More Sources</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
