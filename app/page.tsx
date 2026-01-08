@@ -274,7 +274,7 @@ export default function LandingPage() {
                 </div>
             </header>
             {/* Stats Section */}
-            <section className="border-y border-slate-200 dark:border-border-dark bg-white dark:bg-[#0d121c]">
+            <section className="border-y border-slate-200 dark:border-border-dark bg-white dark:bg-[#1a2230]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-slate-100 dark:divide-slate-800/50">
                         <div className="flex flex-col gap-1">
@@ -389,7 +389,7 @@ export default function LandingPage() {
                 </div>
             </section>
             {/* Testimonial Section (Split layout variant) */}
-            <section className="py-24 bg-white dark:bg-[#0d121c]">
+            <section className="py-24 bg-white dark:bg-[#1a2230]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <div className="relative h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl">
