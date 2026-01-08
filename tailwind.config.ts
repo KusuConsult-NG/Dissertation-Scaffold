@@ -13,9 +13,10 @@ const config: Config = {
                 primary: "#135bec",
                 "primary-hover": "#3b82f6",
                 "background-light": "#f6f6f8",
-                "background-dark": "#101622",
+                "background-dark": "#0d1117", // GitHub Dim
+                "surface-dark": "#161b22",     // GitHub Dim Panel
                 "card-dark": "#161b26",
-                "border-dark": "#282e39",
+                "border-dark": "#30363d",      // GitHub Dim Border
                 "text-main": "#111318",
                 "text-secondary": "#616f89",
             },

@@ -98,26 +98,26 @@ export default function MethodologyPage() {
                 {/* Left Sidebar: Tools & Components */}
                 <aside className="hidden lg:flex flex-col gap-6 sticky top-6 h-[calc(100vh-8rem)]">
                     {/* Progress */}
-                    <div className="bg-surface-dark bg-[#161b22] border border-border-dark border-[#30363d] rounded-lg p-5">
+                    <div className="bg-surface-dark border border-border-dark rounded-lg p-5">
                         <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
                             Completion Status
                         </h3>
                         <div className="flex items-end justify-between mb-2">
                             <span className="text-2xl font-bold text-white">45%</span>
-                            <span className="text-xs text-accent-green text-[#2ea043] mb-1">
+                            <span className="text-xs text-accent-green mb-1">
                                 On Track
                             </span>
                         </div>
-                        <div className="w-full bg-border-dark bg-[#30363d] rounded-full h-1.5">
+                        <div className="w-full bg-border-dark rounded-full h-1.5">
                             <div
-                                className="bg-accent-green bg-[#2ea043] h-1.5 rounded-full"
+                                className="bg-accent-green h-1.5 rounded-full"
                                 style={{ width: "45%" }}
                             ></div>
                         </div>
                     </div>
                     {/* Toolbox */}
-                    <div className="bg-surface-dark bg-[#161b22] border border-border-dark border-[#30363d] rounded-lg flex-1 flex flex-col overflow-hidden">
-                        <div className="p-4 border-b border-border-dark border-[#30363d] bg-surface-dark/50 bg-[#161b22]/50">
+                    <div className="bg-surface-dark border border-border-dark rounded-lg flex-1 flex flex-col overflow-hidden">
+                        <div className="p-4 border-b border-border-dark bg-surface-dark/50">
                             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
                                 Method Components
                             </h3>
@@ -148,7 +148,7 @@ export default function MethodologyPage() {
                             ].map((item, i) => (
                                 <div
                                     key={i}
-                                    className="group p-3 rounded bg-background-dark bg-[#0d1117] border border-border-dark border-[#30363d] hover:border-primary/50 cursor-grab active:cursor-grabbing transition-colors flex items-center gap-3"
+                                    className="group p-3 rounded bg-background-dark border border-border-dark hover:border-primary/50 cursor-grab active:cursor-grabbing transition-colors flex items-center gap-3"
                                 >
                                     <span className="text-slate-500 group-hover:text-primary">
                                         {item.icon}
@@ -170,10 +170,10 @@ export default function MethodologyPage() {
                     {/* Controls */}
                     <div className="flex items-center justify-between">
                         <div className="flex gap-2">
-                            <button className="p-2 rounded hover:bg-surface-dark hover:bg-[#161b22] text-slate-400 hover:text-white transition-colors">
+                            <button className="p-2 rounded hover:bg-surface-dark text-slate-400 hover:text-white transition-colors">
                                 <Undo className="w-5 h-5" />
                             </button>
-                            <button className="p-2 rounded hover:bg-surface-dark hover:bg-[#161b22] text-slate-400 hover:text-white transition-colors">
+                            <button className="p-2 rounded hover:bg-surface-dark text-slate-400 hover:text-white transition-colors">
                                 <Redo className="w-5 h-5" />
                             </button>
                         </div>
@@ -184,8 +184,8 @@ export default function MethodologyPage() {
                             >
                                 <Plus className="w-3 h-3" /> Add Step
                             </button>
-                            <div className="flex bg-surface-dark bg-[#161b22] rounded border border-border-dark border-[#30363d] p-0.5">
-                                <button className="px-3 py-1 rounded text-xs font-medium bg-background-dark bg-[#0d1117] text-white shadow-sm">
+                            <div className="flex bg-surface-dark rounded border border-border-dark p-0.5">
+                                <button className="px-3 py-1 rounded text-xs font-medium bg-background-dark text-white shadow-sm">
                                     Visual
                                 </button>
                                 <button className="px-3 py-1 rounded text-xs font-medium text-slate-500 hover:text-slate-300">
@@ -196,7 +196,7 @@ export default function MethodologyPage() {
                     </div>
                     {/* Flowchart Canvas Area */}
                     <div
-                        className="bg-surface-dark bg-[#161b22] border border-border-dark border-[#30363d] rounded-xl min-h-[600px] relative overflow-hidden"
+                        className="bg-surface-dark border border-border-dark rounded-xl min-h-[600px] relative overflow-hidden"
                         style={{
                             backgroundImage: "radial-gradient(#30363d 1px, transparent 1px)",
                             backgroundSize: "24px 24px",
@@ -238,9 +238,9 @@ export default function MethodologyPage() {
                         {steps.map((step) => (
                             <div
                                 key={step.id}
-                                className={`absolute ${step.position} w-64 bg-background-dark bg-[#0d1117] border rounded-lg shadow-xl p-4 z-10 transition-all cursor-pointer ${selectedStepId === step.id
+                                className={`absolute ${step.position} w-64 bg-background-dark border rounded-lg shadow-xl p-4 z-10 transition-all cursor-pointer ${selectedStepId === step.id
                                     ? "border-primary ring-1 ring-primary"
-                                    : "border-border-dark border-[#30363d] hover:border-primary/50"
+                                    : "border-border-dark hover:border-primary/50"
                                     }`}
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -288,17 +288,17 @@ export default function MethodologyPage() {
 
                                 {/* Connector Points */}
                                 {step.type === "start" && (
-                                    <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-500 rounded-full border-2 border-background-dark border-[#0d1117]"></div>
+                                    <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-500 rounded-full border-2 border-background-dark"></div>
                                 )}
                                 {step.type !== "start" && (
-                                    <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-500 rounded-full border-2 border-background-dark border-[#0d1117]"></div>
+                                    <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-500 rounded-full border-2 border-background-dark"></div>
                                 )}
                             </div>
                         ))}
 
                         {/* Floating Editor */}
                         {selectedStep && (
-                            <div className="absolute bottom-6 right-6 w-80 bg-surface-dark bg-[#161b22] border border-border-dark border-[#30363d] rounded-lg shadow-2xl p-4 z-20 animate-in slide-in-from-bottom-5 fade-in">
+                            <div className="absolute bottom-6 right-6 w-80 bg-surface-dark border border-border-dark rounded-lg shadow-2xl p-4 z-20 animate-in slide-in-from-bottom-5 fade-in">
                                 <div className="flex justify-between items-start mb-3">
                                     <h5 className="text-sm font-bold text-white">
                                         Edit: {selectedStep.title}
@@ -316,7 +316,7 @@ export default function MethodologyPage() {
                                             Title
                                         </label>
                                         <input
-                                            className="w-full bg-background-dark bg-[#0d1117] border border-border-dark border-[#30363d] rounded p-2 text-xs text-slate-300 focus:border-primary outline-none"
+                                            className="w-full bg-background-dark border border-border-dark rounded p-2 text-xs text-slate-300 focus:border-primary outline-none"
                                             value={selectedStep.title}
                                             onChange={(e) =>
                                                 handleUpdateStep(selectedStep.id, {
@@ -330,7 +330,7 @@ export default function MethodologyPage() {
                                             Description
                                         </label>
                                         <textarea
-                                            className="w-full bg-background-dark bg-[#0d1117] border border-border-dark border-[#30363d] rounded p-2 text-xs text-slate-300 focus:border-primary outline-none resize-none h-20"
+                                            className="w-full bg-background-dark border border-border-dark rounded p-2 text-xs text-slate-300 focus:border-primary outline-none resize-none h-20"
                                             value={selectedStep.desc}
                                             onChange={(e) =>
                                                 handleUpdateStep(selectedStep.id, {
@@ -351,7 +351,7 @@ export default function MethodologyPage() {
                 {/* Right Column: AI Critique & Checklist */}
                 <aside className="col-span-1 flex flex-col gap-6 h-[calc(100vh-8rem)] sticky top-6">
                     {/* AI Feedback */}
-                    <div className="bg-gradient-to-b from-surface-dark from-[#161b22] to-background-dark to-[#0d1117] border border-border-dark border-[#30363d] rounded-lg p-5">
+                    <div className="bg-gradient-to-b from-surface-dark to-background-dark border border-border-dark rounded-lg p-5">
                         <div className="flex items-center gap-2 mb-4">
                             <Sparkles className="w-5 h-5 text-primary" />
                             <h3 className="font-bold text-white text-sm">
@@ -384,8 +384,8 @@ export default function MethodologyPage() {
                         </div>
                     </div>
                     {/* Steps Checklist */}
-                    <div className="flex-1 bg-surface-dark bg-[#161b22] border border-border-dark border-[#30363d] rounded-lg flex flex-col overflow-hidden">
-                        <div className="p-4 border-b border-border-dark border-[#30363d] bg-surface-dark/50 bg-[#161b22]/50 flex justify-between items-center">
+                    <div className="flex-1 bg-surface-dark border border-border-dark rounded-lg flex flex-col overflow-hidden">
+                        <div className="p-4 border-b border-border-dark bg-surface-dark/50 flex justify-between items-center">
                             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
                                 Required Sections
                             </h3>
@@ -395,7 +395,7 @@ export default function MethodologyPage() {
                         </div>
                         <div className="overflow-y-auto p-0 flex-1 scrollbar-thin">
                             {/* Check Item */}
-                            <button className="w-full flex items-center justify-between p-4 border-b border-border-dark/50 border-[#30363d]/50 hover:bg-background-dark/50 hover:bg-[#0d1117]/50 transition-colors text-left group">
+                            <button className="w-full flex items-center justify-between p-4 border-b border-border-dark/50 hover:bg-background-dark/50 transition-colors text-left group">
                                 <div>
                                     <h4 className="text-sm font-medium text-slate-400 line-through decoration-slate-600">
                                         Research Design
@@ -404,10 +404,10 @@ export default function MethodologyPage() {
                                         Defined as Mixed-Methods
                                     </p>
                                 </div>
-                                <CheckCircle className="w-4 h-4 text-[#2ea043]" />
+                                <CheckCircle className="w-4 h-4" />
                             </button>
                             {/* Check Item */}
-                            <button className="w-full flex items-center justify-between p-4 border-b border-border-dark/50 border-[#30363d]/50 bg-primary/5 hover:bg-primary/10 transition-colors text-left group border-l-2 border-l-primary">
+                            <button className="w-full flex items-center justify-between p-4 border-b border-border-dark/50 bg-primary/5 hover:bg-primary/10 transition-colors text-left group border-l-2 border-l-primary">
                                 <div>
                                     <h4 className="text-sm font-bold text-white">
                                         Data Collection Instruments
