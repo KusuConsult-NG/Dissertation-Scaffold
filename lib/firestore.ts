@@ -21,6 +21,11 @@ export interface User {
     title: string;
     plan: string;
     createdAt?: any;
+    state?: string;
+    lga?: string;
+    institution?: string;
+    researchLevel?: string;
+    researchArea?: string;
 }
 
 const USERS_COLLECTION = "users";

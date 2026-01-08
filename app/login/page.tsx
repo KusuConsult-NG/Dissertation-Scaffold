@@ -112,7 +112,7 @@ export default function LoginPage() {
                     <div className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
                         Don't have an account?{" "}
                         <a
-                            href="#"
+                            href="/signup"
                             className="text-primary font-medium hover:underline"
                         >
                             Start Free Trial
