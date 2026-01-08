@@ -69,11 +69,14 @@ export default function LandingPage() {
                         </div>
                         {/* CTA */}
                         <div className="flex items-center gap-3">
-                            <button className="hidden sm:flex h-9 px-4 items-center justify-center rounded-lg border border-gray-200 -border-dark bg-white -card-dark text-sm font-medium text-slate-900 -white hover:bg-gray-50 :bg-gray-800 transition-colors">
-                                Log In
-                            </button>
                             <Link
-                                href="/dashboard"
+                                href="/login"
+                                className="hidden sm:flex h-9 px-4 items-center justify-center rounded-lg border border-gray-200 -border-dark bg-white -card-dark text-sm font-medium text-slate-900 -white hover:bg-gray-50 :bg-gray-800 transition-colors"
+                            >
+                                Log In
+                            </Link>
+                            <Link
+                                href="/signup"
                                 className="h-9 px-4 flex items-center justify-center rounded-lg bg-primary hover:bg-primary-hover text-sm font-bold text-white shadow-lg shadow-primary/25 transition-all"
                             >
                                 Get Started
@@ -116,7 +119,7 @@ export default function LandingPage() {
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
                                 <Link
-                                    href="/dashboard"
+                                    href="/signup"
                                     className="h-12 px-8 rounded-lg bg-primary hover:bg-primary-hover text-white font-semibold text-base shadow-lg shadow-primary/25 transition-all flex items-center justify-center gap-2"
                                 >
                                     <span>Start Free Trial</span>
