@@ -3,9 +3,15 @@
 import React, { useState } from "react";
 import DashboardHeader from "../components/DashboardHeader";
 import { Check, Shield } from "lucide-react";
-import { PaystackButton } from "react-paystack";
+import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import { useSession } from "next-auth/react";
+
+// Dynamically import PaystackButton to avoid SSR issues
+const PaystackButton = dynamic(
+    () => import("react-paystack").then((mod) => mod.PaystackButton),
+    { ssr: false }
+);
 
 const plans = [
     {
@@ -136,8 +142,8 @@ export default function PricingPage() {
                                 <div
                                     key={plan.name}
                                     className={`relative rounded-2xl bg-white dark:bg-card-dark border ${plan.recommended
-                                            ? "border-primary shadow-xl shadow-primary/10 ring-2 ring-primary ring-opacity-50"
-                                            : "border-slate-200 dark:border-gray-800"
+                                        ? "border-primary shadow-xl shadow-primary/10 ring-2 ring-primary ring-opacity-50"
+                                        : "border-slate-200 dark:border-gray-800"
                                         } p-8 flex flex-col`}
                                 >
                                     {plan.recommended && (

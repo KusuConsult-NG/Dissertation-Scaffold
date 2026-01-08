@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth";
 import { updateUser } from "@/lib/db";
 
 export async function POST(req: Request) {
@@ -43,7 +43,7 @@ export async function POST(req: Request) {
         console.log(`[Payment] Verified reference ${reference} for plan ${plan}. Updating user ${session.user.email}.`);
 
         // Update user plan in DB
-        const updatedUser = updateUser(session.user.email, {
+        const updatedUser = await updateUser(session.user.email, {
             plan: plan.toLowerCase(), // 'pro', 'enterprise'
         });
 

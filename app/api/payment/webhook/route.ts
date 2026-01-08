@@ -83,7 +83,7 @@ async function handleChargeSuccess(data: any) {
 
         // Find user by email from customer data
         const userEmail = customer.email;
-        const user = getUser(userEmail);
+        const user = await getUser(userEmail);
 
         if (!user) {
             console.error(`[Webhook] User not found: ${userEmail}`);
@@ -91,7 +91,7 @@ async function handleChargeSuccess(data: any) {
         }
 
         // Update user plan
-        const updatedUser = updateUser(userEmail, {
+        const updatedUser = await updateUser(userEmail, {
             plan: plan.toLowerCase(),
         });
 
