@@ -27,7 +27,8 @@ export default function LoginPage() {
                 toast.error("Invalid credentials");
             } else {
                 toast.success("Logged in successfully");
-                router.push("/dashboard");
+                // Force hardware navigation to ensure session cookie is properly recognized by middleware
+                window.location.href = "/dashboard";
             }
         } catch (error) {
             console.error(error);
