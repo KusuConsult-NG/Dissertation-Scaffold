@@ -5,7 +5,7 @@ export default function LandingPage() {
     return (
         <>
             {/* Navbar */}
-            <nav className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-border-dark bg-white/80 dark:bg-[#111318]/80 backdrop-blur-md">
+            <nav className="sticky top-0 z-50 w-full border-b border-gray-200  bg-white/80  backdrop-blur-md">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         {/* Logo */}
@@ -30,38 +30,38 @@ export default function LandingPage() {
                                     ></path>
                                 </svg>
                             </div>
-                            <span className="text-xl font-serif font-bold tracking-tight dark:text-white">
+                            <span className="text-xl font-serif font-bold tracking-tight 
                                 Dissertation Scaffold
                             </span>
                         </div>
                         {/* Desktop Menu */}
                         <div className="hidden md:flex items-center gap-8">
                             <Link
-                                className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors"
+                                className="text-sm font-medium text-slate-600  hover:text-primary transition-colors"
                                 href="/trends"
                             >
                                 Trends
                             </Link>
                             <Link
-                                className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors"
+                                className="text-sm font-medium text-slate-600  hover:text-primary transition-colors"
                                 href="/grants"
                             >
                                 Grants
                             </Link>
                             <Link
-                                className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors"
+                                className="text-sm font-medium text-slate-600  hover:text-primary transition-colors"
                                 href="/novelty"
                             >
                                 Novelty
                             </Link>
                             <Link
-                                className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors"
+                                className="text-sm font-medium text-slate-600  hover:text-primary transition-colors"
                                 href="/methodology"
                             >
                                 Methodology
                             </Link>
                             <Link
-                                className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary transition-colors"
+                                className="text-sm font-medium text-slate-600  hover:text-primary transition-colors"
                                 href="/community"
                             >
                                 Community
@@ -69,7 +69,7 @@ export default function LandingPage() {
                         </div>
                         {/* CTA */}
                         <div className="flex items-center gap-3">
-                            <button className="hidden sm:flex h-9 px-4 items-center justify-center rounded-lg border border-gray-200 dark:border-border-dark bg-white dark:bg-card-dark text-sm font-medium text-slate-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                            <button className="hidden sm:flex h-9 px-4 items-center justify-center rounded-lg border border-gray-200  bg-white  text-sm font-medium text-slate-900  hover:bg-gray-50  transition-colors">
                                 Log In
                             </button>
                             <Link
@@ -103,13 +103,13 @@ export default function LandingPage() {
                                     Trusted by 150+ Universities
                                 </span>
                             </div>
-                            <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-slate-900 dark:text-white">
+                            <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-slate-900 
                                 Structure Your <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400 italic">
                                     Scholarship.
                                 </span>
                             </h1>
-                            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                            <p className="text-lg text-slate-600  max-w-xl mx-auto lg:mx-0 leading-relaxed">
                                 The definitive scaffold for managing complex dissertations and
                                 securing competitive grants. Join over 10,000 researchers
                                 transforming chaotic notes into published success.
@@ -124,37 +124,37 @@ export default function LandingPage() {
                                         arrow_forward
                                     </span>
                                 </Link>
-                                <button className="h-12 px-8 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-semibold text-base transition-all flex items-center justify-center gap-2">
+                                <button className="h-12 px-8 rounded-lg border border-slate-200  hover:bg-slate-50  text-slate-900  font-semibold text-base transition-all flex items-center justify-center gap-2">
                                     <span className="material-symbols-outlined text-[20px]">
                                         play_circle
                                     </span>
                                     <span>View Demo</span>
                                 </button>
                             </div>
-                            <div className="pt-6 flex items-center justify-center lg:justify-start gap-4 text-sm text-slate-500 dark:text-slate-400">
+                            <div className="pt-6 flex items-center justify-center lg:justify-start gap-4 text-sm text-slate-500 
                                 <div className="flex -space-x-2">
                                     <div
-                                        className="w-8 h-8 rounded-full border-2 border-white dark:border-background-dark bg-cover bg-center"
+                                        className="w-8 h-8 rounded-full border-2 border-white  bg-cover bg-center"
                                         style={{
                                             backgroundImage:
                                                 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuCsXusqlNt_Q0ga0JG-UnqBpU2tlVTmO2B-B6VE6sDwaUTChSaN5QxHSF0EFFPAkyWD7joHkUSJIYnly-u4Cb7shqKmrRFd-bYJ8HYev9Jvto8k00Lyx7P1G1RvLSUyU_s24iBfll1es5kRczNpzsM293Z-8_JKEdlGswnpr0VRE5Yo9LBgI4HP6o6PXWbuCn7PiIM3piT2ZCGZwg2rDcrVyH_DpARV7OSJ1NYkflUgdrhr7187A2-egSyXcJvTDqJeikFWDLZzoio")',
                                         }}
                                     />
                                     <div
-                                        className="w-8 h-8 rounded-full border-2 border-white dark:border-background-dark bg-cover bg-center"
+                                        className="w-8 h-8 rounded-full border-2 border-white  bg-cover bg-center"
                                         style={{
                                             backgroundImage:
                                                 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuAs3A4I8iELGYNvplaP1f6GQ0QT42w6W04k4EZ5lLY3LpOV4sNP3Htp0Mx4DMHwN9OcqCuZVub_Y3o8l5KvBWqgqDRQjOnRV0Y-2UNze-he4lHwZ9e6OaFhQ1CGlv6JH2vZq3QyiNGXfAcTUHJoZdV_MVut02jglSbRZzcgQOAOzs7A80GvDCpGA2-50_zkjrvzV3VMl3-7Ct_lEZoWZn0GeDnqTJTvn5yP-gvehTCxjDhluzDusgV_SYHs75sJzMeE9CoW0MxbSX4")',
                                         }}
                                     />
                                     <div
-                                        className="w-8 h-8 rounded-full border-2 border-white dark:border-background-dark bg-cover bg-center"
+                                        className="w-8 h-8 rounded-full border-2 border-white  bg-cover bg-center"
                                         style={{
                                             backgroundImage:
                                                 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuAR9hT-68KE-E1C8gDv4t_jC82wlKHqW7FOrJEjRn75HEYsFL03HQVMHrGDeg1MzF1KBimpyImUhT0KZuBuikIuTcCV9hofPsJiwIY_kYTW1qVAWJeFFGaT-alCynlyFDC6Qx31S53gqnvs6bwKLowlqYnA5MeNZCIWG5-5qRxPo0GgbvcccwfYPkxBp7rxS0-bwLqjsUTBt71nljCWz-hZE8a6QEqDzmuL1G81wmBvXh7nzISwcwGR2rdHaRRHLs_ENsXguLgM9u0")',
                                         }}
                                     />
-                                    <div className="w-8 h-8 rounded-full border-2 border-white dark:border-background-dark bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-[10px] font-bold">
+                                    <div className="w-8 h-8 rounded-full border-2 border-white  bg-slate-200  flex items-center justify-center text-[10px] font-bold">
                                         +2k
                                     </div>
                                 </div>
@@ -166,33 +166,33 @@ export default function LandingPage() {
                             {/* Abstract Background shape */}
                             <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-purple-500/20 rounded-full blur-[100px] animate-pulse"></div>
                             {/* Main Dashboard Card Mockup */}
-                            <div className="relative z-10 w-full max-w-lg bg-white dark:bg-[#1c1f27] rounded-xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden transform rotate-y-12 transition-transform duration-500 hover:rotate-0">
+                            <div className="relative z-10 w-full max-w-lg bg-white  rounded-xl border border-slate-200  shadow-2xl overflow-hidden transform rotate-y-12 transition-transform duration-500 hover:rotate-0">
                                 {/* Fake browser chrome */}
-                                <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-[#161920]">
+                                <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-100  bg-slate-50 
                                     <div className="flex gap-1.5">
                                         <div className="w-3 h-3 rounded-full bg-red-400"></div>
                                         <div className="w-3 h-3 rounded-full bg-amber-400"></div>
                                         <div className="w-3 h-3 rounded-full bg-green-400"></div>
                                     </div>
-                                    <div className="ml-4 h-5 w-48 rounded-md bg-slate-200 dark:bg-slate-700/50"></div>
+                                    <div className="ml-4 h-5 w-48 rounded-md bg-slate-200 
                                 </div>
                                 {/* Dashboard Inner Content */}
                                 <div className="p-6 grid gap-6">
                                     {/* Top stats row */}
                                     <div className="grid grid-cols-3 gap-4">
-                                        <div className="p-4 rounded-lg bg-slate-50 dark:bg-[#252a36]">
+                                        <div className="p-4 rounded-lg bg-slate-50 
                                             <div className="text-xs text-slate-500 uppercase font-semibold">
                                                 Citations
                                             </div>
-                                            <div className="text-xl font-bold text-slate-900 dark:text-white mt-1">
+                                            <div className="text-xl font-bold text-slate-900  mt-1">
                                                 1,248
                                             </div>
                                         </div>
-                                        <div className="p-4 rounded-lg bg-slate-50 dark:bg-[#252a36]">
+                                        <div className="p-4 rounded-lg bg-slate-50 
                                             <div className="text-xs text-slate-500 uppercase font-semibold">
                                                 Sources
                                             </div>
-                                            <div className="text-xl font-bold text-slate-900 dark:text-white mt-1">
+                                            <div className="text-xl font-bold text-slate-900  mt-1">
                                                 342
                                             </div>
                                         </div>
@@ -206,7 +206,7 @@ export default function LandingPage() {
                                         </div>
                                     </div>
                                     {/* Graph area */}
-                                    <div className="h-32 rounded-lg bg-slate-50 dark:bg-[#252a36] relative overflow-hidden flex items-end justify-between px-2 pb-2 gap-1">
+                                    <div className="h-32 rounded-lg bg-slate-50  relative overflow-hidden flex items-end justify-between px-2 pb-2 gap-1">
                                         {/* Fake bars */}
                                         <div className="w-full bg-primary/20 h-[40%] rounded-sm"></div>
                                         <div className="w-full bg-primary/40 h-[60%] rounded-sm"></div>
@@ -217,14 +217,14 @@ export default function LandingPage() {
                                     </div>
                                     {/* List items */}
                                     <div className="space-y-3">
-                                        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-[#252a36] transition-colors cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-slate-700">
+                                        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50  transition-colors cursor-pointer border border-transparent hover:border-slate-200 
                                             <div className="p-2 rounded bg-green-500/20 text-green-500">
                                                 <span className="material-symbols-outlined text-[18px]">
                                                     check_circle
                                                 </span>
                                             </div>
                                             <div>
-                                                <div className="text-sm font-semibold dark:text-white">
+                                                <div className="text-sm font-semibold 
                                                     Literature Review Draft
                                                 </div>
                                                 <div className="text-xs text-slate-500">
@@ -232,14 +232,14 @@ export default function LandingPage() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-[#252a36] transition-colors cursor-pointer border border-transparent hover:border-slate-200 dark:hover:border-slate-700">
+                                        <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50  transition-colors cursor-pointer border border-transparent hover:border-slate-200 
                                             <div className="p-2 rounded bg-amber-500/20 text-amber-500">
                                                 <span className="material-symbols-outlined text-[18px]">
                                                     schedule
                                                 </span>
                                             </div>
                                             <div>
-                                                <div className="text-sm font-semibold dark:text-white">
+                                                <div className="text-sm font-semibold 
                                                     Grant Application Deadline
                                                 </div>
                                                 <div className="text-xs text-slate-500">
@@ -274,11 +274,11 @@ export default function LandingPage() {
                 </div>
             </header>
             {/* Stats Section */}
-            <section className="border-y border-slate-200 dark:border-border-dark bg-white dark:bg-[#1a2230]">
+            <section className="border-y border-slate-200  bg-white 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-slate-100 dark:divide-slate-800/50">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-slate-100 
                         <div className="flex flex-col gap-1">
-                            <span className="text-3xl font-bold text-slate-900 dark:text-white font-serif">
+                            <span className="text-3xl font-bold text-slate-900  font-serif">
                                 $10M+
                             </span>
                             <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">
@@ -286,7 +286,7 @@ export default function LandingPage() {
                             </span>
                         </div>
                         <div className="flex flex-col gap-1">
-                            <span className="text-3xl font-bold text-slate-900 dark:text-white font-serif">
+                            <span className="text-3xl font-bold text-slate-900  font-serif">
                                 5,000+
                             </span>
                             <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">
@@ -294,7 +294,7 @@ export default function LandingPage() {
                             </span>
                         </div>
                         <div className="flex flex-col gap-1">
-                            <span className="text-3xl font-bold text-slate-900 dark:text-white font-serif">
+                            <span className="text-3xl font-bold text-slate-900  font-serif">
                                 12k
                             </span>
                             <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">
@@ -302,7 +302,7 @@ export default function LandingPage() {
                             </span>
                         </div>
                         <div className="flex flex-col gap-1">
-                            <span className="text-3xl font-bold text-slate-900 dark:text-white font-serif">
+                            <span className="text-3xl font-bold text-slate-900  font-serif">
                                 150+
                             </span>
                             <span className="text-sm font-medium text-slate-500 uppercase tracking-wider">
@@ -313,35 +313,35 @@ export default function LandingPage() {
                 </div>
             </section>
             {/* Feature Section */}
-            <section className="py-24 bg-background-light dark:bg-background-dark relative overflow-hidden">
+            <section className="py-24 bg-background-light  relative overflow-hidden">
                 {/* Decorative background elements */}
                 <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
                 <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center max-w-3xl mx-auto mb-16">
-                        <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 dark:text-white mb-4">
+                        <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900  mb-4">
                             Engineered for Academic Rigor
                         </h2>
-                        <p className="text-lg text-slate-600 dark:text-slate-400">
+                        <p className="text-lg text-slate-600 
                             Our platform bridges the gap between chaotic notes and published
                             success with tools designed specifically for the modern scholar.
                         </p>
                     </div>
                     <div className="grid md:grid-cols-3 gap-8">
                         {/* Feature 1: Smart Outlining */}
-                        <Link href="/methodology" className="group relative overflow-hidden rounded-2xl bg-white/50 dark:bg-card-dark/50 backdrop-blur-sm border border-slate-200 dark:border-border-dark p-8 hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1">
-                            <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent dark:from-blue-900/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <Link href="/methodology" className="group relative overflow-hidden rounded-2xl bg-white/50  backdrop-blur-sm border border-slate-200  p-8 hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1">
+                            <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-transparent  opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             <div className="relative z-10">
                                 <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform duration-300">
                                     <span className="material-symbols-outlined text-[32px]">
                                         account_tree
                                     </span>
                                 </div>
-                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors">
+                                <h3 className="text-xl font-bold text-slate-900  mb-3 group-hover:text-primary transition-colors">
                                     Smart Outlining
                                 </h3>
-                                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                                <p className="text-slate-600  leading-relaxed">
                                     Automatically structure your thesis with AI-driven templates
                                     approved by top universities. Focus on the content, not the
                                     format.
@@ -349,18 +349,18 @@ export default function LandingPage() {
                             </div>
                         </Link>
                         {/* Feature 2: Grant Calendar */}
-                        <Link href="/grants" className="group relative overflow-hidden rounded-2xl bg-white/50 dark:bg-card-dark/50 backdrop-blur-sm border border-slate-200 dark:border-border-dark p-8 hover:border-purple-500/50 transition-all hover:shadow-xl hover:shadow-purple-500/5 hover:-translate-y-1">
-                            <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 to-transparent dark:from-purple-900/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <Link href="/grants" className="group relative overflow-hidden rounded-2xl bg-white/50  backdrop-blur-sm border border-slate-200  p-8 hover:border-purple-500/50 transition-all hover:shadow-xl hover:shadow-purple-500/5 hover:-translate-y-1">
+                            <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 to-transparent  opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             <div className="relative z-10">
                                 <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg shadow-purple-500/30 group-hover:scale-110 transition-transform duration-300">
                                     <span className="material-symbols-outlined text-[32px]">
                                         calendar_month
                                     </span>
                                 </div>
-                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-purple-500 transition-colors">
+                                <h3 className="text-xl font-bold text-slate-900  mb-3 group-hover:text-purple-500 transition-colors">
                                     Grant Calendar
                                 </h3>
-                                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                                <p className="text-slate-600  leading-relaxed">
                                     Never miss a funding deadline. Our integrated global grant
                                     tracking system alerts you to opportunities relevant to your
                                     field.
@@ -368,18 +368,18 @@ export default function LandingPage() {
                             </div>
                         </Link>
                         {/* Feature 3: Literature Synthesis */}
-                        <Link href="/literature" className="group relative overflow-hidden rounded-2xl bg-white/50 dark:bg-card-dark/50 backdrop-blur-sm border border-slate-200 dark:border-border-dark p-8 hover:border-emerald-500/50 transition-all hover:shadow-xl hover:shadow-emerald-500/5 hover:-translate-y-1">
-                            <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 to-transparent dark:from-emerald-900/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <Link href="/literature" className="group relative overflow-hidden rounded-2xl bg-white/50  backdrop-blur-sm border border-slate-200  p-8 hover:border-emerald-500/50 transition-all hover:shadow-xl hover:shadow-emerald-500/5 hover:-translate-y-1">
+                            <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/50 to-transparent  opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             <div className="relative z-10">
                                 <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-lg shadow-emerald-500/30 group-hover:scale-110 transition-transform duration-300">
                                     <span className="material-symbols-outlined text-[32px]">
                                         hub
                                     </span>
                                 </div>
-                                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-emerald-500 transition-colors">
+                                <h3 className="text-xl font-bold text-slate-900  mb-3 group-hover:text-emerald-500 transition-colors">
                                     Literature Synthesis
                                 </h3>
-                                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                                <p className="text-slate-600  leading-relaxed">
                                     Connect themes across hundreds of sources with our visual
                                     knowledge graph. See the gaps in research instantly.
                                 </p>
@@ -389,7 +389,7 @@ export default function LandingPage() {
                 </div>
             </section>
             {/* Testimonial Section (Split layout variant) */}
-            <section className="py-24 bg-white dark:bg-[#1a2230]">
+            <section className="py-24 bg-white 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <div className="relative h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl">
@@ -428,11 +428,11 @@ export default function LandingPage() {
                             <span className="text-primary font-bold tracking-wide uppercase text-sm mb-2">
                                 Success Stories
                             </span>
-                            <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 dark:text-white mb-6">
+                            <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900  mb-6">
                                 "Dissertation Scaffold helped me secure a $50k grant and finish
                                 my thesis 6 months early."
                             </h2>
-                            <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 italic">
+                            <p className="text-lg text-slate-600  mb-8 italic">
                                 The structured approach to literature review and the automated
                                 citation management saved me hundreds of hours of manual work.
                             </p>
@@ -445,7 +445,7 @@ export default function LandingPage() {
                                     }}
                                 ></div>
                                 <div>
-                                    <div className="font-bold text-slate-900 dark:text-white">
+                                    <div className="font-bold text-slate-900 
                                         Dr. Sarah Jenkins
                                     </div>
                                     <div className="text-sm text-slate-500">
@@ -458,11 +458,11 @@ export default function LandingPage() {
                 </div>
             </section>
             {/* Footer */}
-            <footer className="bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-border-dark pt-16 pb-8">
+            <footer className="bg-background-light  border-t border-slate-200  pt-16 pb-8">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-12">
                         <div className="col-span-2 lg:col-span-2">
-                            <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white">
+                            <div className="flex items-center gap-2 mb-4 text-slate-900 
                                 <div className="size-6 text-primary">
                                     <svg
                                         fill="currentColor"
@@ -509,10 +509,10 @@ export default function LandingPage() {
                             </div>
                         </div>
                         <div>
-                            <h4 className="font-bold text-slate-900 dark:text-white mb-4">
+                            <h4 className="font-bold text-slate-900  mb-4">
                                 Platform
                             </h4>
-                            <ul className="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+                            <ul className="space-y-2 text-sm text-slate-500 
                                 <li>
                                     <Link className="hover:text-primary transition-colors" href="/#features">
                                         Features
@@ -536,10 +536,10 @@ export default function LandingPage() {
                             </ul>
                         </div>
                         <div>
-                            <h4 className="font-bold text-slate-900 dark:text-white mb-4">
+                            <h4 className="font-bold text-slate-900  mb-4">
                                 Resources
                             </h4>
-                            <ul className="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+                            <ul className="space-y-2 text-sm text-slate-500 
                                 <li>
                                     <Link className="hover:text-primary transition-colors" href="/docs">
                                         Documentation
@@ -563,10 +563,10 @@ export default function LandingPage() {
                             </ul>
                         </div>
                         <div>
-                            <h4 className="font-bold text-slate-900 dark:text-white mb-4">
+                            <h4 className="font-bold text-slate-900  mb-4">
                                 Company
                             </h4>
-                            <ul className="space-y-2 text-sm text-slate-500 dark:text-slate-400">
+                            <ul className="space-y-2 text-sm text-slate-500 
                                 <li>
                                     <Link className="hover:text-primary transition-colors" href="/about">
                                         About
@@ -590,7 +590,7 @@ export default function LandingPage() {
                             </ul>
                         </div>
                     </div>
-                    <div className="border-t border-slate-200 dark:border-border-dark pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+                    <div className="border-t border-slate-200  pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
                         <p>© 2024 Dissertation Scaffold. All rights reserved.</p>
                         <div className="flex gap-6">
                             <Link className="hover:text-primary transition-colors" href="/privacy">
