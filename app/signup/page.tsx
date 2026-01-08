@@ -102,9 +102,7 @@ export default function SignupPage() {
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-4">
-                            <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider">
-                                Personal Information
-                            </h3>
+
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
@@ -160,9 +158,7 @@ export default function SignupPage() {
                         </div>
 
                         <div className="space-y-4">
-                            <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider">
-                                Academic Profile
-                            </h3>
+
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
@@ -200,7 +196,7 @@ export default function SignupPage() {
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                                    Research Area / Topic
+                                    Research Area
                                 </label>
                                 <input
                                     type="text"
@@ -214,9 +210,7 @@ export default function SignupPage() {
                         </div>
 
                         <div className="space-y-4">
-                            <h3 className="text-sm font-semibold text-slate-900 dark:text-white uppercase tracking-wider">
-                                Security
-                            </h3>
+
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
