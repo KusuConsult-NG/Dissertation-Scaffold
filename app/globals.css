@@ -97,6 +97,16 @@ body {
     color: #135bec;  /* primary blue - already good contrast */
   }
   
+  /* Force all hardcoded light text colors to dark */
+  .text-\[#111318\],
+  .text-\[#616f89\] {
+    color: #374151 !important;  /* slate-700 - visible */
+  }
+  
+  .dark\:text-\[#616f89\] {
+    color: #4b5563 !important;  /* slate-600 */
+  }
+  
   /* Ensure all text elements default to dark */
   .text-slate-900, .text-gray-900 {
     color: #111827 !important;
@@ -108,6 +118,14 @@ body {
   
   .text-slate-600, .text-gray-600 {
     color: #4b5563 !important;
+  }
+  
+  .text-slate-500, .text-gray-500 {
+    color: #6b7280 !important;
+  }
+  
+  .text-slate-400, .text-gray-400 {
+    color: #9ca3af !important;
   }
   
   /* Force dark text colors */
