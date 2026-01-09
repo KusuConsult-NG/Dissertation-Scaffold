@@ -153,8 +153,8 @@ export default function MethodologyPage() {
         switch (type) {
             case "quant": return <BarChart className="w-4 h-4 text-[#a371f7]" />;
             case "qual": return <Mic className="w-4 h-4 text-primary" />;
-            case "start": return <Play className="w-4 h-4 text-white" />;
-            default: return <Database className="w-4 h-4 text-slate-400" />;
+            case "start": return <Play className="w-4 h-4 text-slate-900" />;
+            default: return <Database className="w-4 h-4 text-slate-600" />;
         }
     };
 
@@ -173,12 +173,12 @@ export default function MethodologyPage() {
                 {/* Left Sidebar: Tools & Components */}
                 <aside className="hidden lg:flex flex-col gap-6 sticky top-6 h-[calc(100vh-8rem)]">
                     {/* Progress */}
-                    <div className="bg-surface-dark border border-border-dark rounded-lg p-5">
-                        <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+                    <div className="bg-white border border-slate-300 rounded-lg p-5">
+                        <h3 className="text-xs font-bold text-slate-600 uppercase tracking-wider mb-3">
                             Completion Status
                         </h3>
                         <div className="flex items-end justify-between mb-2">
-                            <span className="text-2xl font-bold text-white">
+                            <span className="text-2xl font-bold text-slate-900">
                                 {Math.min(100, Math.round((steps.length / 5) * 100))}%
                             </span>
                             <span className="text-xs text-accent-green mb-1">
@@ -193,9 +193,9 @@ export default function MethodologyPage() {
                         </div>
                     </div>
                     {/* Toolbox */}
-                    <div className="bg-surface-dark border border-border-dark rounded-lg flex-1 flex flex-col overflow-hidden">
-                        <div className="p-4 border-b border-border-dark bg-surface-dark/50">
-                            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    <div className="bg-white border border-slate-300 rounded-lg flex-1 flex flex-col overflow-hidden">
+                        <div className="p-4 border-b border-slate-300 bg-white/50">
+                            <h3 className="text-xs font-bold text-slate-600 uppercase tracking-wider">
                                 Method Components
                             </h3>
                         </div>
@@ -230,16 +230,16 @@ export default function MethodologyPage() {
                                 <button
                                     key={i}
                                     onClick={handleAddStep}
-                                    className="w-full text-left group p-3 rounded bg-background-dark border border-border-dark hover:border-primary/50 transition-colors flex items-center gap-3"
+                                    className="w-full text-left group p-3 rounded bg-slate-50 border border-slate-300 hover:border-primary/50 transition-colors flex items-center gap-3"
                                 >
-                                    <span className="text-slate-500 group-hover:text-primary">
+                                    <span className="text-slate-600 group-hover:text-primary">
                                         {item.icon}
                                     </span>
                                     <div>
                                         <p className="text-sm font-medium text-slate-200">
                                             {item.title}
                                         </p>
-                                        <p className="text-[10px] text-slate-500">{item.desc}</p>
+                                        <p className="text-[10px] text-slate-600">{item.desc}</p>
                                     </div>
                                     <Plus className="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
                                 </button>
@@ -253,7 +253,7 @@ export default function MethodologyPage() {
                     {/* Controls */}
                     <div className="flex items-center justify-between">
                         <div className="flex gap-2">
-                            <span className="text-xs text-slate-500 flex items-center gap-2">
+                            <span className="text-xs text-slate-600 flex items-center gap-2">
                                 {saving ? "Saving..." : "All changes saved"}
                             </span>
                         </div>
@@ -274,7 +274,7 @@ export default function MethodologyPage() {
                     </div>
                     {/* Flowchart Canvas Area */}
                     <div
-                        className="bg-surface-dark border border-border-dark rounded-xl min-h-[600px] relative overflow-hidden"
+                        className="bg-white border border-slate-300 rounded-xl min-h-[600px] relative overflow-hidden"
                         style={{
                             backgroundImage: "radial-gradient(#30363d 1px, transparent 1px)",
                             backgroundSize: "24px 24px",
@@ -282,7 +282,7 @@ export default function MethodologyPage() {
                         onClick={() => setSelectedStepId(null)}
                     >
                         {loading && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-background-dark/80 z-50">
+                            <div className="absolute inset-0 flex items-center justify-center bg-slate-50/80 z-50">
                                 <span className="text-primary animate-pulse">Loading Methodology...</span>
                             </div>
                         )}
@@ -295,9 +295,9 @@ export default function MethodologyPage() {
                         {steps.map((step) => (
                             <div
                                 key={step.id}
-                                className={`absolute ${step.position} w-64 bg-background-dark border rounded-lg shadow-xl p-4 z-10 transition-all cursor-pointer ${selectedStepId === step.id
+                                className={`absolute ${step.position} w-64 bg-slate-50 border rounded-lg shadow-xl p-4 z-10 transition-all cursor-pointer ${selectedStepId === step.id
                                     ? "border-primary ring-1 ring-primary"
-                                    : "border-border-dark hover:border-primary/50"
+                                    : "border-slate-300 hover:border-primary/50"
                                     }`}
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -305,7 +305,7 @@ export default function MethodologyPage() {
                                 }}
                             >
                                 {step.type === "start" && (
-                                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-700 text-white text-[10px] uppercase font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-700 text-slate-900 text-[10px] uppercase font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
                                         <Play className="w-3 h-3" /> Start
                                     </div>
                                 )}
@@ -313,15 +313,15 @@ export default function MethodologyPage() {
                                 <div className="flex items-center justify-between mb-2">
                                     <div className="flex items-center gap-2">
                                         <span>{getIconForType(step.type)}</span>
-                                        <h4 className="font-bold text-white text-sm">
+                                        <h4 className="font-bold text-slate-900 text-sm">
                                             {step.title}
                                         </h4>
                                     </div>
-                                    <button className="text-slate-500 hover:text-white">
+                                    <button className="text-slate-600 hover:text-slate-900">
                                         <MoreHorizontal className="w-4 h-4" />
                                     </button>
                                 </div>
-                                <p className="text-xs text-slate-400 line-clamp-2">
+                                <p className="text-xs text-slate-600 line-clamp-2">
                                     {step.desc}
                                 </p>
 
@@ -330,7 +330,7 @@ export default function MethodologyPage() {
                                         {step.tags.map((tag, i) => (
                                             <span
                                                 key={i}
-                                                className="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded border border-slate-700"
+                                                className="text-[10px] bg-slate-800 text-slate-600 px-1.5 py-0.5 rounded border border-slate-700"
                                             >
                                                 {tag}
                                             </span>
@@ -342,9 +342,9 @@ export default function MethodologyPage() {
 
                         {/* Floating Editor */}
                         {selectedStep && (
-                            <div className="absolute bottom-6 right-6 w-80 bg-surface-dark border border-border-dark rounded-lg shadow-2xl p-4 z-20 animate-in slide-in-from-bottom-5 fade-in">
+                            <div className="absolute bottom-6 right-6 w-80 bg-white border border-slate-300 rounded-lg shadow-2xl p-4 z-20 animate-in slide-in-from-bottom-5 fade-in">
                                 <div className="flex justify-between items-start mb-3">
-                                    <h5 className="text-sm font-bold text-white">
+                                    <h5 className="text-sm font-bold text-slate-900">
                                         Edit: {selectedStep.title}
                                     </h5>
                                     <div>
@@ -357,7 +357,7 @@ export default function MethodologyPage() {
                                         </button>
                                         <button
                                             onClick={() => setSelectedStepId(null)}
-                                            className="text-slate-500 hover:text-white"
+                                            className="text-slate-600 hover:text-slate-900"
                                         >
                                             <X className="w-4 h-4" />
                                         </button>
@@ -365,11 +365,11 @@ export default function MethodologyPage() {
                                 </div>
                                 <div className="space-y-3">
                                     <div>
-                                        <label className="block text-[10px] uppercase font-bold text-slate-500 mb-1">
+                                        <label className="block text-[10px] uppercase font-bold text-slate-600 mb-1">
                                             Title
                                         </label>
                                         <input
-                                            className="w-full bg-background-dark border border-border-dark rounded p-2 text-xs text-slate-300 focus:border-primary outline-none"
+                                            className="w-full bg-slate-50 border border-slate-300 rounded p-2 text-xs text-slate-700 focus:border-primary outline-none"
                                             value={selectedStep.title}
                                             onChange={(e) =>
                                                 handleUpdateStep(selectedStep.id, {
@@ -379,11 +379,11 @@ export default function MethodologyPage() {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-[10px] uppercase font-bold text-slate-500 mb-1">
+                                        <label className="block text-[10px] uppercase font-bold text-slate-600 mb-1">
                                             Description
                                         </label>
                                         <textarea
-                                            className="w-full bg-background-dark border border-border-dark rounded p-2 text-xs text-slate-300 focus:border-primary outline-none resize-none h-20"
+                                            className="w-full bg-slate-50 border border-slate-300 rounded p-2 text-xs text-slate-700 focus:border-primary outline-none resize-none h-20"
                                             value={selectedStep.desc}
                                             onChange={(e) =>
                                                 handleUpdateStep(selectedStep.id, {
@@ -397,7 +397,7 @@ export default function MethodologyPage() {
                                             persistSteps(steps);
                                             setSelectedStepId(null);
                                         }}
-                                        className="w-full py-1.5 bg-primary text-white text-xs font-bold rounded hover:bg-sky-400"
+                                        className="w-full py-1.5 bg-primary text-slate-900 text-xs font-bold rounded hover:bg-sky-400"
                                     >
                                         Save & Close
                                     </button>
@@ -410,18 +410,18 @@ export default function MethodologyPage() {
                 {/* Right Column: AI Critique & Checklist */}
                 <aside className="col-span-1 flex flex-col gap-6 h-[calc(100vh-8rem)] sticky top-6">
                     {/* AI Feedback */}
-                    <div className="bg-gradient-to-b from-surface-dark to-background-dark border border-border-dark rounded-lg p-5">
+                    <div className="bg-gradient-to-b from-surface-dark to-background-dark border border-slate-300 rounded-lg p-5">
                         <div className="flex items-center gap-2 mb-4">
                             <Sparkles className="w-5 h-5 text-primary" />
-                            <h3 className="font-bold text-white text-sm">
+                            <h3 className="font-bold text-slate-900 text-sm">
                                 Methodology Critique
                             </h3>
                         </div>
                         <div className="space-y-4">
                             <div className="bg-primary/5 border-l-2 border-primary p-3 rounded-r">
-                                <p className="text-xs text-slate-300 leading-relaxed">
+                                <p className="text-xs text-slate-700 leading-relaxed">
                                     <strong className="text-primary">Suggestion:</strong> Based on your Research Questions, consider adding a
-                                    <strong className="text-white"> Quantitative Survey</strong> step.
+                                    <strong className="text-slate-900"> Quantitative Survey</strong> step.
                                 </p>
                                 <div className="flex gap-2 mt-2">
                                     <button
@@ -436,12 +436,12 @@ export default function MethodologyPage() {
                     </div>
 
                     {/* Steps Checklist - Dynamic based on actual steps */}
-                    <div className="flex-1 bg-surface-dark border border-border-dark rounded-lg flex flex-col overflow-hidden">
-                        <div className="p-4 border-b border-border-dark bg-surface-dark/50 flex justify-between items-center">
-                            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                    <div className="flex-1 bg-white border border-slate-300 rounded-lg flex flex-col overflow-hidden">
+                        <div className="p-4 border-b border-slate-300 bg-white/50 flex justify-between items-center">
+                            <h3 className="text-xs font-bold text-slate-600 uppercase tracking-wider">
                                 Your Steps
                             </h3>
-                            <span className="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">
+                            <span className="text-[10px] bg-slate-800 text-slate-600 px-1.5 py-0.5 rounded">
                                 {steps.length} Total
                             </span>
                         </div>
@@ -450,13 +450,13 @@ export default function MethodologyPage() {
                                 <button
                                     key={step.id}
                                     onClick={() => setSelectedStepId(step.id)}
-                                    className={`w-full flex items-center justify-between p-4 border-b border-border-dark/50 transition-colors text-left group ${selectedStepId === step.id ? 'bg-primary/10 border-l-2 border-l-primary' : 'hover:bg-background-dark/50'}`}
+                                    className={`w-full flex items-center justify-between p-4 border-b border-slate-300/50 transition-colors text-left group ${selectedStepId === step.id ? 'bg-primary/10 border-l-2 border-l-primary' : 'hover:bg-slate-50/50'}`}
                                 >
                                     <div className="w-[80%]">
-                                        <h4 className="text-sm font-medium text-slate-300 truncate">
+                                        <h4 className="text-sm font-medium text-slate-700 truncate">
                                             {step.title}
                                         </h4>
-                                        <p className="text-[10px] text-slate-500 truncate">
+                                        <p className="text-[10px] text-slate-600 truncate">
                                             {step.desc}
                                         </p>
                                     </div>
