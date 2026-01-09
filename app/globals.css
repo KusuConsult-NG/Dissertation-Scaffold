@@ -4,16 +4,16 @@
 
 :root {
   --foreground-rgb: 17, 24, 39;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 255, 255, 255;
+  --background-start-rgb: 250, 250, 250;
+  --background-end-rgb: 250, 250, 250;
 }
 
 /* Force bright light mode - override system dark mode preference */
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 17, 24, 39;
-    --background-start-rgb: 255, 255, 255;
-    --background-end-rgb: 255, 255, 255;
+    --background-start-rgb: 250, 250, 250;
+    --background-end-rgb: 250, 250, 250;
   }
 }
 
