@@ -39,6 +39,21 @@ body {
     background-color: #fafafa !important;
   }
   
+  /* Force all dark backgrounds to light */
+  .dark\:bg-card-dark,
+  .dark\:bg-\[#1a2230\],
+  .dark\:bg-\[#1c1f27\],
+  .dark\:bg-\[#151b26\],
+  .dark\:bg-\[#101622\],
+  .dark\:bg-\[#0d121c\],
+  .dark\:bg-\[#111318\],
+  .dark\:bg-\[#161b22\],
+  .dark\:bg-\[#161920\],
+  .dark\:bg-\[#252a36\],
+  .dark\:bg-\[#151f25\] {
+    background-color: #fafafa !important;
+  }
+  
   /* Make borders darker and more visible */
   .border-slate-100,
   .dark\:border-slate-100 {
@@ -47,6 +62,20 @@ body {
   
   .border-slate-200,
   .dark\:border-slate-200 {
+    border-color: #94a3b8 !important;  /* slate-400 */
+  }
+  
+  .border-\[#f0f2f4\],
+  .dark\:border-\[#2a3441\],
+  .dark\:border-\[#30363d\],
+  .dark\:border-slate-700,
+  .dark\:border-slate-800,
+  .dark\:border-gray-700,
+  .dark\:border-gray-800 {
+    border-color: #cbd5e1 !important;  /* slate-300 - visible */
+  }
+  
+  .dark\:border-card-border {
     border-color: #94a3b8 !important;  /* slate-400 */
   }
 }
