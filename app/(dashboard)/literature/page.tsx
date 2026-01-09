@@ -313,12 +313,6 @@ export default function LiteraturePage() {
                                 ))}
                             </div>
                         )}
-
-                        <div className="p-4 bg-background-light dark:bg-[#101622] border-t border-[#f0f2f4] dark:border-[#2a3441] text-center">
-                            <button className="text-sm text-[#616f89] font-medium hover:text-primary transition-colors">
-                                Load More Sources
-                            </button>
-                        </div>
                     </div>
                 </div>
 
