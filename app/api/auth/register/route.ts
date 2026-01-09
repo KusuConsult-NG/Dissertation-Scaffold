@@ -3,6 +3,10 @@ import { createUser } from "@/lib/db-admin";
 import { userRegisterSchema } from "@/lib/validations/auth";
 import { z } from "zod";
 
+// CRITICAL: firebase-admin requires Node.js runtime, not Edge
+export const runtime = 'nodejs';
+
+
 export async function POST(req: Request) {
     try {
         const body = await req.json();
