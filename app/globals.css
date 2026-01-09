@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 17, 24, 39;
-  --background-start-rgb: 250, 250, 250;
-  --background-end-rgb: 250, 250, 250;
+  --foreground-rgb: 17, 24, 39;      /* High contrast text */
+  --background-start-rgb: 250, 250, 250;  /* Off-white */
+  --background-end-rgb: 250, 250, 250;    /* Off-white */
 }
 
-/* Force bright light mode - override system dark mode preference */
+/* Force bright off-white theme - override system dark mode preference */
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 17, 24, 39;
@@ -22,11 +22,46 @@ body {
   background: rgb(var(--background-end-rgb));
 }
 
+/* Global override: Force all white backgrounds to off-white */
+@layer base {
+  /* Override bg-white with off-white */
+  .bg-white {
+    background-color: #fafafa !important;
+  }
+  
+  /* Ensure bg-slate-50 is also off-white for consistency */
+  .bg-slate-50 {
+    background-color: #fafafa !important;
+  }
+  
+  /* Override any hardcoded white in dark mode variants */
+  .dark\:bg-white {
+    background-color: #fafafa !important;
+  }
+}
+
+/* Ensure high contrast for all text elements */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    color: #111827;
+  }
+  
+  p, span, div, a {
+    color: inherit;
+  }
+  
+  /* Ensure placeholder text is visible */
+  ::placeholder {
+    color: #9ca3af;
+    opacity: 1;
+  }
+}
+
 .material-symbols-outlined {
   font-family: 'Material Symbols Outlined';
   font-weight: normal;
   font-style: normal;
-  font-size: 24px;  /* Preferred icon size */
+  font-size: 24px;
   display: inline-block;
   line-height: 1;
   text-transform: none;
@@ -34,15 +69,8 @@ body {
   word-wrap: normal;
   white-space: nowrap;
   direction: ltr;
-
-  /* Support for all WebKit browsers. */
   -webkit-font-smoothing: antialiased;
-  /* Support for Safari and Chrome. */
   text-rendering: optimizeLegibility;
-
-  /* Support for Firefox. */
   -moz-osx-font-smoothing: grayscale;
-
-  /* Support for IE. */
   font-feature-settings: 'liga';
 }
