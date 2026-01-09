@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createUser } from "@/lib/db";
+import { createUser } from "@/lib/db-admin";
 import { userRegisterSchema } from "@/lib/validations/auth";
 import { z } from "zod";
 
