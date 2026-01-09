@@ -161,7 +161,7 @@ export default function MethodologyPage() {
     const selectedStep = steps.find((s) => s.id === selectedStepId);
 
     return (
-        <div className="flex flex-col h-full bg-background-dark text-slate-300">
+        <div className="flex flex-col h-full bg-[#fafafa] text-slate-900">
             <DashboardHeader
                 breadcrumbs={[
                     { label: "Tools" },

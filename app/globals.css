@@ -38,6 +38,17 @@ body {
   .dark\:bg-white {
     background-color: #fafafa !important;
   }
+  
+  /* Make borders darker and more visible */
+  .border-slate-100,
+  .dark\:border-slate-100 {
+    border-color: #cbd5e1 !important;  /* slate-300 */
+  }
+  
+  .border-slate-200,
+  .dark\:border-slate-200 {
+    border-color: #94a3b8 !important;  /* slate-400 */
+  }
 }
 
 /* Ensure maximum text visibility - dark text on off-white */

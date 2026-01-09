@@ -52,8 +52,8 @@ export default function LiteraturePage() {
 
         const q = query(
             collection(db, "literature"),
-            where("userId", "==", session.user.email),
-            orderBy("createdAt", "desc")
+            where("userId", "==", session.user.email)
+            // Removed orderBy to avoid requiring composite index
         );
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -61,6 +61,14 @@ export default function LiteraturePage() {
                 id: doc.id,
                 ...doc.data()
             })) as LiteratureSource[];
+
+            // Sort client-side by createdAt
+            fetchedSources.sort((a, b) => {
+                const aTime = a.createdAt?.toMillis?.() || 0;
+                const bTime = b.createdAt?.toMillis?.() || 0;
+                return bTime - aTime;
+            });
+
             setSources(fetchedSources);
         }, (err) => {
             console.error("Fetch error:", err);
