@@ -83,23 +83,27 @@ export default function LoginPage() {
 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                            <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                                 Email Address
                             </label>
                             <input
+                                id="email"
                                 type="email"
+                                autoComplete="email"
                                 {...register("email")}
                                 className={`w-full h-10 px-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`}
                             />
                             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                            <label htmlFor="password" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                                 Password
                             </label>
                             <div className="relative">
                                 <input
+                                    id="password"
                                     type={showPassword ? "text" : "password"}
+                                    autoComplete="current-password"
                                     {...register("password")}
                                     className={`w-full h-10 px-3 rounded-lg border ${errors.password ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`}
                                 />

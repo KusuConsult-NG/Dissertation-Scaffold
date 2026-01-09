@@ -117,21 +117,25 @@ export default function SignupPage() {
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                                     Full Name <span className="text-red-500">*</span>
                                 </label>
                                 <input
+                                    id="name"
+                                    autoComplete="name"
                                     {...register("name")}
                                     className={`w-full h-10 px-3 rounded-lg border ${errors.name ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`}
                                 />
                                 {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                                     Email Address <span className="text-red-500">*</span>
                                 </label>
                                 <input
+                                    id="email"
                                     type="email"
+                                    autoComplete="email"
                                     {...register("email")}
                                     className={`w-full h-10 px-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`}
                                 />
@@ -141,11 +145,13 @@ export default function SignupPage() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                <label htmlFor="state" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                                     State <span className="text-red-500">*</span>
                                 </label>
                                 <div className="relative">
                                     <select
+                                        id="state"
+                                        autoComplete="address-level1"
                                         {...register("state", {
                                             onChange: (e) => {
                                                 setValue("lga", ""); // Reset LGA when state changes
@@ -167,11 +173,13 @@ export default function SignupPage() {
                                 {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state.message}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                <label htmlFor="lga" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                                     LGA / City <span className="text-red-500">*</span>
                                 </label>
                                 <div className="relative">
                                     <select
+                                        id="lga"
+                                        autoComplete="address-level2"
                                         {...register("lga")}
                                         disabled={!selectedState}
                                         className={`w-full h-10 px-3 rounded-lg border ${errors.lga ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none appearance-none disabled:opacity-50 disabled:cursor-not-allowed`}
@@ -192,10 +200,12 @@ export default function SignupPage() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                            <label htmlFor="institution" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                                 Institution <span className="text-red-500">*</span>
                             </label>
                             <input
+                                id="institution"
+                                autoComplete="organization"
                                 {...register("institution")}
                                 className={`w-full h-10 px-3 rounded-lg border ${errors.institution ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`}
                             />
@@ -204,11 +214,13 @@ export default function SignupPage() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                <label htmlFor="researchLevel" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                                     Research Level <span className="text-red-500">*</span>
                                 </label>
                                 <div className="relative">
                                     <select
+                                        id="researchLevel"
+                                        autoComplete="off"
                                         {...register("researchLevel")}
                                         className={`w-full h-10 px-3 rounded-lg border ${errors.researchLevel ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none appearance-none`}
                                     >
@@ -227,10 +239,12 @@ export default function SignupPage() {
                                 {errors.researchLevel && <p className="text-red-500 text-xs mt-1">{errors.researchLevel.message}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                <label htmlFor="researchArea" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                                     Research Area <span className="text-red-500">*</span>
                                 </label>
                                 <input
+                                    id="researchArea"
+                                    autoComplete="off"
                                     {...register("researchArea")}
                                     className={`w-full h-10 px-3 rounded-lg border ${errors.researchArea ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`}
                                 />
@@ -240,12 +254,14 @@ export default function SignupPage() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                <label htmlFor="password" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                                     Password <span className="text-red-500">*</span>
                                 </label>
                                 <div className="relative">
                                     <input
+                                        id="password"
                                         type={showPassword ? "text" : "password"}
+                                        autoComplete="new-password"
                                         {...register("password")}
                                         className={`w-full h-10 px-3 rounded-lg border ${errors.password ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`}
                                     />
@@ -260,12 +276,14 @@ export default function SignupPage() {
                                 {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                                     Confirm Password <span className="text-red-500">*</span>
                                 </label>
                                 <div className="relative">
                                     <input
+                                        id="confirmPassword"
                                         type={showConfirmPassword ? "text" : "password"}
+                                        autoComplete="new-password"
                                         {...register("confirmPassword")}
                                         className={`w-full h-10 px-3 rounded-lg border ${errors.confirmPassword ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`}
                                     />
