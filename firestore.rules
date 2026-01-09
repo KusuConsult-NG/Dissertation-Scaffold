@@ -1,0 +1,48 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper helper
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.token.email == userId;
+    }
+
+    // Users: Users can read/write their own profile
+    match /users/{email} {
+      allow read: if isAuthenticated(); // Allow reading other profiles for community features
+      allow write: if isOwner(email);
+    }
+
+    // Literature: Strictly private
+    match /literature/{docId} {
+      allow read, list, write: if isAuthenticated() && resource.data.userId == request.auth.token.email;
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.token.email;
+    }
+
+    // Methodology: Private (stored by email ID)
+    match /methodology/{email} {
+      allow read, write: if isOwner(email);
+    }
+
+    // Drafts: Private (stored by email ID)
+    match /drafts/{email} {
+      allow read, write: if isOwner(email);
+    }
+
+    // Community Posts: Publicly readable (by auth users), write if auth
+    match /posts/{postId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      // Allow update/delete if author title (email) matches
+      allow update, delete: if isAuthenticated() && resource.data.author.title == request.auth.token.email;
+    }
+
+    // Default deny for anything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

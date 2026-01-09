@@ -2,6 +2,7 @@
 
 import React from "react";
 import DashboardHeader from "../../components/DashboardHeader";
+import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
@@ -89,7 +90,13 @@ export default function SettingsPage() {
                                     <div className="h-24 w-24 rounded-full bg-slate-200 dark:bg-gray-700 flex items-center justify-center text-3xl font-bold text-slate-500 overflow-hidden">
                                         {/* Mock Image Display */}
                                         {session?.user?.image ? (
-                                            <img src={session.user.image} alt="Profile" className="w-full h-full object-cover" />
+                                            <Image
+                                                src={session.user.image}
+                                                alt="Profile"
+                                                width={96}
+                                                height={96}
+                                                className="w-full h-full object-cover"
+                                            />
                                         ) : (
                                             <span>{session?.user?.name?.[0] || "U"}</span>
                                         )}

@@ -2,50 +2,39 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { toast } from "sonner";
-import { Loader2, ChevronDown, Eye, EyeOff } from "lucide-react";
 import { signIn } from "next-auth/react";
+import { toast } from "sonner";
+import { Loader2, Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
 import { nigerianLocations } from "@/lib/locations";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { userRegisterSchema, UserRegisterSchema } from "@/lib/validations/auth";
 
 export default function SignupPage() {
     const router = useRouter();
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    // New fields
-    const [state, setState] = useState("");
-    const [lga, setLga] = useState("");
-    const [institution, setInstitution] = useState("");
-    const [researchLevel, setResearchLevel] = useState("Undergraduate");
-    const [researchArea, setResearchArea] = useState("");
+    const {
+        register,
+        handleSubmit,
+        watch,
+        setValue,
+        formState: { errors },
+    } = useForm<UserRegisterSchema>({
+        resolver: zodResolver(userRegisterSchema),
+        defaultValues: {
+            state: "",
+            lga: "",
+            researchLevel: "",
+        },
+    });
 
-    const [loading, setLoading] = useState(false);
+    const selectedState = watch("state");
 
-    // Get available states
-    const states = Object.keys(nigerianLocations).sort();
-
-    // Get LGAs for selected state
-    const lgas = state ? nigerianLocations[state] || [] : []; // Ensure type safety with empty array
-
-    const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const newState = e.target.value;
-        setState(newState);
-        setLga(""); // Reset LGA when state changes
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (password !== confirmPassword) {
-            toast.error("Passwords do not match");
-            return;
-        }
-
+    const onSubmit = async (data: UserRegisterSchema) => {
         setLoading(true);
 
         try {
@@ -54,40 +43,35 @@ export default function SignupPage() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    name,
-                    email,
-                    password,
-                    state,
-                    lga,
-                    institution,
-                    researchLevel,
-                    researchArea,
-                }),
+                body: JSON.stringify(data),
             });
 
-            const data = await res.json();
+            const responseData = await res.json();
 
             if (!res.ok) {
-                throw new Error(data.message || "Something went wrong");
+                // Handle specific field errors returned from server
+                if (responseData.errors) {
+                    throw new Error("Validation failed. Please check your inputs.");
+                }
+                throw new Error(responseData.message || "Something went wrong");
             }
 
             toast.success("Account created successfully! Logging you in...");
 
-            // Auto login
-            const result = await signIn("credentials", {
-                email,
-                password,
+            // Auto-login
+            const loginRes = await signIn("credentials", {
+                email: data.email,
+                password: data.password,
                 redirect: false,
             });
 
-            if (result?.error) {
-                toast.error("Account created, but auto-login failed. Please sign in manually.");
+            if (loginRes?.error) {
+                toast.error("Auto-login failed. Please sign in manually.");
                 router.push("/login");
             } else {
-                router.push("/dashboard");
+                toast.success("Logged in successfully");
+                window.location.href = "/dashboard";
             }
-
         } catch (error: any) {
             console.error(error);
             toast.error(error.message);
@@ -97,7 +81,7 @@ export default function SignupPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-[#0d121c] p-4 py-12">
+        <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-[#0d121c] p-4">
             <div className="w-full max-w-2xl bg-white dark:bg-[#1a2230] rounded-xl shadow-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
                 <div className="p-8">
                     <div className="text-center mb-8">
@@ -123,202 +107,191 @@ export default function SignupPage() {
                             </svg>
                         </div>
                         <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-                            Create an Account
+                            Create Account
                         </h1>
                         <p className="text-slate-500 dark:text-slate-400 mt-2">
-                            Join the community of researchers
+                            Start your research journey today
                         </p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        <div className="space-y-4">
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                                        Full Name
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        className="w-full h-10 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                                        Email Address
-                                    </label>
-                                    <input
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full h-10 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                                        State
-                                    </label>
-                                    <div className="relative">
-                                        <select
-                                            value={state}
-                                            onChange={handleStateChange}
-                                            className="w-full h-10 px-3 pr-10 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none appearance-none"
-                                            required
-                                        >
-                                            <option value="">Select State</option>
-                                            {states.map((s) => (
-                                                <option key={s} value={s}>{s}</option>
-                                            ))}
-                                        </select>
-                                        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
-                                            <ChevronDown className="w-4 h-4" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                                        LGA / City
-                                    </label>
-                                    <div className="relative">
-                                        <select
-                                            value={lga}
-                                            onChange={(e) => setLga(e.target.value)}
-                                            className="w-full h-10 px-3 pr-10 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none appearance-none disabled:opacity-50"
-                                            required
-                                            disabled={!state}
-                                        >
-                                            <option value="">Select LGA</option>
-                                            {lgas.map((l) => (
-                                                <option key={l} value={l}>{l}</option>
-                                            ))}
-                                        </select>
-                                        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
-                                            <ChevronDown className="w-4 h-4" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="space-y-4">
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                                        Institution
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={institution}
-                                        onChange={(e) => setInstitution(e.target.value)}
-                                        className="w-full h-10 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                                        Research Level
-                                    </label>
-                                    <div className="relative">
-                                        <select
-                                            value={researchLevel}
-                                            onChange={(e) => setResearchLevel(e.target.value)}
-                                            className="w-full h-10 px-3 pr-10 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none appearance-none"
-                                        >
-                                            <option value="Undergraduate">Undergraduate</option>
-                                            <option value="Masters">Masters</option>
-                                            <option value="PhD">PhD</option>
-                                            <option value="Postdoc">Postdoc</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
-                                            <ChevronDown className="w-4 h-4" />
-                                        </div>
-                                    </div>
-                                </div>
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                    Full Name <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    {...register("name")}
+                                    className={`w-full h-10 px-3 rounded-lg border ${errors.name ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`}
+                                />
+                                {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                                    Research Area
+                                    Email Address <span className="text-red-500">*</span>
                                 </label>
                                 <input
-                                    type="text"
-                                    value={researchArea}
-                                    onChange={(e) => setResearchArea(e.target.value)}
-                                    placeholder="e.g. Artificial Intelligence in Healthcare"
-                                    className="w-full h-10 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
-                                    required
+                                    type="email"
+                                    {...register("email")}
+                                    className={`w-full h-10 px-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`}
                                 />
+                                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                             </div>
                         </div>
 
-                        <div className="space-y-4">
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                                        Password
-                                    </label>
-                                    <div className="relative">
-                                        <input
-                                            type={showPassword ? "text" : "password"}
-                                            value={password}
-                                            onChange={(e) => setPassword(e.target.value)}
-                                            className="w-full h-10 px-3 pr-10 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
-                                            required
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
-                                        >
-                                            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                                        </button>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                    State <span className="text-red-500">*</span>
+                                </label>
+                                <div className="relative">
+                                    <select
+                                        {...register("state", {
+                                            onChange: (e) => {
+                                                setValue("lga", ""); // Reset LGA when state changes
+                                            }
+                                        })}
+                                        className={`w-full h-10 px-3 rounded-lg border ${errors.state ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none appearance-none`}
+                                    >
+                                        <option value="">Select State</option>
+                                        {Object.keys(nigerianLocations).map((state) => (
+                                            <option key={state} value={state}>
+                                                {state}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+                                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
                                     </div>
                                 </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                                        Confirm Password
-                                    </label>
-                                    <div className="relative">
-                                        <input
-                                            type={showConfirmPassword ? "text" : "password"}
-                                            value={confirmPassword}
-                                            onChange={(e) => setConfirmPassword(e.target.value)}
-                                            className="w-full h-10 px-3 pr-10 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
-                                            required
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
-                                        >
-                                            {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                                        </button>
+                                {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state.message}</p>}
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                    LGA / City <span className="text-red-500">*</span>
+                                </label>
+                                <div className="relative">
+                                    <select
+                                        {...register("lga")}
+                                        disabled={!selectedState}
+                                        className={`w-full h-10 px-3 rounded-lg border ${errors.lga ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none appearance-none disabled:opacity-50 disabled:cursor-not-allowed`}
+                                    >
+                                        <option value="">Select LGA</option>
+                                        {selectedState && nigerianLocations[selectedState as keyof typeof nigerianLocations]?.map((lga: string) => (
+                                            <option key={lga} value={lga}>
+                                                {lga}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+                                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
                                     </div>
                                 </div>
+                                {errors.lga && <p className="text-red-500 text-xs mt-1">{errors.lga.message}</p>}
                             </div>
                         </div>
 
-                        <div className="pt-2">
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className="w-full h-10 flex items-center justify-center rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-sm shadow-md transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                                {loading ? (
-                                    <Loader2 className="w-4 h-4 animate-spin" />
-                                ) : (
-                                    "Create Account"
-                                )}
-                            </button>
+                        <div>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                Institution <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                {...register("institution")}
+                                className={`w-full h-10 px-3 rounded-lg border ${errors.institution ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`}
+                            />
+                            {errors.institution && <p className="text-red-500 text-xs mt-1">{errors.institution.message}</p>}
                         </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                    Research Level <span className="text-red-500">*</span>
+                                </label>
+                                <div className="relative">
+                                    <select
+                                        {...register("researchLevel")}
+                                        className={`w-full h-10 px-3 rounded-lg border ${errors.researchLevel ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none appearance-none`}
+                                    >
+                                        <option value="">Select Level</option>
+                                        <option value="Undergraduate">Undergraduate</option>
+                                        <option value="Masters">Masters</option>
+                                        <option value="PhD">PhD</option>
+                                        <option value="Postdoc">Postdoc</option>
+                                        <option value="Faculty">Faculty</option>
+                                        <option value="Independent">Independent</option>
+                                    </select>
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+                                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                                    </div>
+                                </div>
+                                {errors.researchLevel && <p className="text-red-500 text-xs mt-1">{errors.researchLevel.message}</p>}
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                    Research Area <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    {...register("researchArea")}
+                                    className={`w-full h-10 px-3 rounded-lg border ${errors.researchArea ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`}
+                                />
+                                {errors.researchArea && <p className="text-red-500 text-xs mt-1">{errors.researchArea.message}</p>}
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                    Password <span className="text-red-500">*</span>
+                                </label>
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        {...register("password")}
+                                        className={`w-full h-10 px-3 rounded-lg border ${errors.password ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                                    >
+                                        {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                    </button>
+                                </div>
+                                {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                    Confirm Password <span className="text-red-500">*</span>
+                                </label>
+                                <div className="relative">
+                                    <input
+                                        type={showConfirmPassword ? "text" : "password"}
+                                        {...register("confirmPassword")}
+                                        className={`w-full h-10 px-3 rounded-lg border ${errors.confirmPassword ? 'border-red-500' : 'border-slate-300 dark:border-slate-700'} bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none`}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                                    >
+                                        {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                                    </button>
+                                </div>
+                                {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>}
+                            </div>
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full h-10 flex items-center justify-center rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-sm shadow-md transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            {loading ? (
+                                <Loader2 className="w-4 h-4 animate-spin" />
+                            ) : (
+                                "Create Account"
+                            )}
+                        </button>
                     </form>
 
                     <div className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">

@@ -40,7 +40,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Payment was not successful" }, { status: 400 });
         }
 
-        console.log(`[Payment] Verified reference ${reference} for plan ${plan}. Updating user ${session.user.email}.`);
+
 
         // Update user plan in DB
         const updatedUser = await updateUser(session.user.email, {

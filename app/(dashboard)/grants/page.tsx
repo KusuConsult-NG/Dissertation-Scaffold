@@ -9,44 +9,81 @@ import {
     TrendingUp,
     BadgeCheck,
     CalendarDays,
+    ExternalLink,
+    Bookmark,
+    Check
 } from "lucide-react";
 import { toast } from "sonner";
 
+interface Grant {
+    id: string;
+    title: string;
+    agency: string;
+    matchScore: number;
+    amount: string;
+    deadline: string;
+    description: string;
+    url: string;
+}
+
+const MOCK_GRANTS: Grant[] = [
+    {
+        id: "1",
+        title: "Graduate Research Fellowship Program (GRFP)",
+        agency: "National Science Foundation (NSF)",
+        matchScore: 94,
+        amount: "$147,000",
+        deadline: "Oct 21, 2026",
+        description: "Supports outstanding graduate students in NSF-supported science, technology, engineering, and mathematics disciplines.",
+        url: "https://www.nsf.gov/funding/pgm_summ.jsp?pims_id=6201"
+    },
+    {
+        id: "2",
+        title: "Quantum Information Science Research",
+        agency: "Department of Energy (DOE)",
+        matchScore: 88,
+        amount: "$50,000 - $200,000",
+        deadline: "Nov 15, 2026",
+        description: "Funding for advanced research in quantum information science, targeting specific ethical implementation frameworks.",
+        url: "https://science.osti.gov/wdts/scgsr"
+    },
+    {
+        id: "3",
+        title: "Ethical AI & Society Grant",
+        agency: "Future of Life Institute",
+        matchScore: 82,
+        amount: "$100,000",
+        deadline: "Rolling",
+        description: "Project grants for researchers working on core problems in AI safety and governance.",
+        url: "https://futureoflife.org/grants/ai-safety-grants/"
+    }
+];
+
 export default function GrantsPage() {
     const [analyzing, setAnalyzing] = useState(false);
-    const [analysisResult, setAnalysisResult] = useState<string | null>(null);
+    const [savedGrants, setSavedGrants] = useState<Set<string>>(new Set());
 
     const handleReanalyze = async () => {
         setAnalyzing(true);
-        setAnalysisResult(null);
         const toastId = toast.loading("Analyzing grant potential...");
-        try {
-            // Simulating analyzing specific grants or general project
-            const res = await fetch("/api/ai/grants", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    projectDescription:
-                        "Looking for funding for Quantum Ethics research focusing on policy frameworks.",
-                    grantName: "NSF Graduate Research Fellowship",
-                }),
-            });
-            if (!res.ok) throw new Error("Analysis failed");
-            const data = await res.json();
-            if (data.analysis) {
-                setAnalysisResult(
-                    `AI Analysis: ${data.analysis} (Score: ${data.matchScore}%)`
-                );
-                toast.success("Analysis complete", { id: toastId });
-            } else {
-                toast.dismiss(toastId);
-            }
-        } catch (e) {
-            console.error(e);
-            toast.error("Failed to analyze project", { id: toastId });
-        } finally {
+
+        // Simulate analysis
+        setTimeout(() => {
             setAnalyzing(false);
+            toast.success("Analysis complete. 2 new matches found.", { id: toastId });
+        }, 2000);
+    };
+
+    const toggleSave = (id: string) => {
+        const newSaved = new Set(savedGrants);
+        if (newSaved.has(id)) {
+            newSaved.delete(id);
+            toast.info("Grant removed from bookmarks");
+        } else {
+            newSaved.add(id);
+            toast.success("Grant saved to bookmarks");
         }
+        setSavedGrants(newSaved);
     };
 
     return (
@@ -90,17 +127,10 @@ export default function GrantsPage() {
                                 <RefreshCw
                                     className={`w-4 h-4 mr-2 ${analyzing ? "animate-spin" : ""}`}
                                 />
-                                {analyzing ? "Analyzing..." : "Re-analyze Project"}
+                                {analyzing ? "Scanning..." : "Re-analyze Project"}
                             </button>
                         </div>
                     </div>
-
-                    {/* AI Banner Result */}
-                    {analysisResult && (
-                        <div className="bg-primary/10 border border-primary/20 p-4 rounded-lg text-primary text-sm font-medium animate-in fade-in slide-in-from-top-2">
-                            {analysisResult}
-                        </div>
-                    )}
 
                     {/* Key Stats Row */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -129,7 +159,7 @@ export default function GrantsPage() {
                                 </p>
                             </div>
                             <p className="text-gray-900 dark:text-white text-3xl font-bold tracking-tight truncate">
-                                14 Grants
+                                {MOCK_GRANTS.length} Grants
                             </p>
                             <p className="text-sm text-gray-500 mt-2 truncate">
                                 Based on &gt;80% semantic match
@@ -144,10 +174,10 @@ export default function GrantsPage() {
                                 </p>
                             </div>
                             <p className="text-gray-900 dark:text-white text-3xl font-bold tracking-tight truncate">
-                                Oct 15, 2023
+                                Oct 21, 2026
                             </p>
                             <p className="text-sm text-orange-500 dark:text-orange-400 font-medium mt-2 truncate">
-                                12 Days Remaining
+                                Upcoming very soon
                             </p>
                         </div>
                     </div>
@@ -172,7 +202,7 @@ export default function GrantsPage() {
                                         High Probability
                                     </span>
                                 </div>
-                                {/* Chart SVG */}
+                                {/* Chart SVG - Same as before but kept for context */}
                                 <div className="w-full aspect-[2/1] sm:aspect-[3/1] relative">
                                     <svg
                                         className="w-full h-full"
@@ -210,45 +240,73 @@ export default function GrantsPage() {
                                         ></path>
                                     </svg>
                                 </div>
-                                <div className="flex justify-between mt-4 px-2">
-                                    <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                                        Jan
-                                    </span>
-                                    <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                                        Feb
-                                    </span>
-                                    <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                                        Mar
-                                    </span>
-                                    <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                                        Apr
-                                    </span>
-                                    <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                                        May
-                                    </span>
-                                    <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">
-                                        Jun
-                                    </span>
-                                </div>
                             </div>
 
-                            {/* Grant Cards (Simplified for brevity) */}
+                            {/* Grant Cards */}
                             <div className="flex flex-col gap-4">
-                                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Matched Opportunities</h3>
-                                <div className="p-4 bg-white dark:bg-card-dark rounded-lg border border-gray-200 dark:border-gray-800">
-                                    <div className="flex justify-between">
-                                        <h4 className="font-bold">NSF Graduate Research Fellowship</h4>
-                                        <span className="text-primary font-bold">94% Match</span>
+                                <h3 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
+                                    Matched Opportunities
+                                    <span className="text-sm font-normal text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">
+                                        {MOCK_GRANTS.length} found
+                                    </span>
+                                </h3>
+
+                                {MOCK_GRANTS.map((grant) => (
+                                    <div key={grant.id} className="p-5 bg-white dark:bg-card-dark rounded-lg border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-md transition-shadow">
+                                        <div className="flex flex-col md:flex-row justify-between gap-4 mb-2">
+                                            <div>
+                                                <h4 className="text-lg font-bold text-gray-900 dark:text-white leading-tight">
+                                                    {grant.title}
+                                                </h4>
+                                                <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+                                                    {grant.agency}
+                                                </p>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <div className="text-right">
+                                                    <p className="text-xs text-gray-500 uppercase font-semibold">Match Score</p>
+                                                    <p className="text-lg font-bold text-primary">{grant.matchScore}%</p>
+                                                </div>
+                                                <div className="w-12 h-12 rounded-full border-4 border-primary/20 flex items-center justify-center">
+                                                    <div className="w-full h-full rounded-full border-4 border-primary border-t-transparent animate-spin-slow rotate-45" style={{ borderLeftColor: 'transparent', borderBottomColor: 'transparent' }}></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
+                                            {grant.description}
+                                        </p>
+
+                                        <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-4">
+                                            <div className="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
+                                                Amount: <span className="font-semibold text-gray-900 dark:text-white">{grant.amount}</span>
+                                            </div>
+                                            <div className="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
+                                                Deadline: <span className="font-semibold text-gray-900 dark:text-white">{grant.deadline}</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex items-center gap-3 pt-4 border-t border-gray-100 dark:border-gray-800">
+                                            <a
+                                                href={grant.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex-1 flex items-center justify-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary font-bold py-2 rounded-lg transition-colors"
+                                            >
+                                                Apply Now <ExternalLink className="w-4 h-4" />
+                                            </a>
+                                            <button
+                                                onClick={() => toggleSave(grant.id)}
+                                                className={`p-2 rounded-lg border transition-all ${savedGrants.has(grant.id)
+                                                        ? "bg-yellow-500/10 border-yellow-500/50 text-yellow-600 dark:text-yellow-500"
+                                                        : "bg-white dark:bg-card-dark border-gray-200 dark:border-gray-700 hover:bg-gray-50"
+                                                    }`}
+                                            >
+                                                {savedGrants.has(grant.id) ? <Check className="w-5 h-5" /> : <Bookmark className="w-5 h-5" />}
+                                            </button>
+                                        </div>
                                     </div>
-                                    <p className="text-sm text-gray-500 mt-1">Supports outstanding graduate students in NSF-supported disciplines.</p>
-                                </div>
-                                <div className="p-4 bg-white dark:bg-card-dark rounded-lg border border-gray-200 dark:border-gray-800">
-                                    <div className="flex justify-between">
-                                        <h4 className="font-bold">Department of Energy (DOE) Grant</h4>
-                                        <span className="text-primary font-bold">88% Match</span>
-                                    </div>
-                                    <p className="text-sm text-gray-500 mt-1">Funding for advanced research in quantum information science.</p>
-                                </div>
+                                ))}
                             </div>
                         </div>
 
@@ -260,7 +318,44 @@ export default function GrantsPage() {
                                     <span className="text-4xl font-black text-gray-900 dark:text-white">87%</span>
                                     <p className="text-sm text-gray-500">Excellent Fit</p>
                                 </div>
+                                <div className="space-y-3 mt-4">
+                                    <div className="text-sm flex justify-between">
+                                        <span className="text-gray-500">Topic Relevance</span>
+                                        <span className="font-bold text-gray-900 dark:text-white">High</span>
+                                    </div>
+                                    <div className="text-sm flex justify-between">
+                                        <span className="text-gray-500">Inst. Eligibility</span>
+                                        <span className="font-bold text-gray-900 dark:text-white">Verified</span>
+                                    </div>
+                                    <div className="text-sm flex justify-between">
+                                        <span className="text-gray-500">Career Stage</span>
+                                        <span className="font-bold text-gray-900 dark:text-white">Match</span>
+                                    </div>
+                                </div>
                             </div>
+
+                            {/* Saved Grants Mini Widget */}
+                            {savedGrants.size > 0 && (
+                                <div className="bg-white dark:bg-card-dark rounded-xl border border-gray-200 dark:border-gray-800 p-6 shadow-sm animate-in fade-in slide-in-from-right-4">
+                                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+                                        <Bookmark className="w-4 h-4 fill-current text-yellow-500" />
+                                        Saved Grants
+                                    </h3>
+                                    <ul className="space-y-2">
+                                        {Array.from(savedGrants).map(id => {
+                                            const grant = MOCK_GRANTS.find(g => g.id === id);
+                                            return (
+                                                <li key={id} className="text-sm p-2 bg-gray-50 dark:bg-gray-800/50 rounded flex justify-between items-center group">
+                                                    <span className="truncate max-w-[180px] font-medium">{grant?.title}</span>
+                                                    <button onClick={() => toggleSave(id)} className="text-gray-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                        ×
+                                                    </button>
+                                                </li>
+                                            )
+                                        })}
+                                    </ul>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

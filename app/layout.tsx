@@ -3,6 +3,7 @@ import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { ToasterProvider } from "./components/ToasterProvider";
 import { NextAuthProvider } from "./components/Providers";
+import { FirebaseAuthProvider } from "./components/FirebaseAuthProvider";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
@@ -26,8 +27,10 @@ export default function RootLayout({
                 className={`${inter.variable} ${playfair.variable} antialiased`}
             >
                 <NextAuthProvider>
-                    {children}
-                    <ToasterProvider />
+                    <FirebaseAuthProvider>
+                        {children}
+                        <ToasterProvider />
+                    </FirebaseAuthProvider>
                 </NextAuthProvider>
             </body>
         </html>

@@ -423,7 +423,7 @@ export default function LandingPage() {
                                     </span>
                                 </div>
                                 <p className="text-sm font-medium text-slate-200">
-                                    "The single most important tool in my PhD toolkit."
+                                    &quot;The single most important tool in my PhD toolkit.&quot;
                                 </p>
                             </div>
                         </div>
@@ -432,8 +432,8 @@ export default function LandingPage() {
                                 Success Stories
                             </span>
                             <h2 className="text-3xl md:text-4xl font-serif font-bold text-slate-900 -white mb-6">
-                                "Dissertation Scaffold helped me secure a $50k grant and finish
-                                my thesis 6 months early."
+                                &quot;Dissertation Scaffold helped me secure a $50k grant and finish
+                                my thesis 6 months early.&quot;
                             </h2>
                             <p className="text-lg text-slate-600 -slate-400 mb-8 italic">
                                 The structured approach to literature review and the automated

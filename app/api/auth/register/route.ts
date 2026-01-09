@@ -1,31 +1,40 @@
 import { NextResponse } from "next/server";
 import { createUser } from "@/lib/db";
+import { userRegisterSchema } from "@/lib/validations/auth";
+import { z } from "zod";
 
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const { name, email, password, state, lga, institution, researchLevel, researchArea } = body;
 
-        if (!name || !email || !password) {
+        // Validate request body
+        const validationResult = userRegisterSchema.safeParse(body);
+
+        if (!validationResult.success) {
             return NextResponse.json(
-                { message: "Missing required fields" },
+                {
+                    message: "Invalid request data",
+                    errors: validationResult.error.flatten().fieldErrors
+                },
                 { status: 400 }
             );
         }
 
+        const { name, email, password, state, lga, institution, researchLevel, researchArea } = validationResult.data;
+
         const newUser = await createUser({
             name,
             email,
-            password, // Note: In a real app, hash this password!
+            password, // In a real app, hash this password!
             image: null,
             bio: "",
             title: "Researcher",
             plan: "free",
-            state: state || "",
-            lga: lga || "",
-            institution: institution || "",
-            researchLevel: researchLevel || "",
-            researchArea: researchArea || "",
+            state,
+            lga,
+            institution,
+            researchLevel,
+            researchArea,
         });
 
         if (!newUser) {

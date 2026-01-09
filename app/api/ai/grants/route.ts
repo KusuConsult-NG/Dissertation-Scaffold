@@ -1,7 +1,5 @@
-import { HfInference } from "@huggingface/inference";
 import { NextResponse } from "next/server";
-
-const hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
+import { generateText } from "@/lib/ai";
 
 export async function POST(req: Request) {
     try {
@@ -14,29 +12,27 @@ export async function POST(req: Request) {
             );
         }
 
-        // Concept: specific grant matching analysis
-        // "Analyze the relevance of [Project] for [Grant Name]"
-        // Simulated Intelligent Response if API fails or for speed
+        // Construct a reasoning prompt for Mistral
+        const prompt = `[INST] You are a grant reviewer. Analyze the fit between this project and the grant.
+Project: "${projectDescription}"
+Grant: "${grantName || "General Research Grant"}"
 
-        let analysis = "";
-        try {
-            const result = await hf.textGeneration({
-                model: "google/flan-t5-large",
-                inputs: `Analyze the fit between this project: "${projectDescription}" and the grant "${grantName || "General Research Grant"}". concise reason:`,
-                parameters: { max_new_tokens: 60 }
-            });
-            analysis = result.generated_text;
-        } catch (e) {
-            console.warn("HF API Warning", e);
-            analysis = "Strong alignment with grant objectives based on keyword overlap in 'Ethics' and 'Quantum'.";
+Provide a concise reason why this project is a good fit. [/INST]
+Reason:`;
+
+        let analysis = await generateText(prompt, 100);
+
+        // Fallback for missing key or error
+        if (!analysis) {
+            analysis = "Strong alignment with grant objectives based on keyword overlap. (AI currently unavailable for deeper analysis)";
         }
 
-        // Mock a score
+        // Mock a score for now (could be AI generated in future)
         const score = Math.floor(Math.random() * (99 - 70 + 1) + 70);
 
         return NextResponse.json({
             matchScore: score,
-            analysis: analysis
+            analysis: analysis.trim()
         });
 
     } catch (error) {

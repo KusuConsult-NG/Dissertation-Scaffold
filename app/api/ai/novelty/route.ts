@@ -1,10 +1,5 @@
-import { HfInference } from "@huggingface/inference";
 import { NextResponse } from "next/server";
-
-// Initialize Hugging Face Inference
-// Note: In a real scenario, you should use process.env.HUGGINGFACE_API_KEY
-// For this scaffolding, we'll try to use the public API or fail gracefully.
-const hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
+import { generateText } from "@/lib/ai";
 
 export async function POST(req: Request) {
     try {
@@ -17,28 +12,20 @@ export async function POST(req: Request) {
             );
         }
 
-        // Use a text-to-text generation model (e.g., Flan-T5) to suggest improvements
-        // Prompt conceptualization: "Improve this academic novelty statement: [text]"
-        // Since public API is rate limited, we might fallback to simulated logic if it fails.
+        // Use Mistral for actionable advice
+        const prompt = `[INST] Enhance this academic novelty statement to be more impactful and intellectually rigorous.
+Statement: "${text}"
 
-        let suggestion = "";
-        try {
-            const result = await hf.textGeneration({
-                model: "google/flan-t5-large",
-                inputs: `Improve this academic novelty statement to be more impactful: "${text}"`,
-                parameters: {
-                    max_new_tokens: 100,
-                    temperature: 0.7,
-                }
-            });
-            suggestion = result.generated_text;
-        } catch (apiError) {
-            console.warn("HF API failed, using heuristic fallback", apiError);
-            // Fallback for demo purposes if API key is missing/rate limited
-            suggestion = "Consider explicitly stating how your methodology diverges from Smith et al. (2021) to strengthen your claim of empirical novelty.";
+Provide 2-3 specific improvements or a rewritten version. [/INST]
+Suggestions:`;
+
+        let suggestion = await generateText(prompt, 150);
+
+        if (!suggestion) {
+            suggestion = "Consider explicitly stating how your methodology diverges from recent studies (2024-2025) to strengthen your claim.";
         }
 
-        return NextResponse.json({ suggestion });
+        return NextResponse.json({ suggestion: suggestion.trim() });
     } catch (error) {
         console.error(error);
         return NextResponse.json(

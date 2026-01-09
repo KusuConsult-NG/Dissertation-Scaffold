@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import DashboardHeader from "../../components/DashboardHeader";
 import {
     Database,
@@ -18,7 +18,13 @@ import {
     Sparkles,
     CheckCircle,
     Play,
+    Save,
+    Trash2
 } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { doc, setDoc, onSnapshot, serverTimestamp, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { toast } from "sonner";
 
 interface MethodologyStep {
     id: string;
@@ -27,50 +33,94 @@ interface MethodologyStep {
     desc: string;
     position: string; // Tailwind formatting classes for position
     tags?: string[];
-    icon?: React.ReactNode;
+    // Icon is purely UI, we'll map type to icon on render to avoid serializing JSX
 }
 
+const DEFAULT_STEPS: MethodologyStep[] = [
+    {
+        id: "1",
+        type: "start",
+        title: "Research Questions",
+        desc: "Define your core research questions here.",
+        position: "top-10 left-1/2 -translate-x-1/2",
+    },
+];
+
 export default function MethodologyPage() {
-    const [steps, setSteps] = useState<MethodologyStep[]>([
-        {
-            id: "1",
-            type: "start",
-            title: "Research Questions",
-            desc: "How does remote work impact employee retention in tech startups?",
-            position: "top-10 left-1/2 -translate-x-1/2",
-        },
-        {
-            id: "2",
-            type: "quant",
-            title: "Quantitative Survey",
-            desc: "N=500 tech workers, Likert scale analysis.",
-            position: "top-56 left-[10%] lg:left-[15%]",
-            tags: ["SurveyMonkey", "Pending IRB"],
-            icon: <BarChart className="w-4 h-4 text-[#a371f7]" />,
-        },
-        {
-            id: "3",
-            type: "qual",
-            title: "Qualitative Interviews",
-            desc: "Semi-structured, 30 min zoom calls with founders.",
-            position: "top-56 right-[10%] lg:right-[15%]",
-            tags: ["Zoom", "Drafting"],
-            icon: <Mic className="w-4 h-4 text-primary" />,
-        },
-    ]);
-
+    const { data: session } = useSession();
+    const [steps, setSteps] = useState<MethodologyStep[]>(DEFAULT_STEPS);
     const [selectedStepId, setSelectedStepId] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [saving, setSaving] = useState(false);
 
-    const selectedStep = steps.find((s) => s.id === selectedStepId);
+    useEffect(() => {
+        if (!session?.user?.email) return;
 
-    const handleUpdateStep = (id: string, updates: Partial<MethodologyStep>) => {
-        setSteps((prev) =>
-            prev.map((s) => (s.id === id ? { ...s, ...updates } : s))
-        );
+        const docRef = doc(db, "methodologies", session.user.email);
+        const unsubscribe = onSnapshot(docRef, (docSnap) => {
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                if (data.steps) {
+                    setSteps(data.steps);
+                }
+            } else {
+                // Initialize if new
+                setDoc(docRef, {
+                    steps: DEFAULT_STEPS,
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp()
+                }, { merge: true });
+            }
+            setLoading(false);
+        }, (err) => {
+            console.error(err);
+            toast.error("Failed to load methodology.");
+            setLoading(false);
+        });
+
+        return () => unsubscribe();
+    }, [session]);
+
+    const saveToFirestore = async (newSteps: MethodologyStep[]) => {
+        if (!session?.user?.email) return;
+        setSaving(true);
+        try {
+            await setDoc(doc(db, "methodologies", session.user.email), {
+                steps: newSteps,
+                updatedAt: serverTimestamp()
+            }, { merge: true });
+        } catch (err) {
+            console.error("Failed to save:", err);
+            toast.error("Failed to save changes.");
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    // Debounce save to avoid too many writes while dragging or typing? 
+    // For now, explicit save on "Add" and "Edit Finish" is better, or direct save.
+    // Let's do direct save for simplicity but maybe debounce the "Title/Desc" typing.
+
+    const handleUpdateStep = async (id: string, updates: Partial<MethodologyStep>) => {
+        const updatedSteps = steps.map((s) => (s.id === id ? { ...s, ...updates } : s));
+        setSteps(updatedSteps);
+        // We trigger save immediately here. For high-frequency typing, this should be debounced.
+        // Implementing simple debounce-like behavior by not awaiting?
+        // Ideally we'd use a real debounce ref, but for this demo:
+        // Let's assume user types slowly or we accept some writes.
+        // Actually, let's just update local state and have a "Save" button in the edit panel, 
+        // OR rely on onBlur or explicit save.
+        // Better UX: Auto-save.
+        // We'll trust Firestore SDK to handle some batching, but we should be careful.
+    };
+
+    // Helper to persist only when needed (e.g. closing modal or adding step)
+    const persistSteps = (currentSteps: MethodologyStep[]) => {
+        saveToFirestore(currentSteps);
     };
 
     const handleAddStep = () => {
-        const newId = (steps.length + 1).toString();
+        const newId = (Date.now()).toString(); // Unique ID
         const newStep: MethodologyStep = {
             id: newId,
             type: "generic",
@@ -79,14 +129,39 @@ export default function MethodologyPage() {
             position: "top-96 left-1/2 -translate-x-1/2", // Place below start
             tags: ["Draft"],
         };
-        setSteps((prev) => [...prev, newStep]);
+        const newSteps = [...steps, newStep];
+        setSteps(newSteps);
+        persistSteps(newSteps);
         setSelectedStepId(newId);
     };
 
+    const handleDeleteStep = (id: string) => {
+        if (!confirm("Delete this step?")) return;
+        const newSteps = steps.filter(s => s.id !== id);
+        setSteps(newSteps);
+        persistSteps(newSteps);
+        setSelectedStepId(null);
+    };
+
+    const handleReset = () => {
+        if (!confirm("Reset entire methodology flow? This cannot be undone.")) return;
+        setSteps(DEFAULT_STEPS);
+        persistSteps(DEFAULT_STEPS);
+    };
+
+    const getIconForType = (type: string) => {
+        switch (type) {
+            case "quant": return <BarChart className="w-4 h-4 text-[#a371f7]" />;
+            case "qual": return <Mic className="w-4 h-4 text-primary" />;
+            case "start": return <Play className="w-4 h-4 text-white" />;
+            default: return <Database className="w-4 h-4 text-slate-400" />;
+        }
+    };
+
+    const selectedStep = steps.find((s) => s.id === selectedStepId);
+
     return (
         <div className="flex flex-col h-full bg-background-dark text-slate-300">
-            {/* Helper to force dark mode styles for this specific page if typically light, 
-        but since we are mixing themes, we'll try to stick to the page's design */}
             <DashboardHeader
                 breadcrumbs={[
                     { label: "Tools" },
@@ -103,15 +178,17 @@ export default function MethodologyPage() {
                             Completion Status
                         </h3>
                         <div className="flex items-end justify-between mb-2">
-                            <span className="text-2xl font-bold text-white">45%</span>
+                            <span className="text-2xl font-bold text-white">
+                                {Math.min(100, Math.round((steps.length / 5) * 100))}%
+                            </span>
                             <span className="text-xs text-accent-green mb-1">
-                                On Track
+                                {steps.length > 3 ? "On Track" : "Getting Started"}
                             </span>
                         </div>
                         <div className="w-full bg-border-dark rounded-full h-1.5">
                             <div
-                                className="bg-accent-green h-1.5 rounded-full"
-                                style={{ width: "45%" }}
+                                className="bg-accent-green h-1.5 rounded-full transition-all duration-500"
+                                style={{ width: `${Math.min(100, (steps.length / 5) * 100)}%` }}
                             ></div>
                         </div>
                     </div>
@@ -123,32 +200,37 @@ export default function MethodologyPage() {
                             </h3>
                         </div>
                         <div className="overflow-y-auto p-2 space-y-2 flex-1 scrollbar-thin">
-                            {/* Draggable Items */}
+                            {/* Items that act as templates */}
                             {[
                                 {
                                     icon: <Database className="w-5 h-5" />,
                                     title: "Data Collection",
                                     desc: "Surveys, Interviews",
+                                    type: "generic"
                                 },
                                 {
                                     icon: <BarChart2 className="w-5 h-5" />,
-                                    title: "Analysis Method",
-                                    desc: "Regression, Thematic",
+                                    title: "Quantitative Analysis",
+                                    desc: "Regression, Stats",
+                                    type: "quant"
+                                },
+                                {
+                                    icon: <Mic className="w-5 h-5" />,
+                                    title: "Qualitative Interviews",
+                                    desc: "Thematic Analysis",
+                                    type: "qual"
                                 },
                                 {
                                     icon: <Shield className="w-5 h-5" />,
                                     title: "Ethics Protocol",
                                     desc: "IRB, Consent Forms",
-                                },
-                                {
-                                    icon: <Filter className="w-5 h-5" />,
-                                    title: "Sampling Strategy",
-                                    desc: "Random, Stratified",
+                                    type: "generic"
                                 },
                             ].map((item, i) => (
-                                <div
+                                <button
                                     key={i}
-                                    className="group p-3 rounded bg-background-dark border border-border-dark hover:border-primary/50 cursor-grab active:cursor-grabbing transition-colors flex items-center gap-3"
+                                    onClick={handleAddStep}
+                                    className="w-full text-left group p-3 rounded bg-background-dark border border-border-dark hover:border-primary/50 transition-colors flex items-center gap-3"
                                 >
                                     <span className="text-slate-500 group-hover:text-primary">
                                         {item.icon}
@@ -159,7 +241,8 @@ export default function MethodologyPage() {
                                         </p>
                                         <p className="text-[10px] text-slate-500">{item.desc}</p>
                                     </div>
-                                </div>
+                                    <Plus className="w-4 h-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+                                </button>
                             ))}
                         </div>
                     </div>
@@ -170,12 +253,9 @@ export default function MethodologyPage() {
                     {/* Controls */}
                     <div className="flex items-center justify-between">
                         <div className="flex gap-2">
-                            <button className="p-2 rounded hover:bg-surface-dark text-slate-400 hover:text-white transition-colors">
-                                <Undo className="w-5 h-5" />
-                            </button>
-                            <button className="p-2 rounded hover:bg-surface-dark text-slate-400 hover:text-white transition-colors">
-                                <Redo className="w-5 h-5" />
-                            </button>
+                            <span className="text-xs text-slate-500 flex items-center gap-2">
+                                {saving ? "Saving..." : "All changes saved"}
+                            </span>
                         </div>
                         <div className="flex items-center gap-4">
                             <button
@@ -184,14 +264,12 @@ export default function MethodologyPage() {
                             >
                                 <Plus className="w-3 h-3" /> Add Step
                             </button>
-                            <div className="flex bg-surface-dark rounded border border-border-dark p-0.5">
-                                <button className="px-3 py-1 rounded text-xs font-medium bg-background-dark text-white shadow-sm">
-                                    Visual
-                                </button>
-                                <button className="px-3 py-1 rounded text-xs font-medium text-slate-500 hover:text-slate-300">
-                                    Text
-                                </button>
-                            </div>
+                            <button
+                                onClick={handleReset}
+                                className="flex items-center gap-1 text-xs font-mono text-red-500 bg-red-500/10 px-3 py-1.5 rounded border border-red-500/20 hover:bg-red-500/20 transition-colors"
+                            >
+                                <Trash2 className="w-3 h-3" /> Reset
+                            </button>
                         </div>
                     </div>
                     {/* Flowchart Canvas Area */}
@@ -203,36 +281,15 @@ export default function MethodologyPage() {
                         }}
                         onClick={() => setSelectedStepId(null)}
                     >
-                        {/* Connector Lines (SVG) - Keeping static for now, would need dynamic calc for real app */}
-                        <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                            <path
-                                d="M 390 120 L 390 180"
-                                fill="none"
-                                stroke="#30363d"
-                                strokeWidth="2"
-                            ></path>
-                            <path
-                                d="M 390 180 L 250 220"
-                                fill="none"
-                                stroke="#30363d"
-                                strokeWidth="2"
-                            ></path>
-                            <path
-                                d="M 390 180 L 530 220"
-                                fill="none"
-                                stroke="#30363d"
-                                strokeWidth="2"
-                            ></path>
-                            {/* Simple line for added steps if any (mock) */}
-                            {steps.length > 3 && (
-                                <path
-                                    d="M 390 280 L 390 380"
-                                    fill="none"
-                                    stroke="#30363d"
-                                    strokeWidth="2"
-                                    strokeDasharray="4"
-                                ></path>
-                            )}
+                        {loading && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-background-dark/80 z-50">
+                                <span className="text-primary animate-pulse">Loading Methodology...</span>
+                            </div>
+                        )}
+
+                        {/* Connector Lines (SVG) - Simplified for static mock */}
+                        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
+                            <line x1="50%" y1="100" x2="50%" y2="600" stroke="currentColor" strokeWidth="2" strokeDasharray="5,5" />
                         </svg>
 
                         {steps.map((step) => (
@@ -252,15 +309,10 @@ export default function MethodologyPage() {
                                         <Play className="w-3 h-3" /> Start
                                     </div>
                                 )}
-                                {step.type === "qual" && (
-                                    <div className="absolute -right-2 -top-2 w-5 h-5 bg-primary rounded-full flex items-center justify-center text-white">
-                                        <Edit className="w-3 h-3" />
-                                    </div>
-                                )}
 
                                 <div className="flex items-center justify-between mb-2">
                                     <div className="flex items-center gap-2">
-                                        {step.icon && <span>{step.icon}</span>}
+                                        <span>{getIconForType(step.type)}</span>
                                         <h4 className="font-bold text-white text-sm">
                                             {step.title}
                                         </h4>
@@ -285,14 +337,6 @@ export default function MethodologyPage() {
                                         ))}
                                     </div>
                                 )}
-
-                                {/* Connector Points */}
-                                {step.type === "start" && (
-                                    <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-500 rounded-full border-2 border-background-dark"></div>
-                                )}
-                                {step.type !== "start" && (
-                                    <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-500 rounded-full border-2 border-background-dark"></div>
-                                )}
                             </div>
                         ))}
 
@@ -303,12 +347,21 @@ export default function MethodologyPage() {
                                     <h5 className="text-sm font-bold text-white">
                                         Edit: {selectedStep.title}
                                     </h5>
-                                    <button
-                                        onClick={() => setSelectedStepId(null)}
-                                        className="text-slate-500 hover:text-white"
-                                    >
-                                        <X className="w-4 h-4" />
-                                    </button>
+                                    <div>
+                                        <button
+                                            onClick={() => handleDeleteStep(selectedStep.id)}
+                                            className="text-red-500 hover:text-red-400 mr-2"
+                                            title="Delete Step"
+                                        >
+                                            <Trash2 className="w-4 h-4" />
+                                        </button>
+                                        <button
+                                            onClick={() => setSelectedStepId(null)}
+                                            className="text-slate-500 hover:text-white"
+                                        >
+                                            <X className="w-4 h-4" />
+                                        </button>
+                                    </div>
                                 </div>
                                 <div className="space-y-3">
                                     <div>
@@ -339,8 +392,14 @@ export default function MethodologyPage() {
                                             }
                                         />
                                     </div>
-                                    <button className="w-full py-1.5 bg-primary text-white text-xs font-bold rounded hover:bg-sky-400">
-                                        Save Changes
+                                    <button
+                                        onClick={() => {
+                                            persistSteps(steps);
+                                            setSelectedStepId(null);
+                                        }}
+                                        className="w-full py-1.5 bg-primary text-white text-xs font-bold rounded hover:bg-sky-400"
+                                    >
+                                        Save & Close
                                     </button>
                                 </div>
                             </div>
@@ -361,63 +420,49 @@ export default function MethodologyPage() {
                         <div className="space-y-4">
                             <div className="bg-primary/5 border-l-2 border-primary p-3 rounded-r">
                                 <p className="text-xs text-slate-300 leading-relaxed">
-                                    <strong className="text-primary">Suggestion:</strong> Your
-                                    sample size for the interviews (N=10) might be too small
-                                    compared to your quantitative sample.
+                                    <strong className="text-primary">Suggestion:</strong> Based on your Research Questions, consider adding a
+                                    <strong className="text-white"> Quantitative Survey</strong> step.
                                 </p>
                                 <div className="flex gap-2 mt-2">
-                                    <button className="text-[10px] font-bold text-primary hover:underline">
-                                        Accept
-                                    </button>
-                                    <button className="text-[10px] font-bold text-slate-500 hover:text-slate-300">
-                                        Dismiss
+                                    <button
+                                        onClick={handleAddStep}
+                                        className="text-[10px] font-bold text-primary hover:underline"
+                                    >
+                                        Add Step
                                     </button>
                                 </div>
-                            </div>
-                            <div className="bg-red-500/5 border-l-2 border-red-500 p-3 rounded-r">
-                                <p className="text-xs text-slate-300 leading-relaxed">
-                                    <strong className="text-red-500">Gap Detected:</strong> You
-                                    haven't linked your data analysis method for the qualitative
-                                    section yet.
-                                </p>
                             </div>
                         </div>
                     </div>
-                    {/* Steps Checklist */}
+
+                    {/* Steps Checklist - Dynamic based on actual steps */}
                     <div className="flex-1 bg-surface-dark border border-border-dark rounded-lg flex flex-col overflow-hidden">
                         <div className="p-4 border-b border-border-dark bg-surface-dark/50 flex justify-between items-center">
                             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                                Required Sections
+                                Your Steps
                             </h3>
                             <span className="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded">
-                                3/7 Complete
+                                {steps.length} Total
                             </span>
                         </div>
                         <div className="overflow-y-auto p-0 flex-1 scrollbar-thin">
-                            {/* Check Item */}
-                            <button className="w-full flex items-center justify-between p-4 border-b border-border-dark/50 hover:bg-background-dark/50 transition-colors text-left group">
-                                <div>
-                                    <h4 className="text-sm font-medium text-slate-400 line-through decoration-slate-600">
-                                        Research Design
-                                    </h4>
-                                    <p className="text-[10px] text-slate-600">
-                                        Defined as Mixed-Methods
-                                    </p>
-                                </div>
-                                <CheckCircle className="w-4 h-4" />
-                            </button>
-                            {/* Check Item */}
-                            <button className="w-full flex items-center justify-between p-4 border-b border-border-dark/50 bg-primary/5 hover:bg-primary/10 transition-colors text-left group border-l-2 border-l-primary">
-                                <div>
-                                    <h4 className="text-sm font-bold text-white">
-                                        Data Collection Instruments
-                                    </h4>
-                                    <p className="text-[10px] text-slate-400 group-hover:text-primary transition-colors">
-                                        Currently Editing
-                                    </p>
-                                </div>
-                                <Edit className="w-4 h-4 text-primary" />
-                            </button>
+                            {steps.map((step) => (
+                                <button
+                                    key={step.id}
+                                    onClick={() => setSelectedStepId(step.id)}
+                                    className={`w-full flex items-center justify-between p-4 border-b border-border-dark/50 transition-colors text-left group ${selectedStepId === step.id ? 'bg-primary/10 border-l-2 border-l-primary' : 'hover:bg-background-dark/50'}`}
+                                >
+                                    <div className="w-[80%]">
+                                        <h4 className="text-sm font-medium text-slate-300 truncate">
+                                            {step.title}
+                                        </h4>
+                                        <p className="text-[10px] text-slate-500 truncate">
+                                            {step.desc}
+                                        </p>
+                                    </div>
+                                    <Edit className={`w-3 h-3 ${selectedStepId === step.id ? 'text-primary' : 'text-slate-600'}`} />
+                                </button>
+                            ))}
                         </div>
                     </div>
                 </aside>

@@ -1,7 +1,5 @@
-import { HfInference } from "@huggingface/inference";
 import { NextResponse } from "next/server";
-
-const hf = new HfInference(process.env.HUGGINGFACE_API_KEY);
+import { summarizeText } from "@/lib/ai";
 
 export async function POST(req: Request) {
     try {
@@ -14,21 +12,10 @@ export async function POST(req: Request) {
             );
         }
 
-        let summary = "";
-        try {
-            const result = await hf.summarization({
-                model: "facebook/bart-large-cnn",
-                inputs: text,
-                parameters: {
-                    max_length: 130,
-                    min_length: 30,
-                }
-            });
-            summary = result.summary_text;
-        } catch (apiError) {
-            console.warn("HF API failed, using heuristic fallback", apiError);
-            // Fallback or Mock
-            summary = "AI Summarization unavailable (API Key missing or rate limit). This paper discusses the intersection of ethics and quantum computing, proposing a new framework for policy makers.";
+        let summary = await summarizeText(text);
+
+        if (!summary) {
+            summary = "AI Summarization unavailable (API Key missing or rate limit). This paper discusses key themes in your field.";
         }
 
         return NextResponse.json({ summary });

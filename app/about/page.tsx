@@ -7,7 +7,7 @@ export default function AboutPage() {
                 Dissertation Scaffold was born out of a simple frustration: the academic tools available today are either too simple (basic text editors) or too complex (unintuitive citation managers). There was nothing designed to handle the holistic <em>structure</em> of a dissertation.
             </p>
             <p>
-                Our mission is to democratize access to high-quality research tools. We believe that every student, regardless of their institution's prestige, deserves the best chance to publish groundbreaking work.
+                Our mission is to democratize access to high-quality research tools. We believe that every student, regardless of their institution&apos;s prestige, deserves the best chance to publish groundbreaking work.
             </p>
             <div className="not-prose grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 mb-12">
                 <div className="p-6 bg-slate-50 dark:bg-slate-800 rounded-lg text-center">

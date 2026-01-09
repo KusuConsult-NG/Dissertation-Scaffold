@@ -1,148 +1,320 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import DashboardHeader from "../../components/DashboardHeader";
+import Image from "next/image";
 import {
-    Plus,
+    MessageSquare,
+    Heart,
+    Share2,
+    Search,
+    Users,
+    Video,
+    Mic,
     Image as ImageIcon,
     Link as LinkIcon,
+    Send,
     MoreHorizontal,
-    Heart,
-    MessageCircle,
-    RotateCw,
-    UserPlus,
+    Plus,
 } from "lucide-react";
+import { toast } from "sonner";
+import { useSession } from "next-auth/react";
+import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp, Timestamp } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { db, storage } from "@/lib/firebase";
+
+interface Post {
+    id: string;
+    author: {
+        name: string;
+        avatar?: string;
+        title: string;
+        time: string; // Display time, we'll calc from timestamp
+    };
+    content: string;
+    image?: string;
+    likes: number;
+    comments: number;
+    tags: string[];
+    timestamp?: Timestamp;
+}
 
 export default function CommunityPage() {
+    const { data: session } = useSession();
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [newPostContent, setNewPostContent] = useState("");
+    const [isPosting, setIsPosting] = useState(false);
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
+    const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+    // Real-time listener for posts
+    useEffect(() => {
+        // Query posts ordered by timestamp
+        const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
+
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const fetchedPosts = snapshot.docs.map(doc => {
+                const data = doc.data();
+                // Handle timestamp conversion
+                let timeDisplay = 'Just now';
+                if (data.timestamp) {
+                    const date = data.timestamp.toDate();
+                    timeDisplay = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    // If it's older than 24h, show date
+                    if (Date.now() - date.getTime() > 86400000) {
+                        timeDisplay = date.toLocaleDateString();
+                    }
+                }
+
+                return {
+                    id: doc.id,
+                    ...data,
+                    author: {
+                        ...data.author,
+                        time: timeDisplay
+                    }
+                } as Post;
+            });
+            setPosts(fetchedPosts);
+        }, (error) => {
+            console.error("Error fetching posts:", error);
+            toast.error("Failed to load live feed.");
+        });
+
+        return () => unsubscribe();
+    }, []);
+
+    const handleCreatePost = async () => {
+        if (!newPostContent.trim() && !selectedImage) return;
+        if (!session?.user) {
+            toast.error("You must be logged in to post.");
+            return;
+        }
+
+        setIsPosting(true);
+        try {
+            let imageUrl = undefined;
+
+            // Upload image if selected
+            // Upload image if selected
+            if (selectedImage) {
+                if (!storage) {
+                    throw new Error("Firebase Storage is not initialized");
+                }
+                const storageRef = ref(storage, `posts/${Date.now()}_${selectedImage.name}`);
+                await uploadBytes(storageRef, selectedImage);
+                imageUrl = await getDownloadURL(storageRef);
+            }
+
+            await addDoc(collection(db, "posts"), {
+                author: {
+                    name: session.user.name || "Anonymous Scholar",
+                    title: session.user.email || "Researcher",
+                },
+                content: newPostContent,
+                image: imageUrl,
+                likes: 0,
+                comments: 0,
+                tags: ["#General"],
+                timestamp: serverTimestamp(),
+            });
+
+            setNewPostContent("");
+            setSelectedImage(null);
+            if (fileInputRef.current) fileInputRef.current.value = "";
+            toast.success("Post published!");
+        } catch (error: any) {
+            console.error("Error creating post:", error);
+            if (error.code === 'permission-denied') {
+                toast.error("Permission denied. Please refresh to restore authentication.");
+            } else if (error.code === 'storage/unauthorized') {
+                toast.error("Image upload failed. Permission denied.");
+            } else {
+                toast.error(`Failed: ${error.message || "Unknown error"}`);
+            }
+        } finally {
+            setIsPosting(false);
+        }
+    };
+
+    const handleJoinRoom = () => {
+        toast.promise(new Promise((resolve) => setTimeout(resolve, 2000)), {
+            loading: "Connecting to secure room...",
+            success: "Joined 'Thesis Defense Prep' (Simulated)",
+            error: "Failed to join room",
+        });
+    };
+
+    const handleNewDiscussion = () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        const input = document.getElementById("post-input");
+        if (input) input.focus();
+        toast.info("Start a new discussion by posting here.");
+    };
+
+    const handleImageClick = () => {
+        fileInputRef.current?.click();
+    };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            if (file.size > 5 * 1024 * 1024) {
+                toast.error("File is too large (max 5MB)");
+                return;
+            }
+            setSelectedImage(file);
+            toast.success(`Image selected: ${file.name}`);
+        }
+    };
+
     return (
-        <div className="flex flex-col h-full bg-background-light dark:bg-background-dark">
+        <>
             <DashboardHeader
                 breadcrumbs={[
                     { label: "Community" },
                     { label: "Scholar Connect", href: "/community" },
                 ]}
             />
-            <main className="flex-1 flex w-full overflow-hidden">
-                {/* Left Sidebar: Navigation & Groups */}
-                <aside className="w-64 flex-shrink-0 border-r border-slate-200 dark:border-gray-800 bg-white dark:bg-card-dark hidden lg:flex flex-col">
-                    <div className="p-4">
-                        <button className="w-full bg-primary hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2">
-                            <Plus className="w-5 h-5" />
-                            <span>New Discussion</span>
-                        </button>
-                    </div>
-                    <div className="flex-1 overflow-y-auto px-4 pb-4">
-                        <div className="mb-6">
-                            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
-                                My Communities
-                            </h3>
-                            <nav className="space-y-1">
-                                <a
-                                    className="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-gray-800 rounded-lg transition-colors group"
-                                    href="#"
-                                >
-                                    <span className="text-lg">🧬</span>
-                                    <span className="text-sm font-medium group-hover:text-slate-900 dark:group-hover:text-white">
-                                        Bio-Engineering
-                                    </span>
-                                    <span className="ml-auto text-xs bg-slate-100 dark:bg-gray-700 text-slate-500 px-2 py-0.5 rounded-full">
-                                        12
-                                    </span>
-                                </a>
-                                <a
-                                    className="flex items-center gap-3 px-3 py-2 bg-blue-50 dark:bg-primary/20 text-primary rounded-lg transition-colors group"
-                                    href="#"
-                                >
-                                    <span className="text-lg">🤖</span>
-                                    <span className="text-sm font-medium">AI Ethics &amp; Policy</span>
-                                    <span className="ml-auto text-xs bg-blue-100 dark:bg-primary/30 text-primary px-2 py-0.5 rounded-full">
-                                        5
-                                    </span>
-                                </a>
-                                <a
-                                    className="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-gray-400 hover:bg-slate-50 dark:hover:bg-gray-800 rounded-lg transition-colors group"
-                                    href="#"
-                                >
-                                    <span className="text-lg">📊</span>
-                                    <span className="text-sm font-medium group-hover:text-slate-900 dark:group-hover:text-white">
-                                        Qualitative Methods
-                                    </span>
-                                </a>
-                            </nav>
+            <div className="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark">
+                <div className="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 p-4 md:p-8">
+                    {/* Left Sidebar: Navigation & Communities */}
+                    <aside className="hidden lg:block lg:col-span-3 space-y-8 sticky top-8 h-fit">
+                        {/* Search */}
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                            <input
+                                type="text"
+                                placeholder="Search discussions..."
+                                className="w-full bg-white dark:bg-card-dark border border-slate-200 dark:border-border-dark rounded-xl py-2.5 pl-10 pr-4 text-sm outline-none focus:border-primary transition-colors"
+                            />
                         </div>
-                        <div className="mb-6">
-                            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
-                                Active Threads
+
+                        {/* Menu */}
+                        <div className="space-y-1">
+                            <button className="w-full flex items-center justify-between px-4 py-2.5 bg-primary/10 text-primary rounded-xl font-bold text-sm">
+                                <div className="flex items-center gap-3">
+                                    <MessageSquare className="w-4 h-4" />
+                                    <span>Discussions</span>
+                                </div>
+                                <span className="bg-primary text-white text-[10px] px-2 py-0.5 rounded-full">
+                                    {posts.length}
+                                </span>
+                            </button>
+                            <button className="w-full flex items-center justify-between px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl font-medium text-sm transition-colors">
+                                <div className="flex items-center gap-3">
+                                    <Users className="w-4 h-4" />
+                                    <span>My Communities</span>
+                                </div>
+                            </button>
+                            <button className="w-full flex items-center justify-between px-4 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl font-medium text-sm transition-colors">
+                                <div className="flex items-center gap-3">
+                                    <Video className="w-4 h-4" />
+                                    <span>Live Sessions</span>
+                                </div>
+                                <span className="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full animate-pulse">
+                                    Live
+                                </span>
+                            </button>
+                        </div>
+
+                        {/* Active Communities */}
+                        <div>
+                            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 px-2">
+                                Popular Topics
                             </h3>
-                            <div className="space-y-3">
-                                <div className="group cursor-pointer">
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-                                        <p className="text-xs font-semibold text-slate-900 dark:text-white line-clamp-1 group-hover:text-primary transition-colors">
-                                            Grant writing tips for NSF?
-                                        </p>
+                            <div className="space-y-2">
+                                {["#QuantitativeAnalysis", "#AcademicWriting", "#PhDLife", "#GrantFunding"].map((tag) => (
+                                    <div key={tag} className="flex items-center gap-3 px-2 py-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg group">
+                                        <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 group-hover:bg-white dark:group-hover:bg-card-dark flex items-center justify-center text-slate-500 font-bold text-lg">
+                                            #
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-bold text-slate-700 dark:text-white group-hover:text-primary transition-colors">
+                                                {tag.replace("#", "")}
+                                            </p>
+                                            <p className="text-[10px] text-slate-500">1.2k members</p>
+                                        </div>
                                     </div>
-                                    <p className="text-[11px] text-slate-500 pl-3.5">
-                                        Posted by Dr. Chen • 2h ago
-                                    </p>
-                                </div>
-                                <div className="group cursor-pointer">
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-primary transition-colors"></div>
-                                        <p className="text-xs font-semibold text-slate-900 dark:text-white line-clamp-1 group-hover:text-primary transition-colors">
-                                            Dealing with IRB delays
-                                        </p>
-                                    </div>
-                                    <p className="text-[11px] text-slate-500 pl-3.5">
-                                        Posted by Sarah J. • 5h ago
-                                    </p>
-                                </div>
+                                ))}
                             </div>
                         </div>
-                    </div>
-                    {/* Lower profile section removed as it is redundant with global sidebar */}
-                </aside>
+                    </aside>
 
-                {/* Middle Column: Main Feed */}
-                <section className="flex-1 flex flex-col min-w-0 bg-background-light dark:bg-background-dark overflow-hidden relative">
-                    {/* Live Session Banner */}
-                    <div className="bg-indigo-600 text-white px-4 py-2 flex items-center justify-between shadow-sm z-20">
-                        <div className="flex items-center gap-3">
-                            <span className="flex h-2 w-2 relative">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-                            </span>
-                            <p className="text-sm font-medium">
-                                Live Now: "Structuring your Literature Review" with Prof. Davis
-                            </p>
+                    {/* Main Feed */}
+                    <main className="col-span-1 lg:col-span-6 space-y-6">
+                        {/* Live Session Banner */}
+                        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 text-white relative overflow-hidden shadow-lg shadow-indigo-500/20">
+                            <div className="relative z-10 flex justify-between items-center">
+                                <div>
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1">
+                                            <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span>
+                                            LIVE NOW
+                                        </span>
+                                        <span className="text-indigo-100 text-xs">Started 12 mins ago</span>
+                                    </div>
+                                    <h2 className="text-xl font-bold mb-1">Thesis Defense Prep: Q&A</h2>
+                                    <p className="text-indigo-100 text-sm">
+                                        Host: Dr. Sarah Mitchell • 142 listening
+                                    </p>
+                                </div>
+                                <button
+                                    onClick={handleJoinRoom}
+                                    className="bg-white text-indigo-600 px-4 py-2 rounded-lg text-sm font-bold hover:bg-indigo-50 transition-colors shadow-lg"
+                                >
+                                    Join Room
+                                </button>
+                            </div>
+                            {/* Decorative circles */}
+                            <div className="absolute -top-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-2xl"></div>
+                            <div className="absolute bottom-0 left-1/2 w-32 h-32 bg-purple-500/20 rounded-full blur-xl"></div>
                         </div>
-                        <button className="text-xs bg-white/20 hover:bg-white/30 px-3 py-1 rounded transition-colors font-medium">
-                            Join Room
-                        </button>
-                    </div>
 
-                    {/* Feed Content */}
-                    <div className="flex-1 overflow-y-auto p-4 md:p-8 space-y-6">
-                        {/* Post Input */}
-                        <div className="bg-white dark:bg-card-dark rounded-xl shadow-sm border border-slate-200 dark:border-gray-800 p-4">
+                        {/* Create Post */}
+                        <div className="bg-white dark:bg-card-dark rounded-2xl border border-slate-200 dark:border-border-dark p-4 shadow-sm">
                             <div className="flex gap-4">
-                                <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+                                <div className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex-shrink-0 flex items-center justify-center font-bold text-slate-500">
+                                    {(session?.user?.name?.[0] || "U").toUpperCase()}
+                                </div>
                                 <div className="flex-1">
                                     <textarea
-                                        className="w-full border-none focus:ring-0 resize-none text-sm placeholder-slate-400 dark:bg-transparent dark:text-white p-0"
-                                        placeholder="Share your research milestone or ask a question..."
-                                        rows={2}
-                                    ></textarea>
-                                    <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-100 dark:border-gray-800">
-                                        <div className="flex gap-2 text-slate-500">
-                                            <button className="hover:text-primary hover:bg-slate-50 dark:hover:bg-gray-800 p-1.5 rounded transition-colors flex-shrink-0">
+                                        id="post-input"
+                                        value={newPostContent}
+                                        onChange={(e) => setNewPostContent(e.target.value)}
+                                        placeholder="Share your research progress or ask a question..."
+                                        className="w-full bg-slate-50 dark:bg-[#151b26] border-none rounded-xl p-3 text-sm focus:ring-1 focus:ring-primary outline-none resize-none min-h-[100px]"
+                                    />
+                                    <div className="flex justify-between items-center mt-3">
+                                        <div className="flex gap-2 items-center">
+                                            <input
+                                                type="file"
+                                                ref={fileInputRef}
+                                                className="hidden"
+                                                accept="image/*"
+                                                onChange={handleFileChange}
+                                            />
+                                            <button onClick={handleImageClick} className={`p-2 rounded-lg transition-colors ${selectedImage ? "text-primary bg-primary/10" : "text-slate-400 hover:text-primary hover:bg-primary/5"}`} title="Add Image">
                                                 <ImageIcon className="w-5 h-5" />
                                             </button>
-                                            <button className="hover:text-primary hover:bg-slate-50 dark:hover:bg-gray-800 p-1.5 rounded transition-colors flex-shrink-0">
+                                            {selectedImage && (
+                                                <span className="text-xs text-primary font-medium truncate max-w-[100px]">
+                                                    {selectedImage.name}
+                                                </span>
+                                            )}
+                                            <button className="p-2 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors" title="Add Link">
                                                 <LinkIcon className="w-5 h-5" />
                                             </button>
+                                            <button className="p-2 text-slate-400 hover:text-primary hover:bg-primary/5 rounded-lg transition-colors" title="Add Poll">
+                                                <MoreHorizontal className="w-5 h-5" />
+                                            </button>
                                         </div>
-                                        <button className="px-4 py-1.5 bg-primary text-white text-sm font-medium rounded-lg hover:bg-blue-600 transition-colors flex-shrink-0">
+                                        <button
+                                            onClick={handleCreatePost}
+                                            disabled={isPosting || !newPostContent.trim()}
+                                            className="bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-primary-hover transition-colors disabled:opacity-50"
+                                        >
+                                            <Send className="w-4 h-4" />
                                             Post
                                         </button>
                                     </div>
@@ -150,131 +322,136 @@ export default function CommunityPage() {
                             </div>
                         </div>
 
-                        {/* Post 1 */}
-                        <div className="bg-white dark:bg-card-dark rounded-xl shadow-sm border border-slate-200 dark:border-gray-800 overflow-hidden">
-                            <div className="p-4 md:p-6">
-                                <div className="flex items-start justify-between mb-4">
-                                    <div className="flex items-center gap-3 min-w-0">
-                                        <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold border border-purple-200 flex-shrink-0">
-                                            MK
-                                        </div>
-                                        <div className="min-w-0">
-                                            <h4 className="text-sm font-bold text-slate-900 dark:text-white truncate">
-                                                Maria K.
-                                            </h4>
-                                            <p className="text-xs text-slate-500 truncate">
-                                                PhD Candidate • Stanford University
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <button className="text-slate-500 hover:text-slate-900 dark:hover:text-white flex-shrink-0">
-                                        <MoreHorizontal className="w-5 h-5" />
-                                    </button>
-                                </div>
-                                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
-                                    Finally defended my proposal! 🎉
-                                </h3>
-                                <p className="text-sm text-slate-600 dark:text-gray-300 leading-relaxed mb-4">
-                                    After 6 months of grueling revisions and endless literature
-                                    reviews, my committee approved my dissertation proposal on
-                                    "Algorithmic Bias in Healthcare Systems". Huge thanks to
-                                    everyone in the{" "}
-                                    <span className="text-primary font-medium cursor-pointer hover:underline">
-                                        #AI_Ethics
-                                    </span>{" "}
-                                    circle for the feedback on chapter 3!
-                                </p>
-                                <div className="flex gap-2 mb-4">
-                                    <span className="px-2 py-1 bg-green-50 text-green-700 text-xs font-medium rounded-full border border-green-100">
-                                        Milestone
-                                    </span>
-                                    <span className="px-2 py-1 bg-slate-50 text-slate-600 text-xs font-medium rounded-full border border-slate-100">
-                                        Proposal Defense
-                                    </span>
-                                </div>
-                                <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-gray-800 text-slate-500 text-sm">
-                                    <div className="flex gap-6">
-                                        <button className="flex items-center gap-1.5 hover:text-pink-500 transition-colors">
-                                            <Heart className="w-5 h-5" />
-                                            <span>42</span>
-                                        </button>
-                                        <button className="flex items-center gap-1.5 hover:text-primary transition-colors">
-                                            <MessageCircle className="w-5 h-5" />
-                                            <span>8 Comments</span>
-                                        </button>
-                                    </div>
-                                    <span className="text-xs text-slate-400">24 mins ago</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Right Sidebar: Suggested People & Events */}
-                <aside className="w-80 flex-shrink-0 border-l border-slate-200 dark:border-gray-800 bg-white dark:bg-card-dark hidden xl:block overflow-y-auto p-6">
-                    {/* Events */}
-                    <div className="mb-8">
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-                                Upcoming Events
-                            </h3>
-                            <a className="text-primary text-xs font-medium hover:underline" href="#">
-                                View all
-                            </a>
-                        </div>
+                        {/* Feed */}
                         <div className="space-y-4">
-                            <div className="flex gap-3 items-start group cursor-pointer hover:bg-slate-50 dark:hover:bg-gray-800 p-2 -mx-2 rounded-lg transition-colors">
-                                <div className="bg-slate-100 dark:bg-gray-700 rounded-lg p-2 text-center min-w-[50px]">
-                                    <span className="block text-xs font-bold text-red-500 uppercase">
-                                        Oct
-                                    </span>
-                                    <span className="block text-xl font-bold text-slate-900 dark:text-white">
-                                        15
-                                    </span>
-                                </div>
-                                <div>
-                                    <h4 className="text-sm font-bold text-slate-900 dark:text-white leading-tight mb-1 group-hover:text-primary transition-colors">
-                                        Virtual Writing Retreat
-                                    </h4>
-                                    <p className="text-xs text-slate-500 mb-1">
-                                        10:00 AM - 4:00 PM EST
+                            {posts.map((post) => (
+                                <div key={post.id} className="bg-white dark:bg-card-dark rounded-2xl border border-slate-200 dark:border-border-dark p-5 shadow-sm hover:border-primary/20 transition-colors">
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-sm">
+                                                {post.author.name[0]}
+                                            </div>
+                                            <div>
+                                                <h3 className="font-bold text-slate-900 dark:text-white text-sm">
+                                                    {post.author.name}
+                                                </h3>
+                                                <p className="text-xs text-slate-500">
+                                                    {post.author.title} • {post.author.time}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <button className="text-slate-400 hover:text-slate-600">
+                                            <MoreHorizontal className="w-5 h-5" />
+                                        </button>
+                                    </div>
+                                    <p className="text-slate-700 dark:text-slate-300 text-sm leading-relaxed mb-4 whitespace-pre-wrap">
+                                        {post.content}
                                     </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    {/* Suggested Scholars */}
-                    <div>
-                        <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-                                Suggested Scholars
+                                    {/* Tags */}
+                                    <div className="flex gap-2 mb-4">
+                                        {post.tags.map((tag, i) => (
+                                            <span key={i} className="text-xs text-primary bg-primary/5 px-2 py-1 rounded-md font-medium"> # {tag} </span>
+                                        ))}
+                                    </div>
+
+                                    {/* Real Image Rendering */}
+                                    {post.image && (
+                                        <div className="mb-4 rounded-xl overflow-hidden border border-slate-100 dark:border-slate-800">
+                                            <Image
+                                                src={post.image}
+                                                alt="Post attachment"
+                                                width={800}
+                                                height={600}
+                                                className="w-full h-auto max-h-[400px] object-cover"
+                                            />
+                                        </div>
+                                    )}
+
+                                    <div className="flex items-center gap-6 border-t border-slate-100 dark:border-slate-800 pt-4">
+                                        <button className="flex items-center gap-2 text-slate-500 hover:text-red-500 transition-colors text-sm group">
+                                            <Heart className="w-5 h-5 group-hover:fill-red-500" />
+                                            <span>{post.likes}</span>
+                                        </button>
+                                        <button className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors text-sm">
+                                            <MessageSquare className="w-5 h-5" />
+                                            <span>{post.comments}</span>
+                                        </button>
+                                        <button className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors text-sm ml-auto">
+                                            <Share2 className="w-5 h-5" />
+                                            <span>Share</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+
+                            {posts.length === 0 && (
+                                <div className="text-center py-10 text-slate-500">
+                                    No posts yet. Be the first to start a discussion!
+                                </div>
+                            )}
+                        </div>
+                    </main>
+
+                    {/* Right Sidebar: Suggestions */}
+                    <aside className="hidden lg:block lg:col-span-3 space-y-6 sticky top-8 h-fit">
+                        <div className="flex justify-between items-center mb-2">
+                            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                New Discussions
                             </h3>
-                            <button className="text-slate-500 hover:text-primary">
-                                <RotateCw className="w-4 h-4" />
+                            <button onClick={handleNewDiscussion} className="flex items-center gap-1 text-primary text-xs font-bold hover:underline">
+                                <Plus className="w-3 h-3" /> New
                             </button>
                         </div>
-                        <div className="space-y-4">
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-9 h-9 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-xs">
-                                        AL
-                                    </div>
-                                    <div>
-                                        <h4 className="text-sm font-bold text-slate-900 dark:text-white">
-                                            Dr. Ana Lopez
-                                        </h4>
-                                        <p className="text-xs text-slate-500">Sociology • Yale</p>
-                                    </div>
-                                </div>
-                                <button className="text-primary hover:bg-primary/10 p-1.5 rounded-full transition-colors">
-                                    <UserPlus className="w-5 h-5" />
+
+                        {/* Event Card */}
+                        <div className="bg-slate-900 rounded-xl p-5 text-white relative overflow-hidden">
+                            <div className="relative z-10">
+                                <p className="text-xs font-bold text-indigo-300 uppercase mb-2">
+                                    Upcoming Webinar
+                                </p>
+                                <h3 className="font-bold text-lg mb-1">
+                                    Academic Writing Masterclass
+                                </h3>
+                                <p className="text-sm text-slate-300 mb-4">
+                                    Tomorrow • 10:00 AM EST
+                                </p>
+                                <button className="w-full py-2 bg-white text-slate-900 rounded-lg text-sm font-bold hover:bg-indigo-50 transition-colors">
+                                    Register Free
                                 </button>
                             </div>
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500 rounded-full blur-3xl opacity-20 -mr-16 -mt-16"></div>
                         </div>
-                    </div>
-                </aside>
-            </main>
-        </div>
+
+                        {/* Who to follow */}
+                        <div className="bg-white dark:bg-card-dark border border-slate-200 dark:border-border-dark rounded-xl p-5 shadow-sm">
+                            <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-4">
+                                Scholars to Follow
+                            </h3>
+                            <div className="space-y-4">
+                                {[1, 2, 3].map((i) => (
+                                    <div key={i} className="flex items-center justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700"></div>
+                                            <div>
+                                                <h4 className="text-sm font-bold text-slate-900 dark:text-white">
+                                                    Dr. Alex Chen
+                                                </h4>
+                                                <p className="text-[10px] text-slate-500">
+                                                    Quantum Physics
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <button className="text-primary hover:bg-primary/5 p-1.5 rounded-lg transition-colors">
+                                            <Plus className="w-4 h-4" />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </>
     );
 }

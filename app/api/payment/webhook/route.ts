@@ -31,7 +31,7 @@ export async function POST(req: Request) {
         // Parse the event
         const event = JSON.parse(body);
 
-        console.log(`[Webhook] Received event: ${event.event}`);
+
 
         // Handle different event types
         switch (event.event) {
@@ -42,11 +42,10 @@ export async function POST(req: Request) {
             case "subscription.create":
             case "subscription.disable":
                 // Future: Handle subscription events
-                console.log(`[Webhook] ${event.event} event received (not yet implemented)`);
                 break;
 
             default:
-                console.log(`[Webhook] Unhandled event type: ${event.event}`);
+            // Unhandled event type
         }
 
         // Always return 200 to acknowledge receipt
@@ -67,7 +66,7 @@ async function handleChargeSuccess(data: any) {
 
         // Only process successful payments
         if (status !== "success") {
-            console.log(`[Webhook] Skipping non-success charge: ${status}`);
+
             return;
         }
 
@@ -95,9 +94,7 @@ async function handleChargeSuccess(data: any) {
             plan: plan.toLowerCase(),
         });
 
-        console.log(
-            `[Webhook] Successfully updated ${userEmail} to ${plan} plan (ref: ${reference})`
-        );
+
 
         // Optional: Store payment record
         // In production, you'd save this to a payments table

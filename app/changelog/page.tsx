@@ -7,7 +7,7 @@ export default function ChangelogPage() {
                 <div className="relative pl-8 border-l-2 border-slate-200 dark:border-slate-800">
                     <div className="absolute top-0 -left-[9px] w-4 h-4 rounded-full bg-primary border-4 border-white dark:border-[#0d121c]"></div>
                     <span className="text-sm font-mono text-slate-500 mb-2 block">v2.1.0 • January 8, 2026</span>
-                    <h3 className="text-xl font-bold mb-4">The "Smart Scaffold" Update</h3>
+                    <h3 className="text-xl font-bold mb-4">The &quot;Smart Scaffold&quot; Update</h3>
                     <ul className="list-disc pl-5 space-y-2">
                         <li>Check out the new <span className="font-bold text-primary">Smart Outlining</span> engine.</li>
                         <li>Added <span className="font-bold text-primary">Grant Calendar</span> with sync capabilities.</li>

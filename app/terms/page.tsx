@@ -4,7 +4,7 @@ export default function TermsPage() {
     return (
         <SimplePage title="Terms of Service" description="Last updated: January 8, 2026">
             <p>
-                Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the Dissertation Scaffold website (the "Service") operated by Dissertation Scaffold ("us", "we", or "our").
+                Please read these Terms of Service (&quot;Terms&quot;, &quot;Terms of Service&quot;) carefully before using the Dissertation Scaffold website (the &quot;Service&quot;) operated by Dissertation Scaffold (&quot;us&quot;, &quot;we&quot;, or &quot;our&quot;).
             </p>
             <h3>1. Acceptance of Terms</h3>
             <p>

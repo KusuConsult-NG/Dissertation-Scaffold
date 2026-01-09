@@ -26,6 +26,7 @@ export interface User {
     institution?: string;
     researchLevel?: string;
     researchArea?: string;
+    connectedTools?: string[];
 }
 
 const USERS_COLLECTION = "users";
@@ -145,7 +146,7 @@ export async function initializeDefaultUser(): Promise<void> {
         const existingUser = await getUser("user@example.com");
 
         if (!existingUser) {
-            console.log("[Firestore] Creating default user...");
+            // Creating default user
             await createUser({
                 email: "user@example.com",
                 name: "Dr. Researcher",
@@ -154,10 +155,9 @@ export async function initializeDefaultUser(): Promise<void> {
                 bio: "Researching the intersection of quantum computing mechanics and ethical policy frameworks.",
                 title: "Postdoctoral Fellow, Quantum Ethics",
                 plan: "free",
+                connectedTools: [],
             });
-            console.log("[Firestore] Default user created successfully");
-        } else {
-            console.log("[Firestore] Default user already exists");
+
         }
     } catch (error) {
         console.error("[Firestore] Error initializing default user:", error);

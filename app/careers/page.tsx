@@ -26,7 +26,7 @@ export default function CareersPage() {
                 </div>
             </div>
             <p className="mt-8 text-sm text-slate-500">
-                Don't see a role that fits? Email us at careers@dissertationscaffold.com
+                Don&apos;t see a role that fits? Email us at careers@dissertationscaffold.com
             </p>
         </SimplePage>
     );
