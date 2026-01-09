@@ -40,20 +40,64 @@ body {
   }
 }
 
-/* Ensure high contrast for all text elements */
+/* Ensure maximum text visibility - dark text on off-white */
 @layer base {
+  /* Headings: Very dark gray for maximum contrast */
   h1, h2, h3, h4, h5, h6 {
-    color: #111827;
+    color: #1f2937 !important;  /* slate-800 */
   }
   
-  p, span, div, a {
-    color: inherit;
+  /* Body text: Dark gray */
+  p {
+    color: #374151 !important;  /* slate-700 */
   }
   
-  /* Ensure placeholder text is visible */
+  /* Links and interactive text */
+  a {
+    color: #135bec;  /* primary blue - already good contrast */
+  }
+  
+  /* Ensure all text elements default to dark */
+  .text-slate-900, .text-gray-900 {
+    color: #111827 !important;
+  }
+  
+  .text-slate-700, .text-gray-700 {
+    color: #374151 !important;
+  }
+  
+  .text-slate-600, .text-gray-600 {
+    color: #4b5563 !important;
+  }
+  
+  /* Force dark text colors */
+  .dark\:text-white,
+  .dark\:text-gray-100,
+  .dark\:text-gray-200,
+  .dark\:text-slate-100,
+  .dark\:text-slate-200 {
+    color: #111827 !important;  /* Force to dark gray instead of white */
+  }
+  
+  .dark\:text-gray-300,
+  .dark\:text-slate-300 {
+    color: #4b5563 !important;  /* Force to medium gray */
+  }
+  
+  .dark\:text-gray-400,
+  .dark\:text-slate-400 {
+    color: #6b7280 !important;  /* Force to readable gray */
+  }
+  
+  /* Ensure placeholder text is visible but subtle */
   ::placeholder {
-    color: #9ca3af;
+    color: #9ca3af !important;
     opacity: 1;
+  }
+
+  /* Input text should be dark */
+  input, textarea, select {
+    color: #111827 !important;
   }
 }
 
