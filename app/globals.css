@@ -34,6 +34,11 @@ body {
     background-color: #fafafa !important;
   }
   
+  /* bg-background-light should be slightly lighter for contrast */
+  .bg-background-light {
+    background-color: #f5f5f5 !important;
+  }
+  
   /* Override any hardcoded white in dark mode variants */
   .dark\:bg-white {
     background-color: #fafafa !important;
@@ -54,7 +59,11 @@ body {
     background-color: #fafafa !important;
   }
   
-  /* Make borders darker and more visible */
+  .dark\:bg-background-light {
+    background-color: #f5f5f5 !important;
+  }
+  
+  /* Make borders and dividers darker and more visible */
   .border-slate-100,
   .dark\:border-slate-100 {
     border-color: #cbd5e1 !important;  /* slate-300 */
@@ -63,6 +72,16 @@ body {
   .border-slate-200,
   .dark\:border-slate-200 {
     border-color: #94a3b8 !important;  /* slate-400 */
+  }
+  
+  .divide-slate-100 > :not([hidden]) ~ :not([hidden]),
+  .dark\:divide-slate-100 > :not([hidden]) ~ :not([hidden]) {
+    border-color: #cbd5e1 !important;  /* slate-300 */
+  }
+  
+  .divide-slate-800 > :not([hidden]) ~ :not([hidden]),
+  .dark\:divide-slate-800 > :not([hidden]) ~ :not([hidden]) {
+    border-color: #cbd5e1 !important;  /* slate-300 */
   }
   
   .border-\[#f0f2f4\],
