@@ -1,12 +1,26 @@
 import { NextResponse } from "next/server";
-import { initializeDefaultUser } from "@/lib/firestore";
+import { createUser } from "@/lib/db-admin";
+
+// CRITICAL: firebase-admin requires Node.js runtime
+export const runtime = 'nodejs';
 
 export async function POST() {
     try {
-        await initializeDefaultUser();
+        // Create default user using Admin SDK to bypass security rules
+        const existingUser = await createUser({
+            email: "user@example.com",
+            name: "Dr. Researcher",
+            password: "password",
+            image: null,
+            bio: "Researching the intersection of quantum computing mechanics and ethical policy frameworks.",
+            title: "Postdoctoral Fellow, Quantum Ethics",
+            plan: "free",
+        });
+
         return NextResponse.json({
             success: true,
-            message: "Default user initialized in Firestore"
+            message: "Default user initialized in Firestore",
+            user: existingUser
         });
     } catch (error) {
         console.error("[Init] Error:", error);

@@ -3,6 +3,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { updateUser } from "@/lib/db";
 
+// CRITICAL: getServerSession requires Node.js runtime for firebase-admin
+export const runtime = 'nodejs';
+
 export async function POST(req: Request) {
     const session = await getServerSession(authOptions);
 
