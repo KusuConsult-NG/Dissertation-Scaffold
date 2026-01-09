@@ -4,7 +4,9 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
-import { Loader2, ChevronDown } from "lucide-react";
+import { Loader2, ChevronDown, Eye, EyeOff } from "lucide-react";
+import { signIn } from "next-auth/react";
+import { nigerianLocations } from "@/lib/locations";
 
 export default function SignupPage() {
     const router = useRouter();
@@ -12,6 +14,8 @@ export default function SignupPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     // New fields
     const [state, setState] = useState("");
@@ -21,6 +25,18 @@ export default function SignupPage() {
     const [researchArea, setResearchArea] = useState("");
 
     const [loading, setLoading] = useState(false);
+
+    // Get available states
+    const states = Object.keys(nigerianLocations).sort();
+
+    // Get LGAs for selected state
+    const lgas = state ? nigerianLocations[state] || [] : []; // Ensure type safety with empty array
+
+    const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const newState = e.target.value;
+        setState(newState);
+        setLga(""); // Reset LGA when state changes
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -56,8 +72,22 @@ export default function SignupPage() {
                 throw new Error(data.message || "Something went wrong");
             }
 
-            toast.success("Account created successfully!");
-            router.push("/login");
+            toast.success("Account created successfully! Logging you in...");
+
+            // Auto login
+            const result = await signIn("credentials", {
+                email,
+                password,
+                redirect: false,
+            });
+
+            if (result?.error) {
+                toast.error("Account created, but auto-login failed. Please sign in manually.");
+                router.push("/login");
+            } else {
+                router.push("/dashboard");
+            }
+
         } catch (error: any) {
             console.error(error);
             toast.error(error.message);
@@ -134,25 +164,44 @@ export default function SignupPage() {
                                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                                         State
                                     </label>
-                                    <input
-                                        type="text"
-                                        value={state}
-                                        onChange={(e) => setState(e.target.value)}
-                                        className="w-full h-10 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
-                                        required
-                                    />
+                                    <div className="relative">
+                                        <select
+                                            value={state}
+                                            onChange={handleStateChange}
+                                            className="w-full h-10 px-3 pr-10 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none appearance-none"
+                                            required
+                                        >
+                                            <option value="">Select State</option>
+                                            {states.map((s) => (
+                                                <option key={s} value={s}>{s}</option>
+                                            ))}
+                                        </select>
+                                        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                                            <ChevronDown className="w-4 h-4" />
+                                        </div>
+                                    </div>
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                                         LGA / City
                                     </label>
-                                    <input
-                                        type="text"
-                                        value={lga}
-                                        onChange={(e) => setLga(e.target.value)}
-                                        className="w-full h-10 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
-                                        required
-                                    />
+                                    <div className="relative">
+                                        <select
+                                            value={lga}
+                                            onChange={(e) => setLga(e.target.value)}
+                                            className="w-full h-10 px-3 pr-10 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none appearance-none disabled:opacity-50"
+                                            required
+                                            disabled={!state}
+                                        >
+                                            <option value="">Select LGA</option>
+                                            {lgas.map((l) => (
+                                                <option key={l} value={l}>{l}</option>
+                                            ))}
+                                        </select>
+                                        <div className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                                            <ChevronDown className="w-4 h-4" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -216,25 +265,43 @@ export default function SignupPage() {
                                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                                         Password
                                     </label>
-                                    <input
-                                        type="password"
-                                        value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full h-10 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
-                                        required
-                                    />
+                                    <div className="relative">
+                                        <input
+                                            type={showPassword ? "text" : "password"}
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            className="w-full h-10 px-3 pr-10 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
+                                            required
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword(!showPassword)}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+                                        >
+                                            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                        </button>
+                                    </div>
                                 </div>
                                 <div>
                                     <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                                         Confirm Password
                                     </label>
-                                    <input
-                                        type="password"
-                                        value={confirmPassword}
-                                        onChange={(e) => setConfirmPassword(e.target.value)}
-                                        className="w-full h-10 px-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
-                                        required
-                                    />
+                                    <div className="relative">
+                                        <input
+                                            type={showConfirmPassword ? "text" : "password"}
+                                            value={confirmPassword}
+                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                            className="w-full h-10 px-3 pr-10 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0d121c] text-slate-900 dark:text-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all outline-none"
+                                            required
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+                                        >
+                                            {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

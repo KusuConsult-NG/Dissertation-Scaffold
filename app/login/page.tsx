@@ -8,8 +8,8 @@ import { Loader2 } from "lucide-react";
 
 export default function LoginPage() {
     const router = useRouter();
-    const [email, setEmail] = useState("user@example.com");
-    const [password, setPassword] = useState("password");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -119,10 +119,6 @@ export default function LoginPage() {
                             Start Free Trial
                         </a>
                     </div>
-                </div>
-                <div className="px-8 py-4 bg-slate-50 dark:bg-[#151b26] border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-500">
-                    <p>Demo Account:</p>
-                    <p className="font-mono mt-1">user@example.com / password</p>
                 </div>
             </div>
         </div>
