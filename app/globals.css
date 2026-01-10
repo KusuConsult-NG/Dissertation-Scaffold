@@ -63,6 +63,35 @@ body {
     background-color: #f5f5f5 !important;
   }
   
+  /* Force very dark backgrounds (slate-900, gray-900) to lighter colors */
+  .bg-slate-900,
+  .dark\:bg-slate-900,
+  .bg-gray-900,
+  .dark\:bg-gray-900 {
+    background-color: #e2e8f0 !important;  /* slate-200 - light gray */
+  }
+  
+  .bg-slate-800,
+  .dark\:bg-slate-800,
+  .bg-gray-800,
+  .dark\:bg-gray-800 {
+    background-color: #f1f5f9 !important;  /* slate-100 */
+  }
+  
+  .bg-slate-700,
+  .dark\:bg-slate-700,
+  .bg-gray-700,
+  .dark\:bg-gray-700 {
+    background-color: #f8fafc !important;  /* slate-50 */
+  }
+  
+  /* Force dark gradient backgrounds to light equivalents */
+  .bg-gradient-to-r.from-indigo-600,
+  .bg-gradient-to-r.from-purple-600,
+  .bg-gradient-to-br {
+    background: linear-gradient(to right, #e0e7ff, #f3e8ff) !important;  /* light indigo to light purple */
+  }
+  
   /* Make borders and dividers darker and more visible */
   .border-slate-100,
   .dark\:border-slate-100 {
