@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/firebase";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 
 // CRITICAL: getServerSession requires Node.js runtime for firebase-admin
 export const runtime = 'nodejs';
@@ -22,7 +22,7 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Image too large. Maximum size is 1MB." }, { status: 400 });
         }
 
-        // Update user in Firestore
+        // Update user in Firestore (using setDoc with merge to handle non-existent docs)
         const userRef = doc(db, "users", session.user.email);
 
         const updates: any = {
@@ -36,15 +36,19 @@ export async function POST(req: Request) {
         if (body.notifications !== undefined) updates.notifications = body.notifications;
         if (body.theme !== undefined) updates.theme = body.theme;
 
-        await updateDoc(userRef, updates);
+        // Use setDoc with merge instead of updateDoc to handle non-existent documents
+        await setDoc(userRef, updates, { merge: true });
 
         // Get updated user data
         const updatedDoc = await getDoc(userRef);
         const userData = updatedDoc.data();
 
         return NextResponse.json({ user: userData, success: true });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Update user error:", error);
-        return NextResponse.json({ error: "Failed to update profile" }, { status: 500 });
+        return NextResponse.json({
+            error: "Failed to update profile",
+            details: error.message
+        }, { status: 500 });
     }
 }
