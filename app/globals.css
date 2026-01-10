@@ -85,11 +85,10 @@ body {
     background-color: #f8fafc !important;  /* slate-50 */
   }
   
-  /* Force dark gradient backgrounds to light equivalents */
-  .bg-gradient-to-r.from-indigo-600,
-  .bg-gradient-to-r.from-purple-600,
-  .bg-gradient-to-br {
+  /* Only override very dark gradients like indigo-600/purple-600, not colorful ones */
+  .bg-gradient-to-r.from-indigo-600.to-purple-600 {
     background: linear-gradient(to right, #e0e7ff, #f3e8ff) !important;  /* light indigo to light purple */
+    color: #1f2937 !important;  /* dark text for light background */
   }
   
   /* Make borders and dividers darker and more visible */
