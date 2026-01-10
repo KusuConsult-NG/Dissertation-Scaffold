@@ -410,7 +410,7 @@ export default function MethodologyPage() {
                 {/* Right Column: AI Critique & Checklist */}
                 <aside className="col-span-1 flex flex-col gap-6 h-[calc(100vh-8rem)] sticky top-6">
                     {/* AI Feedback */}
-                    <div className="bg-gradient-to-b from-surface-dark to-background-dark border border-slate-300 rounded-lg p-5">
+                    <div className="bg-white border border-slate-300 rounded-lg p-5">
                         <div className="flex items-center gap-2 mb-4">
                             <Sparkles className="w-5 h-5 text-primary" />
                             <h3 className="font-bold text-slate-900 text-sm">
